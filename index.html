@@ -132,7 +132,7 @@ button{font:inherit;color:inherit}
 .idcard dt{font-size:.74rem;color:var(--muted);letter-spacing:.03em}
 .idcard dd{margin:0;font-weight:500;font-size:.98rem;line-height:1.5;color:var(--ink)}
 .idcard dd.gold{color:var(--chrome)}
-@media (max-width:640px){.idcard{grid-template-columns:repeat(2,minmax(0,1fr))}.idcard div,.idcard .s3{grid-column:span 1}.idcard .full{grid-column:span 2}}
+@media (max-width:640px){.idcard{grid-template-columns:repeat(2,minmax(0,1fr))}.idcard div,.idcard .s3{grid-column:span 1}.idcard .full{grid-column:span 2;order:1}.idcard .s6{order:2}}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px}
 .ghost{background:transparent;border-color:var(--line);color:var(--ink)}
 .portrait{margin:0;display:grid;justify-items:center;gap:16px;position:relative}
@@ -468,6 +468,7 @@ body.is-preview .to-top{display:none!important}
   .src{font-size:1rem}
   .ba-tag{font-size:.7rem}
   .foot-top{flex-direction:column;align-items:stretch;text-align:center}
+  .foot-bottom{padding-bottom:84px}
   .foot-actions{justify-content:center}
 }
 @media (max-width:360px){
@@ -945,7 +946,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
     </div>
   </div>
   <div class="wrap foot-bottom">
-    <p class="rj-badge"><svg class="rj-logo site" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="rjg-rj-logo site" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#c9952a"/></linearGradient></defs><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#0f1a42" stroke="url(#rjg-rj-logo site)" stroke-width="2"/><text x="19" y="26.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="17" fill="url(#rjg-rj-logo site)" letter-spacing="-.5">RJ</text><path d="M31 7.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#ffd84a"/></svg><span>جميع الحقوق محفوظة <bdi dir="ltr">© RJ Works</bdi></span></p>
+    <p class="rj-badge"><svg class="rj-logo site" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="rjg-rj-logo site" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#c9952a"/></linearGradient></defs><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#0f1a42" stroke="url(#rjg-rj-logo site)" stroke-width="2"/><text x="19" y="26.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="19" fill="#ffd84a" letter-spacing="-.5">RJ</text><path d="M31 7.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#ffd84a"/></svg><span>جميع الحقوق محفوظة <bdi dir="ltr">© RJ Works</bdi></span></p>
   </div>
 </footer>
 </div>
@@ -1052,7 +1053,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
       </table>
     </section>
 
-    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b></span><span class="r-rj"><svg class="rj-mini r1" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="rjg-rj-mini r1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#c9952a"/></linearGradient></defs><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#0f1a42" stroke="url(#rjg-rj-mini r1)" stroke-width="2"/><text x="19" y="26.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="17" fill="url(#rjg-rj-mini r1)" letter-spacing="-.5">RJ</text><path d="M31 7.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#ffd84a"/></svg>جميع الحقوق محفوظة <bdi dir="ltr">© RJ Works</bdi></span><span>صفحة <b>1</b> من 3</span></footer>
+    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b></span><span class="r-rj"><svg class="rj-mini r1" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="rjg-rj-mini r1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#c9952a"/></linearGradient></defs><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#0f1a42" stroke="url(#rjg-rj-mini r1)" stroke-width="2"/><text x="19" y="26.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="19" fill="#ffd84a" letter-spacing="-.5">RJ</text><path d="M31 7.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#ffd84a"/></svg>جميع الحقوق محفوظة <bdi dir="ltr">© RJ Works</bdi></span><span>صفحة <b>1</b> من 3</span></footer>
   </article>
 
   <!-- SHEET 2 -->
@@ -1099,7 +1100,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
       </div>
     </section>
 
-    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b></span><span class="r-rj"><svg class="rj-mini r2" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="rjg-rj-mini r2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#c9952a"/></linearGradient></defs><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#0f1a42" stroke="url(#rjg-rj-mini r2)" stroke-width="2"/><text x="19" y="26.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="17" fill="url(#rjg-rj-mini r2)" letter-spacing="-.5">RJ</text><path d="M31 7.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#ffd84a"/></svg>جميع الحقوق محفوظة <bdi dir="ltr">© RJ Works</bdi></span><span>صفحة <b>2</b> من 3</span></footer>
+    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b></span><span class="r-rj"><svg class="rj-mini r2" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="rjg-rj-mini r2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#c9952a"/></linearGradient></defs><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#0f1a42" stroke="url(#rjg-rj-mini r2)" stroke-width="2"/><text x="19" y="26.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="19" fill="#ffd84a" letter-spacing="-.5">RJ</text><path d="M31 7.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#ffd84a"/></svg>جميع الحقوق محفوظة <bdi dir="ltr">© RJ Works</bdi></span><span>صفحة <b>2</b> من 3</span></footer>
   </article>
 
   <!-- SHEET 3 -->
@@ -1141,7 +1142,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
       <ol class="r-src" id="srcPrint"></ol>
     </section>
 
-    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b></span><span class="r-rj"><svg class="rj-mini r3" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="rjg-rj-mini r3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#c9952a"/></linearGradient></defs><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#0f1a42" stroke="url(#rjg-rj-mini r3)" stroke-width="2"/><text x="19" y="26.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="17" fill="url(#rjg-rj-mini r3)" letter-spacing="-.5">RJ</text><path d="M31 7.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#ffd84a"/></svg>جميع الحقوق محفوظة <bdi dir="ltr">© RJ Works</bdi></span><span>صفحة <b>3</b> من 3</span></footer>
+    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b></span><span class="r-rj"><svg class="rj-mini r3" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="rjg-rj-mini r3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#c9952a"/></linearGradient></defs><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#0f1a42" stroke="url(#rjg-rj-mini r3)" stroke-width="2"/><text x="19" y="26.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="19" fill="#ffd84a" letter-spacing="-.5">RJ</text><path d="M31 7.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#ffd84a"/></svg>جميع الحقوق محفوظة <bdi dir="ltr">© RJ Works</bdi></span><span>صفحة <b>3</b> من 3</span></footer>
   </article>
 </div>
 
