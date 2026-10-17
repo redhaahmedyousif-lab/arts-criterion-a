@@ -58,60 +58,105 @@ button{font:inherit;color:inherit}
 .progress{position:fixed;inset:0 0 auto 0;height:3px;z-index:60;background:linear-gradient(90deg,var(--chrome),var(--gold),var(--cobalt));transform-origin:right;transform:scaleX(0)}
 .topbar{
   position:sticky;top:0;z-index:50;
-  background:rgba(10,15,36,.72);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);
+  background:rgba(10,15,36,.78);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);
   border-bottom:1px solid var(--line);
 }
-.topbar .wrap{display:flex;align-items:center;gap:20px;padding-block:10px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:var(--f-display);font-size:1.25rem;white-space:nowrap}
-.brand-mark{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 40% 40%,var(--chrome),var(--gold) 45%,rgba(240,190,74,0) 72%);box-shadow:0 0 18px rgba(255,216,74,.55)}
-.nav{display:flex;gap:4px;margin-inline-start:auto;overflow-x:auto;scrollbar-width:none}
+.bar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:16px;min-height:64px;padding-block:8px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:var(--f-display);font-size:1.3rem;line-height:1;white-space:nowrap}
+.brand-mark{width:30px;height:30px;flex:none;border-radius:50%;background:radial-gradient(circle at 40% 40%,var(--chrome),var(--gold) 45%,rgba(240,190,74,0) 72%);box-shadow:0 0 18px rgba(255,216,74,.55)}
+.nav{display:flex;align-items:center;justify-content:center;gap:2px;min-width:0;overflow-x:auto;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
-.nav a{color:var(--muted);text-decoration:none;font-size:var(--step--1);padding:6px 10px;border-radius:999px;white-space:nowrap;transition:color .2s,background .2s}
+.nav a{display:inline-flex;align-items:center;height:36px;color:var(--muted);text-decoration:none;font-size:var(--step--1);padding:0 12px;border-radius:999px;white-space:nowrap;transition:color .2s,background .2s}
 .nav a:hover,.nav a.active{color:var(--ink);background:rgba(156,192,238,.1)}
+.nav a.active{box-shadow:inset 0 -2px 0 var(--gold)}
+.bar-actions{display:flex;align-items:center;gap:8px;justify-self:end}
 .btn{
-  display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(240,190,74,.55);
-  background:linear-gradient(135deg,rgba(255,216,74,.18),rgba(240,190,74,.06));
-  color:var(--chrome);padding:9px 16px;border-radius:999px;cursor:pointer;font-weight:500;font-size:var(--step--1);white-space:nowrap;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;border:1px solid rgba(240,190,74,.55);
+  background:linear-gradient(135deg,rgba(255,216,74,.18),rgba(240,190,74,.06));text-decoration:none;
+  color:var(--chrome);padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;font-size:var(--step--1);line-height:1;white-space:nowrap;
   transition:transform .2s,box-shadow .2s,background .2s;
 }
 .btn:hover{transform:translateY(-1px);box-shadow:0 8px 30px -8px rgba(255,216,74,.55);background:linear-gradient(135deg,rgba(255,216,74,.3),rgba(240,190,74,.12))}
 .btn svg{width:18px;height:18px;flex:none}
 .btn.solid{background:var(--gold);color:#1a1405;border-color:var(--gold)}
 .btn.solid:hover{background:var(--chrome)}
-@media (max-width:900px){.nav{display:none}.topbar .btn{margin-inline-start:auto}}
+.print-btn .sm{display:none}
+.menu-btn{display:none;width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:rgba(17,26,63,.6);cursor:pointer;place-items:center;padding:0}
+.menu-btn i{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;box-shadow:0 -6px 0 var(--ink),0 6px 0 var(--ink);transition:all .25s}
+.menu-btn[aria-expanded="true"] i{background:transparent;box-shadow:none;position:relative}
+.menu-btn[aria-expanded="true"] i::before,.menu-btn[aria-expanded="true"] i::after{content:"";position:absolute;inset:0;background:var(--ink);border-radius:2px;transform:rotate(45deg)}
+.menu-btn[aria-expanded="true"] i::after{transform:rotate(-45deg)}
+@media (max-width:1120px){.nav a{padding:0 9px}}
+@media (max-width:980px){
+  .bar{grid-template-columns:auto minmax(0,1fr) auto}
+  .menu-btn{display:inline-grid}
+  .nav{position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;align-items:stretch;gap:4px;
+    padding:10px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px));
+    background:rgba(10,15,36,.97);border-bottom:1px solid var(--line);box-shadow:0 30px 40px -20px rgba(0,0,0,.7)}
+  .nav.open{display:flex}
+  .nav a{height:44px;font-size:1rem;padding:0 14px;border-radius:12px}
+  .bar-actions{grid-column:3}
+}
+@media (max-width:520px){.print-btn .lg{display:none}.print-btn .sm{display:inline}.brand{font-size:1.15rem}}
 
 /* ---------- hero ---------- */
-.hero{position:relative;min-height:min(92vh,860px);display:grid;align-items:end;overflow:hidden;isolation:isolate;border-bottom:1px solid var(--line)}
+.hero{position:relative;min-height:min(92vh,860px);display:grid;align-items:center;overflow:hidden;isolation:isolate;border-bottom:1px solid var(--line)}
 #sky{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
 .hero::after{content:"";position:absolute;inset:0;z-index:-1;background:
   radial-gradient(120% 70% at 70% 110%,rgba(10,15,36,.96) 20%,rgba(10,15,36,.15) 70%),
   linear-gradient(0deg,var(--night) 0%,rgba(10,15,36,0) 35%)}
-.moon{position:absolute;top:12%;left:9%;width:clamp(70px,9vw,130px);aspect-ratio:1;border-radius:50%;z-index:-1;
+.moon{position:absolute;top:9%;left:4%;width:clamp(60px,7vw,110px);aspect-ratio:1;border-radius:50%;z-index:-1;
   background:radial-gradient(circle at 62% 40%,transparent 38%,var(--chrome) 39%,var(--gold) 52%,rgba(240,190,74,0) 70%);
   filter:drop-shadow(0 0 40px rgba(255,216,74,.65));animation:breathe 6s ease-in-out infinite}
 .star{position:absolute;z-index:-1;width:var(--s,14px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff6c7 0,var(--chrome) 25%,rgba(255,216,74,0) 70%);animation:breathe var(--d,4s) ease-in-out infinite}
 @keyframes breathe{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.25);opacity:1}}
-.hero-inner{padding-block:120px 64px;display:grid;gap:22px;max-width:900px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:center;padding-block:96px 72px}
+.hero-inner{display:grid;gap:22px;min-width:0}
 .eyebrow{display:inline-flex;flex-wrap:wrap;gap:8px 14px;align-items:center;color:var(--gold);font-size:var(--step--1);letter-spacing:.04em}
 .eyebrow span+span::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--gold);margin-inline-end:14px;vertical-align:middle;opacity:.7}
 .hero h1{margin:0;font-family:var(--f-display);font-weight:700;font-size:var(--step-4);line-height:1.08;text-wrap:balance;
   background:linear-gradient(180deg,#fff7d6 10%,var(--chrome) 55%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;
   text-shadow:0 0 60px rgba(255,216,74,.12)}
 .hero h1 .latin{display:block;text-align:right;font-size:.38em;margin-top:.25em;color:var(--sky);-webkit-text-fill-color:var(--sky);font-weight:500}
-.hero .lede{margin:0;font-size:var(--step-1);color:#d9dcef;max-width:62ch;font-weight:300}
+.hero .lede{margin:0;font-size:var(--step-1);color:#d9dcef;max-width:60ch;font-weight:300}
 .hero .lede strong{color:var(--chrome);font-weight:500}
-.student{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
-.field{display:flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:6px 12px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.field label{font-size:var(--step--1);color:var(--muted);white-space:nowrap}
-.field input{background:transparent;border:0;color:var(--ink);font:inherit;font-size:var(--step--1);width:150px;min-width:0;padding:4px 0}
-.field input::placeholder{color:rgba(165,175,207,.6)}
-.field input:focus{outline:none}
-.field:focus-within{border-color:var(--gold)}
-.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.idcard{display:flex;flex-wrap:wrap;gap:0;margin:4px 0 0;border-radius:16px;overflow:hidden;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.idcard div{flex:1 1 auto;padding:10px 16px;border-inline-start:1px solid var(--line);min-width:0}
+.idcard div:first-child{border-inline-start:0}
+.idcard dt{font-size:.74rem;color:var(--muted);letter-spacing:.03em}
+.idcard dd{margin:0;font-weight:500;font-size:.98rem;line-height:1.5;color:var(--ink)}
+.idcard dd.gold{color:var(--chrome)}
+@media (max-width:640px){.idcard div{flex:1 1 45%;border-inline-start:0;border-top:1px solid var(--line)}.idcard div:nth-child(-n+2){border-top:0}.idcard div:nth-child(even){border-inline-start:1px solid var(--line)}.idcard div.wide{flex-basis:100%;border-inline-start:0}}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px}
 .ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.portrait{margin:0;display:grid;justify-items:center;gap:16px;position:relative}
+.portrait-ring{position:relative;isolation:isolate;width:clamp(210px,25vw,340px);aspect-ratio:1;max-width:100%;border-radius:50%;padding:6px;
+  box-shadow:0 0 0 1px rgba(255,216,74,.25),0 0 60px rgba(255,216,74,.32),0 0 160px rgba(63,111,208,.45)}
+.portrait-ring::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;
+  background:conic-gradient(from 0deg,var(--chrome),var(--cobalt),var(--gold),var(--prussian),var(--chrome));animation:spin 22s linear infinite}
+.portrait-ring::before{content:"";position:absolute;inset:-18px;border-radius:50%;border:1px dashed rgba(240,190,74,.35)}
+.portrait-ring img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;border-radius:50%;border:5px solid var(--night);background:var(--night-2)}
+.portrait figcaption{display:grid;justify-items:center;gap:2px;text-align:center;font-size:var(--step--1);color:var(--muted)}
+.portrait figcaption b{color:var(--ink);font-weight:500;font-family:var(--f-display);font-size:1.15rem}
+@media (prefers-reduced-motion:reduce){.portrait-ring::after,.moon,.star{animation:none}}
+@media (max-width:860px){
+  .hero-grid{grid-template-columns:1fr;padding-block:56px 64px;gap:28px}
+  .portrait{order:-1}
+  .portrait-ring{width:min(190px,52vw)}
+}
 .scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.75rem;letter-spacing:.2em;display:flex;flex-direction:column;align-items:center;gap:6px}
 .scroll-hint::after{content:"";width:1px;height:34px;background:linear-gradient(var(--gold),transparent);animation:drip 2s ease-in-out infinite}
 @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media (max-width:860px){.scroll-hint{display:none}}
+
+/* artwork images fade in once loaded (real file or designed fallback) */
+img[data-art]{opacity:0;transition:opacity .7s ease}
+img[data-art].ok{opacity:1}
+.img-status{display:inline-flex;align-items:center;gap:8px;margin-top:22px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(17,26,63,.55);font-size:var(--step--1);color:var(--muted)}
+.img-status i{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.img-status.good i{background:#5fd08a;box-shadow:0 0 10px #5fd08a}
+.img-status.warn i{background:var(--gold);box-shadow:0 0 10px var(--gold)}
 
 /* ---------- sections ---------- */
 section.band{padding-block:clamp(64px,9vw,120px);position:relative}
@@ -326,11 +371,11 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-con
 .qr-float p{margin:0;font-size:.74rem;line-height:1.5;max-width:9.5em;color:var(--muted)}
 .qr-float p b{display:block;color:var(--chrome);font-weight:500;font-size:.8rem}
 .qr-float .x{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:var(--night);cursor:pointer;font-size:.8rem;line-height:1;padding:0}
-@media (max-width:640px){.qr-float p{display:none}.qr-float .qr{width:58px;height:58px}}
+@media (max-width:640px){.qr-float{display:none}}
 .qr img,.qr canvas{width:100%!important;height:auto!important;display:block}
 
 /* ===================================================================
-   PRINT REPORT — two A4 sheets. Hidden on screen unless preview mode.
+   PRINT REPORT — three airy A4 sheets. Hidden on screen unless preview mode.
    =================================================================== */
 #report{display:none}
 .preview-bar{display:none}
@@ -342,74 +387,90 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
 body.is-preview .sheet{box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
 
 .sheet{
-  --p-ink:#141c38; --p-soft:#4b5577; --p-gold:#a8780f; --p-blue:#24467f; --p-rule:#d8dbe6; --p-tint:#f4f5fa; --p-warm:#fbf6e8;
-  width:210mm;height:297mm;padding:11mm 12.5mm 10mm;background:#fff;color:var(--p-ink);
-  font-family:var(--f-body);font-size:9.7pt;line-height:1.7;position:relative;overflow:hidden;
-  display:flex;flex-direction:column;gap:4.2mm;
+  --p-ink:#1b2440; --p-navy:#14285a; --p-soft:#5a6380; --p-gold:#a97a12; --p-gold-2:#d9a93a;
+  --p-rule:#e2e4ec; --p-tint:#f7f8fb; --p-warm:#fcf8ee;
+  width:210mm;height:297mm;padding:21mm 19mm 14mm;background:#fff;color:var(--p-ink);
+  font-family:var(--f-body);font-size:10.2pt;line-height:1.8;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:6.5mm;
   -webkit-print-color-adjust:exact;print-color-adjust:exact;
 }
-.sheet h2,.sheet h3,.sheet h4{color:var(--p-ink)}
-.r-head{display:grid;grid-template-columns:minmax(0,1fr) 25mm;gap:5mm;align-items:stretch;border-bottom:1.6pt solid var(--p-ink);padding-bottom:3mm}
-.r-kicker{font-size:7.6pt;color:var(--p-gold);letter-spacing:.04em;font-weight:600}
-.r-title{margin:1mm 0 .5mm;font-family:var(--f-display);font-size:19pt;line-height:1.25;font-weight:700}
-.r-sub{font-size:9pt;color:var(--p-soft);margin:0}
-.r-meta{display:flex;flex-wrap:wrap;gap:2mm 6mm;margin-top:2mm;font-size:8pt}
-.r-meta span b{font-weight:600;color:var(--p-soft);margin-inline-end:1.5mm}
-.r-meta span em{font-style:normal;display:inline-block;min-width:30mm;border-bottom:.6pt dotted var(--p-soft);padding:0 1mm}
-.r-qr{display:grid;justify-items:center;align-content:center;gap:1mm;border:.6pt solid var(--p-rule);border-radius:2mm;padding:1.5mm;text-align:center}
-.r-qr .qr{width:19mm;height:19mm}
-.r-qr small{font-size:5.8pt;line-height:1.3;color:var(--p-soft)}
-.r-sec{display:grid;gap:1.2mm}
-.r-h{display:flex;align-items:baseline;gap:2mm;margin:0;font-family:var(--f-display);font-size:12.6pt;line-height:1.3;font-weight:700}
-.r-h i{font-style:normal;display:inline-grid;place-items:center;width:5.2mm;height:5.2mm;border-radius:50%;background:var(--p-ink);color:#fff;font-family:var(--f-body);font-size:7.4pt;font-weight:600;flex:none;transform:translateY(-.4mm)}
-.r-h small{font-family:var(--f-body);font-weight:400;font-size:7.6pt;color:var(--p-gold)}
-.sheet p{margin:0;text-align:justify}
-.sheet strong{font-weight:600;color:var(--p-blue)}
-.r-cols{display:grid;grid-template-columns:minmax(0,1fr) 58mm;gap:5mm}
-.r-side{display:grid;gap:2.6mm;align-content:start}
-.r-dossier{border:.7pt solid var(--p-ink);border-radius:1.6mm;overflow:hidden}
-.r-dossier h4{margin:0;padding:1.4mm 2.5mm;background:var(--p-ink);color:#fff;font-size:8pt;font-weight:600;display:flex;justify-content:space-between}
-.r-dossier h4 .latin{font-size:8.5pt;color:#f3d27a}
-.r-dossier dl{margin:0;padding:.6mm 2.5mm 1.2mm}
-.r-dossier dl div{display:grid;grid-template-columns:15mm minmax(0,1fr);gap:1.5mm;padding:1.1mm 0;border-bottom:.4pt dashed var(--p-rule);font-size:8.1pt;line-height:1.45}
+.sheet img{opacity:1!important}
+/* corner badge: hangs from the top edge on every sheet */
+.r-badge{position:absolute;top:0;left:19mm;display:grid;justify-items:center;gap:.4mm;padding:3.2mm 4.2mm 2.6mm;background:var(--p-navy);color:#fff;border-radius:0 0 2.2mm 2.2mm;border-bottom:1.6pt solid var(--p-gold-2);text-align:center;line-height:1.25}
+.r-badge b{font-size:8.6pt;font-weight:600}
+.r-badge span{font-size:6.6pt;color:#f3d27a;letter-spacing:.04em}
+.r-run{display:flex;justify-content:space-between;align-items:baseline;gap:6mm;padding-bottom:2mm;border-bottom:.6pt solid var(--p-gold-2);font-size:8pt;color:var(--p-soft);padding-left:52mm}
+.r-run b{color:var(--p-navy);font-family:var(--f-display);font-size:10.5pt;font-weight:700}
+
+.r-head{display:grid;grid-template-columns:minmax(0,1fr) 27mm;gap:7mm;align-items:end;padding-left:0}
+.r-kicker{font-size:8.4pt;color:var(--p-gold);letter-spacing:.04em;font-weight:600}
+.r-title{margin:1.5mm 0 1mm;font-family:var(--f-display);font-size:21pt;line-height:1.3;font-weight:700;color:var(--p-navy);text-wrap:balance}
+.r-sub{font-size:9.6pt;color:var(--p-soft);margin:0;line-height:1.5}
+.r-qr{display:grid;justify-items:center;gap:1.2mm;text-align:center}
+.r-qr .qr{width:24mm;height:24mm;padding:1.2mm;border:.6pt solid var(--p-rule);border-radius:1.6mm;background:#fff}
+.r-qr small{font-size:6.6pt;line-height:1.35;color:var(--p-soft)}
+.r-info{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;border:.7pt solid var(--p-rule);border-top:2pt solid var(--p-navy);border-radius:1.6mm;background:var(--p-tint)}
+.r-info div{padding:2.2mm 3.4mm;border-inline-start:.5pt solid var(--p-rule);border-top:.5pt solid var(--p-rule)}
+.r-info div:nth-child(3n+1){border-inline-start:0}
+.r-info div:nth-child(-n+3){border-top:0}
+.r-info dt{font-size:7.4pt;color:var(--p-soft);line-height:1.3}
+.r-info dd{margin:.6mm 0 0;font-size:10pt;font-weight:600;color:var(--p-navy);line-height:1.4}
+
+.r-sec{display:grid;gap:2.6mm}
+.r-h{display:flex;align-items:center;gap:2.6mm;margin:0;padding-bottom:1.6mm;border-bottom:.5pt solid var(--p-rule);font-family:var(--f-display);font-size:14.5pt;line-height:1.3;font-weight:700;color:var(--p-navy)}
+.r-h i{font-style:normal;display:inline-grid;place-items:center;width:6.6mm;height:6.6mm;border-radius:50%;background:var(--p-navy);color:#fff;border:1pt solid var(--p-gold-2);font-family:var(--f-body);font-size:8.6pt;font-weight:600;flex:none}
+.r-h small{font-family:var(--f-body);font-weight:500;font-size:8.4pt;color:var(--p-gold);margin-inline-start:auto}
+.sheet p{margin:0 0 2.6mm;text-align:justify}
+.sheet p:last-child{margin-bottom:0}
+.sheet strong{font-weight:600;color:var(--p-navy)}
+.r-cols{display:grid;grid-template-columns:minmax(0,1fr) 60mm;gap:7mm;align-items:start}
+.r-dossier{border:.7pt solid var(--p-rule);border-radius:2mm;overflow:hidden;background:#fff}
+.r-dossier .top{display:flex;gap:3mm;align-items:center;padding:2.6mm 3mm;background:var(--p-navy);color:#fff}
+.r-dossier .top img{width:15mm;height:18mm;object-fit:cover;border-radius:1.2mm;border:.8pt solid var(--p-gold-2)}
+.r-dossier .top b{display:block;font-family:var(--f-display);font-size:10.5pt;line-height:1.3}
+.r-dossier .top .latin{font-size:8.4pt;color:#f3d27a}
+.r-dossier dl{margin:0;padding:1mm 3mm 1.6mm}
+.r-dossier dl div{display:grid;grid-template-columns:15mm minmax(0,1fr);gap:2mm;padding:1.4mm 0;border-bottom:.4pt dashed var(--p-rule);font-size:8.4pt;line-height:1.5}
 .r-dossier dl div:last-child{border-bottom:0}
-.r-dossier dt{color:var(--p-soft);font-weight:600}
+.r-dossier dt{color:var(--p-gold);font-weight:600}
 .r-dossier dd{margin:0}
-.r-fig{margin:0;display:grid;gap:1mm}
-.r-fig img{width:100%;height:var(--h,34mm);object-fit:cover;border-radius:1.2mm;border:.4pt solid var(--p-rule)}
-.r-fig figcaption{font-size:7.2pt;color:var(--p-soft);line-height:1.35}
-.r-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3mm}
-.r-box{border:.6pt solid var(--p-rule);border-top:2pt solid var(--p-gold);border-radius:1.2mm;padding:2mm 2.4mm;background:var(--p-tint)}
-.r-box h4{margin:0 0 .6mm;font-size:9.4pt;font-weight:600;line-height:1.35}
-.r-box h4 .latin{font-size:8.4pt;color:var(--p-blue);font-weight:500}
-.r-box p{font-size:8.8pt;line-height:1.65;text-align:right}
-.r-table{width:100%;border-collapse:collapse;font-size:8.2pt;line-height:1.45}
-.r-table th,.r-table td{border:.5pt solid var(--p-rule);padding:1mm 1.6mm;text-align:right;vertical-align:top}
-.r-table thead th{background:var(--p-tint);font-weight:600}
-.r-table .me{background:var(--p-warm);font-weight:500}
-.r-quote{margin:0;padding:3mm 4.5mm;border-right:2.4pt solid var(--p-gold);background:var(--p-warm);font-family:var(--f-display);font-size:12pt;line-height:1.5;border-radius:1mm}
-.r-quote cite{display:block;font-family:var(--f-body);font-style:normal;font-size:7.6pt;color:var(--p-soft);margin-top:.6mm}
-.r-works{display:grid;gap:2.4mm}
-.r-work{display:grid;grid-template-columns:42mm minmax(0,1fr);gap:3.5mm;align-items:start;padding-bottom:2.4mm;border-bottom:.4pt solid var(--p-rule)}
+.r-fig{margin:0;display:grid;gap:1.4mm}
+.r-fig img{width:100%;height:var(--h,40mm);object-fit:cover;border-radius:1.6mm;border:.5pt solid var(--p-rule)}
+.r-fig figcaption{font-size:7.6pt;color:var(--p-soft);line-height:1.45}
+.r-table{width:100%;border-collapse:collapse;font-size:8.8pt;line-height:1.6}
+.r-table th,.r-table td{border:.5pt solid var(--p-rule);padding:1.8mm 2.6mm;text-align:right;vertical-align:top}
+.r-table thead th{background:var(--p-tint);font-weight:600;color:var(--p-navy)}
+.r-table tbody th{color:var(--p-soft);font-weight:600;white-space:nowrap}
+.r-table .me{background:var(--p-warm);font-weight:500;color:var(--p-ink)}
+.r-table thead .me{color:var(--p-gold)}
+.r-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4.5mm}
+.r-box{border:.6pt solid var(--p-rule);border-top:2pt solid var(--p-gold-2);border-radius:1.6mm;padding:3mm 3.4mm 3.2mm;background:#fff}
+.r-box h4{margin:0 0 1.4mm;font-size:10pt;font-weight:600;line-height:1.45;color:var(--p-navy)}
+.r-box h4 .latin{display:block;font-size:9pt;color:var(--p-gold);font-weight:500}
+.r-box p{font-size:9.3pt;line-height:1.75;text-align:right}
+.r-quote{margin:0;padding:3.6mm 5mm;border-right:2.6pt solid var(--p-gold-2);background:var(--p-warm);font-family:var(--f-display);font-size:12.5pt;line-height:1.6;color:var(--p-navy);border-radius:1.4mm}
+.r-quote cite{display:block;font-family:var(--f-body);font-style:normal;font-size:8pt;color:var(--p-soft);margin-top:1mm}
+.r-works{display:grid;gap:6.5mm}
+.r-work{display:grid;grid-template-columns:50mm minmax(0,1fr);gap:6mm;align-items:start;padding-bottom:6.5mm;border-bottom:.5pt solid var(--p-rule)}
 .r-work:last-child{border-bottom:0;padding-bottom:0}
-.r-work img{width:42mm;height:31.5mm;object-fit:cover;border-radius:1.2mm;border:.4pt solid var(--p-rule)}
-.r-work h4{margin:0;font-family:var(--f-display);font-size:11.4pt;line-height:1.3}
-.r-work h4 .latin{font-size:9pt;color:var(--p-blue);font-weight:500}
-.r-work .m{font-size:7.5pt;color:var(--p-soft);margin:.2mm 0 .8mm}
-.r-work p{font-size:8.9pt;line-height:1.62}
-.r-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4mm}
-.r-two .r-box{border-top-color:var(--p-blue);background:#fff}
-.r-tl{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:0;position:relative;padding-top:2mm}
-.r-tl::before{content:"";position:absolute;top:3.4mm;right:2mm;left:2mm;height:.8pt;background:var(--p-ink)}
-.r-tl div{position:relative;padding:3.6mm .8mm 0;font-size:7.2pt;line-height:1.35;text-align:center}
-.r-tl div::before{content:"";position:absolute;top:.6mm;right:50%;transform:translateX(50%);width:2mm;height:2mm;border-radius:50%;background:#fff;border:.9pt solid var(--p-gold)}
-.r-tl b{display:block;font-size:9pt;color:var(--p-ink)}
-.r-src{margin:0;padding:0 0 0 4mm;direction:ltr;text-align:left;font-family:var(--f-latin);font-size:8.8pt;line-height:1.4;display:grid;gap:.4mm}
-.r-src i{color:var(--p-blue)}
-.r-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;border-top:.6pt solid var(--p-rule);padding-top:1.6mm;font-size:6.8pt;color:var(--p-soft)}
-.r-foot b{color:var(--p-ink)}
-.r-concl{padding:2.2mm 3mm;border:.6pt solid var(--p-ink);border-radius:1.4mm}
-.r-concl p{font-size:9pt}
+.r-work img{width:50mm;height:37.5mm;object-fit:cover;border-radius:1.4mm;border:.5pt solid var(--p-rule)}
+.r-work h4{margin:0;font-family:var(--f-display);font-size:12pt;line-height:1.35;color:var(--p-navy)}
+.r-work h4 .latin{font-size:9.6pt;color:var(--p-gold);font-weight:500}
+.r-work .m{font-size:8pt;color:var(--p-soft);margin:.4mm 0 1.4mm;line-height:1.5}
+.r-work p{font-size:9.6pt;line-height:1.75}
+.r-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5mm}
+.r-two .r-box{border-top-color:var(--p-navy);background:var(--p-tint)}
+.r-tl{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));position:relative;padding-top:2mm}
+.r-tl::before{content:"";position:absolute;top:3.6mm;right:3mm;left:3mm;height:.8pt;background:linear-gradient(270deg,var(--p-navy),var(--p-gold-2))}
+.r-tl div{position:relative;padding:4.4mm 1mm 0;font-size:7.8pt;line-height:1.45;text-align:center;color:var(--p-soft)}
+.r-tl div::before{content:"";position:absolute;top:.8mm;right:50%;transform:translateX(50%);width:2.4mm;height:2.4mm;border-radius:50%;background:#fff;border:1pt solid var(--p-gold)}
+.r-tl b{display:block;font-size:9.6pt;color:var(--p-navy)}
+.r-concl{padding:4mm 5mm;border:.7pt solid var(--p-rule);border-right:2.6pt solid var(--p-navy);border-radius:1.6mm;background:var(--p-tint)}
+.r-concl h3{margin:0 0 1.4mm;font-family:var(--f-display);font-size:12.5pt;color:var(--p-navy)}
+.r-src{margin:0;padding:0 0 0 5mm;direction:ltr;text-align:left;font-family:var(--f-latin);font-size:9.6pt;line-height:1.55;display:grid;gap:1.2mm}
+.r-src i{color:var(--p-navy)}
+.r-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:6mm;border-top:.6pt solid var(--p-rule);padding-top:2.4mm;font-size:7.8pt;color:var(--p-soft)}
+.r-foot b{color:var(--p-navy)}
 
 @page{size:A4 portrait;margin:0}
 @media print{
@@ -429,9 +490,9 @@ body.is-preview .sheet{box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
 <!-- ============================== SCREEN SITE ============================== -->
 <div class="site">
 <header class="topbar">
-  <div class="wrap">
+  <div class="wrap bar">
     <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>فان جوخ</a>
-    <nav class="nav" aria-label="أقسام البحث">
+    <nav class="nav" id="nav" aria-label="أقسام البحث">
       <a href="#who">الفنان</a>
       <a href="#school">المدرسة</a>
       <a href="#style">الأسلوب</a>
@@ -441,10 +502,13 @@ body.is-preview .sheet{box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
       <a href="#quotes">اقتباسات</a>
       <a href="#sources">المصادر</a>
     </nav>
-    <button class="btn" type="button" data-print-mode>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>
-      طباعة التقرير / PDF
-    </button>
+    <div class="bar-actions">
+      <button class="btn print-btn" type="button" data-print-mode aria-label="طباعة التقرير أو حفظه PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>
+        <span class="lg">طباعة التقرير / PDF</span><span class="sm">PDF</span>
+      </button>
+      <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="nav" aria-label="فتح قائمة الأقسام"><i></i></button>
+    </div>
   </div>
 </header>
 
@@ -455,20 +519,21 @@ body.is-preview .sheet{box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
     <div class="moon" aria-hidden="true"></div>
     <span class="star" style="top:18%;left:32%;--s:22px;--d:5s" aria-hidden="true"></span>
     <span class="star" style="top:10%;left:52%;--s:14px;--d:3.6s" aria-hidden="true"></span>
-    <span class="star" style="top:28%;left:20%;--s:12px;--d:4.4s" aria-hidden="true"></span>
+    <span class="star" style="top:30%;left:16%;--s:12px;--d:4.4s" aria-hidden="true"></span>
     <span class="star" style="top:8%;right:22%;--s:18px;--d:6s" aria-hidden="true"></span>
-    <span class="star" style="top:22%;right:8%;--s:26px;--d:5.4s" aria-hidden="true"></span>
-    <span class="star" style="top:36%;left:44%;--s:10px;--d:3s" aria-hidden="true"></span>
-    <div class="wrap">
+    <span class="star" style="top:20%;right:6%;--s:26px;--d:5.4s" aria-hidden="true"></span>
+    <span class="star" style="top:78%;left:30%;--s:10px;--d:3s" aria-hidden="true"></span>
+    <div class="wrap hero-grid">
       <div class="hero-inner">
         <div class="eyebrow"><span>الفنون البصرية</span><span>دراسة استقصائية لمدارس الفن</span><span>المهمة 2 · المعيار A: الاستقصاء</span></div>
         <h1 id="hero-title">فينسنت فان جوخ<span class="latin">Vincent van Gogh · 1853–1890</span></h1>
         <p class="lede">تحليل <strong>الحراك التعبيري</strong> في أعمال فنانٍ حوّل العزلة إلى ضوء، والانفعال إلى ضربات فرشاة تتحرك على القماش كالدوامات الكونية.</p>
-        <div class="student" role="group" aria-label="بيانات الطالب (تظهر في التقرير المطبوع)">
-          <div class="field"><label for="f-name">اسم الطالب</label><input id="f-name" data-bind="name" placeholder="اكتب اسمك هنا" autocomplete="name"></div>
-          <div class="field"><label for="f-class">الصف / الشعبة</label><input id="f-class" data-bind="klass" placeholder="مثال: العاشر - أ"></div>
-          <div class="field"><label for="f-teacher">الأستاذ/ة</label><input id="f-teacher" data-bind="teacher" placeholder="اسم المعلم"></div>
-        </div>
+        <dl class="idcard" aria-label="بيانات الطالب">
+          <div><dt>اسم الطالب</dt><dd>رضا أحمد يوسف</dd></div>
+          <div><dt>الصف / الشعبة</dt><dd><span class="latin" style="font-style:normal;font-family:var(--f-body)">MYP-A</span></dd></div>
+          <div><dt>أستاذ المادة</dt><dd>أ. حسن فتيل</dd></div>
+          <div class="wide"><dt>المادة</dt><dd class="gold">الفنون البصرية — المهمة الثانية (المعيار A: الاستقصاء)</dd></div>
+        </dl>
         <div class="hero-cta">
           <a class="btn solid" href="#works">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 17-5-5-9 8"/></svg>
@@ -476,10 +541,14 @@ body.is-preview .sheet{box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
           </a>
           <button class="btn ghost" type="button" data-print-mode>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>
-            معاينة ورقة A4
+            معاينة التقرير A4
           </button>
         </div>
       </div>
+      <figure class="portrait">
+        <div class="portrait-ring"><img data-art="selfportrait" data-w="960" alt="بورتريه ذاتي لفينسنت فان جوخ، 1887" width="340" height="340" fetchpriority="high"></div>
+        <figcaption><b>بورتريه ذاتي</b><span>1887 · زيت على لوح كرتوني · معهد شيكاغو للفنون</span></figcaption>
+      </figure>
     </div>
     <div class="scroll-hint" aria-hidden="true">مرّر</div>
   </section>
@@ -507,7 +576,7 @@ body.is-preview .sheet{box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
       <aside class="glass dossier reveal" aria-label="بطاقة الهوية البصرية للفنان">
         <span class="stamp">DOSSIER</span>
         <div class="dossier-head">
-          <img data-art="selfportrait" data-w="300" alt="بورتريه ذاتي لفان جوخ، 1887" width="72" height="88">
+          <img data-art="selfportrait" data-w="500" alt="بورتريه ذاتي لفان جوخ، 1887" width="72" height="88">
           <div>
             <h3>فينسنت ويليم فان جوخ</h3>
             <span class="latin">Vincent Willem van Gogh</span>
@@ -690,13 +759,14 @@ body.is-preview .sheet{box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
         <h2 id="src-h">المصادر والمراجع<small>توثيق بأسلوب APA</small></h2>
       </div>
       <ol class="src reveal" id="srcList"></ol>
+      <p class="img-status" id="imgStatus" role="status"><i></i><span>جارٍ فحص الصور…</span></p>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>الفنون البصرية · المهمة 2 · المعيار A: الاستقصاء — <span data-out="name">اسم الطالب</span></span>
+    <span>الفنون البصرية · المهمة 2 · المعيار A: الاستقصاء — رضا أحمد يوسف · MYP-A · أ. حسن فتيل</span>
     <button class="btn" type="button" data-print-mode>طباعة التقرير / PDF</button>
   </div>
 </footer>
@@ -739,117 +809,124 @@ body.is-preview .sheet{box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
   <button class="btn ghost" type="button" id="exitPreview">العودة إلى الموقع</button>
 </div>
 
-<!-- ============================== PRINT REPORT (A4 × 2) ============================== -->
+<!-- ============================== PRINT REPORT (A4 × 3) ============================== -->
 <div id="report" aria-label="التقرير المطبوع">
   <!-- SHEET 1 -->
   <article class="sheet">
+    <div class="r-badge"><b>المعيار A: الاستقصاء — المهمة 2</b><span>الفنون البصرية · MYP</span></div>
     <header class="r-head">
       <div>
-        <div class="r-kicker">الفنون البصرية — دراسة استقصائية لمدارس الفن · المهمة 2: المعيار A (الاستقصاء)</div>
+        <div class="r-kicker">الفنون البصرية · دراسة استقصائية لمدارس الفن</div>
         <h1 class="r-title">تحليل الحراك التعبيري في أعمال فينسنت فان جوخ</h1>
-        <p class="r-sub"><span class="latin">Vincent van Gogh (1853–1890)</span> · ما بعد الانطباعية والتمهيد للتعبيرية</p>
-        <div class="r-meta">
-          <span><b>الطالب:</b><em data-out="name"></em></span>
-          <span><b>الصف:</b><em data-out="klass"></em></span>
-          <span><b>الأستاذ/ة:</b><em data-out="teacher"></em></span>
-          <span><b>التاريخ:</b><em data-out="date"></em></span>
-        </div>
+        <p class="r-sub"><span class="latin">Vincent van Gogh (1853–1890)</span> — ما بعد الانطباعية والتمهيد للتعبيرية</p>
       </div>
       <div class="r-qr"><div class="qr" id="qrPrint"></div><small>امسح لزيارة<br>النسخة التفاعلية</small></div>
     </header>
+    <dl class="r-info">
+      <div><dt>اسم الطالب</dt><dd>رضا أحمد يوسف</dd></div>
+      <div><dt>الصف / الشعبة</dt><dd>MYP-A</dd></div>
+      <div><dt>أستاذ المادة</dt><dd>أ. حسن فتيل</dd></div>
+      <div><dt>المادة</dt><dd>الفنون البصرية</dd></div>
+      <div><dt>المهمة</dt><dd>الثانية — المعيار A: الاستقصاء</dd></div>
+      <div><dt>تاريخ التسليم</dt><dd data-out="date"></dd></div>
+    </dl>
 
-    <div class="r-cols">
-      <div style="display:grid;gap:3mm;align-content:start">
-        <section class="r-sec">
-          <h2 class="r-h"><i>1</i>من هو الفنان؟ <small>السيرة والعمق الفلسفي</small></h2>
+    <section class="r-sec">
+      <h2 class="r-h"><i>1</i>من هو الفنان؟<small>السيرة والعمق الفلسفي</small></h2>
+      <div class="r-cols">
+        <div>
           <p>فينسنت فان جوخ <span class="latin">(Vincent van Gogh)</span>؛ عبقري هولندا الذي تحوّل من رجلٍ يصارع عزلة الروح إلى إحدى أعظم الأيقونات الخالدة في تاريخ الفن البشري. لم يكن مجرد رسامٍ يمسك بالفرشاة، بل كان فيلسوفاً يسكب لوعته وشغفه المحموم على قماش اللوحة، ليعيد تعريف الجمال من منظور <strong>الانفعال الإنساني الخالص</strong>.</p>
-          <p>عمل تاجراً للوحات ثم واعظاً بين عمّال المناجم، ولم يقرر احتراف الرسم إلا في السابعة والعشرين (1880). وخلال عشر سنوات فقط أنتج نحو <strong>2100 عمل</strong> منها قرابة 860 لوحة زيتية، بدعمٍ متواصل من أخيه <strong>ثيو</strong>؛ وتُعدّ رسائله إليه أهم وثيقة لفهم فكره الفني. عاش فقيراً مجهولاً، ورأى في الرسم خلاصاً ومعنى لا تزييناً للواقع.</p>
-        </section>
-        <section class="r-sec">
-          <h2 class="r-h"><i>2</i>إلى أي مدرسة ينتمي؟ <small>التمرد الفني</small></h2>
-          <p>يُعدّ فان جوخ ركناً أساسياً في حركة <strong>ما بعد الانطباعية</strong> <span class="latin">(Post-Impressionism)</span>، والأبَ الروحي <strong>للمدرسة التعبيرية</strong> <span class="latin">(Expressionism)</span>. لم يستكن للنقل الحرفي للواقع أو الاكتفاء برصد الضوء كما فعل الانطباعيون، بل شقّ طريقاً تمرّد فيه على المحاكاة الظاهرية، ليتخذ من اللوحة مرآةً تعكس أغوار النفس وشواهد الوجدان.</p>
-          <table class="r-table">
-            <thead><tr><th></th><th>الانطباعية</th><th class="me">فان جوخ</th><th>التعبيرية</th></tr></thead>
-            <tbody>
-              <tr><th>الهدف</th><td>لحظة الضوء العابرة</td><td class="me">الانفعال الداخلي عبر الطبيعة</td><td>القلق النفسي ولو بتشويه الشكل</td></tr>
-              <tr><th>اللون</th><td>واقعي متغير</td><td class="me">رمزي مشبع ومتكامل</td><td>اعتباطي صارخ</td></tr>
-              <tr><th>الفرشاة</th><td>لمسات خفيفة</td><td class="me">كثيفة، متجهة، دوّامية</td><td>عنيفة حادة</td></tr>
-            </tbody>
-          </table>
-        </section>
-      </div>
-
-      <aside class="r-side">
-        <div class="r-dossier">
-          <h4><span>بطاقة الفنان</span><span class="latin">Dossier</span></h4>
+          <p>عمل تاجراً للوحات ثم واعظاً بين عمّال المناجم، ولم يقرر احتراف الرسم إلا في السابعة والعشرين (1880). وخلال عشر سنوات فقط أنتج نحو <strong>2100 عمل</strong>، منها قرابة 860 لوحة زيتية، بدعمٍ متواصل من أخيه <strong>ثيو</strong>؛ وتُعدّ رسائله إليه أهم وثيقة لفهم فكره الفني.</p>
+        </div>
+        <aside class="r-dossier">
+          <div class="top">
+            <img data-art="selfportrait" data-w="500" alt="بورتريه ذاتي، 1887">
+            <div><b>بطاقة الفنان</b><span class="latin">Artist Dossier</span></div>
+          </div>
           <dl>
-            <div><dt>الاسم</dt><dd>فينسنت ويليم فان جوخ</dd></div>
             <div><dt>الميلاد</dt><dd>30 مارس 1853، زوندرت، هولندا</dd></div>
             <div><dt>الوفاة</dt><dd>29 يوليو 1890، أوفير-سور-واز، فرنسا</dd></div>
             <div><dt>الجنسية</dt><dd>هولندي</dd></div>
-            <div><dt>الحركة</dt><dd>ما بعد الانطباعية / ممهّد للتعبيرية</dd></div>
-            <div><dt>الأساليب</dt><dd>الإمباستو، الضربات المتجهة، الألوان المتكاملة، الدوامات</dd></div>
-            <div><dt>الإنتاج</dt><dd>≈ 860 لوحة زيتية و1300 عمل على الورق</dd></div>
+            <div><dt>الحركة</dt><dd>ما بعد الانطباعية، ممهّد للتعبيرية</dd></div>
+            <div><dt>الأساليب</dt><dd>الإمباستو، الضربات المتجهة، الألوان المتكاملة</dd></div>
           </dl>
-        </div>
-        <figure class="r-fig" style="--h:50mm">
-          <img data-art="starry" data-w="700" alt="ليلة مرصعة بالنجوم">
-          <figcaption><b>ليلة مرصعة بالنجوم</b>، 1889، زيت على قماش، 73.7 × 92.1 سم. متحف الفن الحديث (MoMA)، نيويورك.</figcaption>
-        </figure>
-      </aside>
-    </div>
-
-    <section class="r-sec">
-      <h2 class="r-h"><i>3</i>ما أبرز خصائص أسلوبه الفني؟ <small>البصمة البصرية</small></h2>
-      <div class="r-three">
-        <div class="r-box"><h4>عنفوان ضربات الفرشاة <span class="latin">Impasto</span></h4><p>طبقات لونٍ كثيفة وبروز ملمسي يمنح اللوحة بُعداً حركياً ثائراً، وكأن الأشكال تتشكّل وتتحرك أمام عين الناظر.</p></div>
-        <div class="r-box"><h4>الرمزية اللونية والتباين <span class="latin">Colour</span></h4><p>ألوان مشبعة بالدلالات كالصفرة المتوهجة والأزرق اللامتناهي، لا لنقل لون الطبيعة بل لتجسيد حرارة العاطفة أو صفاء الذهن أو عمق الحزن.</p></div>
-        <div class="r-box"><h4>الدوامات والخطوط التموجية <span class="latin">Rhythm</span></h4><p>إيقاعات خطية لولبية تحوّل المشاهد الثابتة إلى ساحة من الطاقة الكونية المتدفقة، فتتوحّد الطبيعة مع نبض الفنان.</p></div>
+        </aside>
       </div>
     </section>
 
-    <blockquote class="r-quote">«بدلاً من محاولة نقل ما أراه أمامي بدقة، أستخدم اللون بحرية أكبر لأعبّر عن نفسي بقوة.»<cite>فان جوخ، رسالة إلى أخيه ثيو، آرل، أغسطس 1888 — الدليل المباشر على نزعته التعبيرية.</cite></blockquote>
+    <section class="r-sec">
+      <h2 class="r-h"><i>2</i>إلى أي مدرسة ينتمي؟<small>التمرد الفني</small></h2>
+      <p>يُعدّ فان جوخ ركناً أساسياً في حركة <strong>ما بعد الانطباعية</strong> <span class="latin">(Post-Impressionism)</span>، والأبَ الروحي <strong>للمدرسة التعبيرية</strong> <span class="latin">(Expressionism)</span>. لم يستكن للنقل الحرفي للواقع أو الاكتفاء برصد الضوء كما فعل الانطباعيون، بل شقّ طريقاً تمرّد فيه على المحاكاة الظاهرية، ليتخذ من اللوحة مرآةً تعكس أغوار النفس وشواهد الوجدان.</p>
+      <table class="r-table">
+        <thead><tr><th></th><th>الانطباعية</th><th class="me">فان جوخ</th><th>التعبيرية</th></tr></thead>
+        <tbody>
+          <tr><th>الهدف</th><td>لحظة الضوء العابرة</td><td class="me">الانفعال الداخلي عبر الطبيعة</td><td>القلق النفسي ولو بتشويه الشكل</td></tr>
+          <tr><th>اللون</th><td>واقعي متغير</td><td class="me">رمزي مشبع ومتكامل</td><td>اعتباطي صارخ</td></tr>
+          <tr><th>الفرشاة</th><td>لمسات خفيفة متقطعة</td><td class="me">كثيفة، متجهة، دوّامية</td><td>عنيفة حادة</td></tr>
+        </tbody>
+      </table>
+    </section>
 
-    <footer class="r-foot"><span>الفنون البصرية · المعيار A: الاستقصاء · <b data-out="name"></b></span><span>صفحة <b>1</b> من 2</span></footer>
+    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b> · أ. حسن فتيل</span><span>صفحة <b>1</b> من 3</span></footer>
   </article>
 
   <!-- SHEET 2 -->
   <article class="sheet">
+    <div class="r-badge"><b>المعيار A: الاستقصاء — المهمة 2</b><span>الفنون البصرية · MYP</span></div>
+    <div class="r-run"><b>فينسنت فان جوخ</b><span>تحليل الحراك التعبيري</span></div>
+
     <section class="r-sec">
-      <h2 class="r-h"><i>4</i>ما أشهر أعماله الفنية؟ <small>تحليل الروائع</small></h2>
+      <h2 class="r-h"><i>3</i>ما أبرز خصائص أسلوبه الفني؟<small>البصمة البصرية</small></h2>
+      <div class="r-three">
+        <div class="r-box"><h4>عنفوان ضربات الفرشاة <span class="latin">Impasto</span></h4><p>طبقات لونٍ كثيفة وبروز ملمسي يمنح اللوحة بُعداً حركياً ثائراً، وكأن الأشكال تتشكّل وتتحرك أمام عين الناظر.</p></div>
+        <div class="r-box"><h4>الرمزية اللونية والتباين <span class="latin">Symbolic Colour</span></h4><p>ألوان مشبعة بالدلالات كالصفرة المتوهجة والأزرق اللامتناهي، لا لنقل لون الطبيعة بل لتجسيد حرارة العاطفة أو عمق الحزن.</p></div>
+        <div class="r-box"><h4>الدوامات والخطوط التموجية <span class="latin">Swirling Rhythm</span></h4><p>إيقاعات خطية لولبية تحوّل المشاهد الثابتة إلى ساحة من الطاقة الكونية المتدفقة، فتتوحّد الطبيعة مع نبض الفنان.</p></div>
+      </div>
+    </section>
+
+    <section class="r-sec">
+      <h2 class="r-h"><i>4</i>ما أشهر أعماله الفنية؟<small>تحليل الروائع</small></h2>
       <div class="r-works">
         <div class="r-work">
-          <img data-art="starry" data-w="400" alt="ليلة مرصعة بالنجوم">
+          <img data-art="starry" data-w="500" alt="ليلة مرصعة بالنجوم">
           <div>
             <h4>«ليلة مرصعة بالنجوم» <span class="latin">The Starry Night</span></h4>
             <div class="m">يونيو 1889 · زيت على قماش · 73.7 × 92.1 سم · متحف الفن الحديث، نيويورك</div>
-            <p>ملحمة بصرية تختزل التوق إلى السماء والهروب من ضيق المصحة النفسية عبر دوامات ضوئية ساحرة. شجرة السرو الداكنة تشقّ الإطار كاللهب وتصل الأرض بالسماء، والقرية الهادئة متخيَّلة جزئياً؛ والتباين بين الأزرق البروسي والأصفر الكرومي يجعل الليل أكثر حياةً من النهار.</p>
+            <p>ملحمة بصرية تختزل التوق إلى السماء والهروب من ضيق المصحة النفسية عبر دوامات ضوئية ساحرة. شجرة السرو تشقّ الإطار كاللهب وتصل الأرض بالسماء، والتباين بين الأزرق البروسي والأصفر الكرومي يجعل الليل أكثر حياةً من النهار.</p>
           </div>
         </div>
         <div class="r-work">
-          <img data-art="sunflowers" data-w="400" alt="دوار الشمس">
+          <img data-art="sunflowers" data-w="500" alt="دوار الشمس">
           <div>
             <h4>«دوار الشمس» <span class="latin">Sunflowers</span></h4>
             <div class="m">أغسطس 1888 · زيت على قماش · 92.1 × 73 سم · المعرض الوطني، لندن</div>
-            <p>قصيدة لونية في حب الضوء والحياة، تسبر أغوار التحول بين التفتح والذبول. رسمها لتزيين غرفة صديقه غوغان في «البيت الأصفر»، مستعرضاً تنويعات «أصفر على أصفر» بأصباغ الكروم الحديثة آنذاك، وتظهر الزهور في كل مراحل عمرها كاستعارة لدورة الحياة.</p>
+            <p>قصيدة لونية في حب الضوء والحياة، تسبر أغوار التحول بين التفتح والذبول. رسمها لتزيين غرفة غوغان في «البيت الأصفر»، مستعرضاً تنويعات «أصفر على أصفر» بأصباغ الكروم الحديثة آنذاك.</p>
           </div>
         </div>
         <div class="r-work">
-          <img data-art="bedroom" data-w="400" alt="غرفة النوم في آرل">
+          <img data-art="bedroom" data-w="500" alt="غرفة النوم في آرل">
           <div>
             <h4>«غرفة النوم في آرل» <span class="latin">Bedroom in Arles</span></h4>
             <div class="m">أكتوبر 1888 · زيت على قماش · 72.4 × 91.3 سم · متحف فان جوخ، أمستردام</div>
-            <p>تجسيد بارع لمفهوم السكينة المفقودة والبحث عن الأمان من خلال زوايا وألوان متداخلة. أراد أن يوحي اللون «بالراحة والنوم»، فاستخدم مساحات مسطحة بلا ظلال على طريقة المطبوعات اليابانية، ومنظوراً مائلاً يكشف قلق الساكن رغم هدوء المكان.</p>
+            <p>تجسيد بارع لمفهوم السكينة المفقودة والبحث عن الأمان. مساحات لونية مسطحة بلا ظلال على طريقة المطبوعات اليابانية، ومنظور مائل يكشف قلق الساكن رغم هدوء المكان.</p>
           </div>
         </div>
       </div>
     </section>
 
+    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b> · أ. حسن فتيل</span><span>صفحة <b>2</b> من 3</span></footer>
+  </article>
+
+  <!-- SHEET 3 -->
+  <article class="sheet">
+    <div class="r-badge"><b>المعيار A: الاستقصاء — المهمة 2</b><span>الفنون البصرية · MYP</span></div>
+    <div class="r-run"><b>فينسنت فان جوخ</b><span>تحليل الحراك التعبيري</span></div>
+
     <section class="r-sec">
-      <h2 class="r-h"><i>5</i>كيف تأثر أسلوبه بالظروف التاريخية والاجتماعية والثقافية؟ <small>التحليل البنيوي</small></h2>
+      <h2 class="r-h"><i>5</i>كيف تأثر أسلوبه بالظروف المحيطة؟<small>التحليل البنيوي</small></h2>
       <div class="r-two">
-        <div class="r-box"><h4>السياق الاجتماعي والتاريخي</h4><p>عاش أواخر القرن التاسع عشر في ذروة <strong>الثورة الصناعية والاغتراب الحديث</strong>؛ انعكست ظروفه القاسية من فقرٍ مدقع وعزلةٍ ذاتية على أسلوبه، فغدا الفن ملاذاً تطهيرياً لا رفاهية سطحية. عايش بؤس عمّال المناجم فرسم الكادحين في «آكلو البطاطا» (1885)، ثم هرب من المدن الصناعية إلى نور الجنوب الفرنسي.</p></div>
-        <div class="r-box"><h4>السياق الثقافي</h4><p>تأثر بشدة بموجة الانبهار بالفن الياباني <span class="latin">(Ukiyo-e)</span>، فاستلهم الجرأة في تقسيم المساحات وبساطة الخطوط والمسطحات اللونية الصافية، ونسخ لوحات هيروشيغي عام 1887؛ ثم مزج هذه الرؤية الشرقية بوعيه الأوروبي القلق، منتجاً أسلوباً ثورياً أثّر في الوحوشية والتعبيرية الألمانية.</p></div>
+        <div class="r-box"><h4>السياق الاجتماعي والتاريخي</h4><p>عاش أواخر القرن التاسع عشر في ذروة <strong>الثورة الصناعية والاغتراب الحديث</strong>؛ فانعكس فقره المدقع وعزلته على أسلوبه، وغدا الفن ملاذاً تطهيرياً لا رفاهية سطحية. عايش بؤس عمّال المناجم فرسم الكادحين في «آكلو البطاطا» (1885).</p></div>
+        <div class="r-box"><h4>السياق الثقافي</h4><p>تأثر بشدة بالفن الياباني <span class="latin">(Ukiyo-e)</span>، فاستلهم الجرأة في تقسيم المساحات وبساطة الخطوط والمسطحات اللونية الصافية، ثم مزج هذه الرؤية الشرقية بوعيه الأوروبي القلق، منتجاً أسلوباً ثورياً أثّر في الفن الحديث.</p></div>
       </div>
     </section>
 
@@ -858,26 +935,28 @@ body.is-preview .sheet{box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
       <div class="r-tl">
         <div><b>1853</b>الميلاد في زوندرت</div>
         <div><b>1880</b>قرار احتراف الرسم</div>
-        <div><b>1885</b>«آكلو البطاطا»: ألوان قاتمة</div>
-        <div><b>1886</b>باريس: الانطباعية واليابان</div>
-        <div><b>1888</b>آرل: الأصفر و«دوار الشمس»</div>
-        <div><b>1889</b>سان-ريمي: «ليلة النجوم»</div>
-        <div><b>1890</b>أوفير: الوفاة في 29 يوليو</div>
-        <div><b>1905</b>ولادة الوحوشية والتعبيرية</div>
+        <div><b>1885</b>«آكلو البطاطا»</div>
+        <div><b>1886</b>باريس واليابان</div>
+        <div><b>1888</b>آرل والأصفر</div>
+        <div><b>1889</b>«ليلة النجوم»</div>
+        <div><b>1890</b>الوفاة في أوفير</div>
+        <div><b>1905</b>ولادة التعبيرية</div>
       </div>
     </section>
 
+    <blockquote class="r-quote">«بدلاً من محاولة نقل ما أراه أمامي بدقة، أستخدم اللون بحرية أكبر لأعبّر عن نفسي بقوة.»<cite>فان جوخ، رسالة إلى أخيه ثيو، آرل، أغسطس 1888</cite></blockquote>
+
     <div class="r-concl">
-      <h2 class="r-h" style="font-size:10.4pt;margin-bottom:.6mm">خلاصة الاستقصاء</h2>
-      <p>يكشف تتبّع أعمال فان جوخ من عتمة نوينن إلى توهّج آرل وسان-ريمي أن أسلوبه لم يكن نتاج موهبة معزولة، بل حصيلة تفاعل بين معاناته الشخصية وسياق صناعي قاسٍ وانفتاح ثقافي على الشرق. لقد نقل الرسم من سؤال «كيف يبدو العالم؟» إلى سؤال «كيف أشعر تجاه العالم؟»، وهو السؤال الذي قامت عليه التعبيرية والفن الحديث من بعده.</p>
+      <h3>خلاصة الاستقصاء</h3>
+      <p>يكشف تتبّع أعماله من عتمة نوينن إلى توهّج آرل وسان-ريمي أن أسلوبه حصيلة تفاعل بين معاناته الشخصية وسياق صناعي قاسٍ وانفتاح ثقافي على الشرق. لقد نقل الرسم من سؤال «كيف يبدو العالم؟» إلى سؤال «كيف أشعر تجاه العالم؟»، وهو السؤال الذي قامت عليه التعبيرية.</p>
     </div>
 
     <section class="r-sec">
-      <h2 class="r-h" style="font-size:10pt">المصادر <small>APA</small></h2>
+      <h2 class="r-h"><i>§</i>المصادر<small>APA</small></h2>
       <ol class="r-src" id="srcPrint"></ol>
     </section>
 
-    <footer class="r-foot"><span>الفنون البصرية · المعيار A: الاستقصاء · <b data-out="name"></b></span><span>صفحة <b>2</b> من 2</span></footer>
+    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b> · أ. حسن فتيل</span><span>صفحة <b>3</b> من 3</span></footer>
   </article>
 </div>
 
@@ -895,25 +974,34 @@ const SITE_URL = "https://redhaahmedyousif-lab.github.io/arts-criterion-a/";
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-const store = {
-  get(k){ try { return localStorage.getItem("vg-" + k); } catch(e){ return null; } },
-  set(k, v){ try { localStorage.setItem("vg-" + k, v); } catch(e){} }
-};
 
 /* ---------------- artwork data ---------------- */
+// Wikimedia Commons files for each artwork: the primary file first, then an alternate copy.
+// "p" is the file's hashed folder on upload.wikimedia.org, so every URL is a direct image link.
 const FILES = {
-  starry:      "Van Gogh - Starry Night - Google Art Project.jpg",
-  sunflowers:  "Vincent Willem van Gogh 127.jpg",
-  bedroom:     "Vincent van Gogh - De slaapkamer - Google Art Project.jpg",
-  potato:      "Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg",
-  plum:        "Van Gogh - Blühender Pflaumenbaum.jpeg",
-  selfportrait:"Vincent van Gogh - Self-Portrait - Google Art Project (454045).jpg",
-  cafe:        "Van Gogh - Terrasse des Cafés an der Place du Forum in Arles am Abend1.jpeg",
-  almond:      "Vincent van Gogh - Almond blossom - Google Art Project.jpg",
-  crows:       "Vincent Van Gogh - Wheatfield with Crows.jpg"
+  starry      :[ { n:"Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg", p:"e/ea" }, { n:"VanGogh-starry_night_ballance1.jpg", p:"6/66" } ],
+  sunflowers  :[ { n:"Vincent_Willem_van_Gogh_127.jpg", p:"4/46" }, { n:"Van_Gogh_Vase_with_Fifteen_Sunflowers.jpg", p:"1/1a" } ],
+  bedroom     :[ { n:"Vincent_van_Gogh_-_De_slaapkamer_-_Google_Art_Project.jpg", p:"7/76" }, { n:"Vincent_van_Gogh_-_The_Bedroom_-_Google_Art_Project.jpg", p:"0/0b" } ],
+  potato      :[ { n:"Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg", p:"b/b1" }, { n:"Vincent_Van_Gogh_-_The_Potato_Eaters.png", p:"a/af" } ],
+  plum        :[ { n:"Van_Gogh_-_Blühender_Pflaumenbaum.jpeg", p:"0/0e" }, { n:"Vincent_van_Gogh_-_Flowering_plum_orchard_(after_Hiroshige)_-_Google_Art_Project.jpg", p:"8/87" } ],
+  selfportrait:[ { n:"Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_(454045).jpg", p:"4/4c" }, { n:"Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project.jpg", p:"b/b2" } ],
+  cafe        :[ { n:"Van_Gogh_-_Terrasse_des_Cafés_an_der_Place_du_Forum_in_Arles_am_Abend1.jpeg", p:"0/09" }, { n:"Vincent_Willem_van_Gogh_-_Cafe_Terrace_at_Night_(Yorck).jpg", p:"2/21" } ],
+  almond      :[ { n:"Vincent_van_Gogh_-_Almond_blossom_-_Google_Art_Project.jpg", p:"6/68" }, { n:"Vincent_van_Gogh_-_Almond_Blossoms_-_VGM_F671.jpg", p:"d/d4" } ],
+  crows       :[ { n:"Vincent_Van_Gogh_-_Wheatfield_with_Crows.jpg", p:"d/d3" }, { n:"Vincent_van_Gogh_(1853-1890)_-_Wheat_Field_with_Crows_(1890).jpg", p:"f/f3" } ]
 };
-const imgURL = (id, w) => "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(FILES[id]) + "?width=" + (w || 900);
-
+const THUMBS = [500, 960, 1280];   // standard Wikimedia thumbnail widths
+// Ordered candidate URLs: direct thumbnail, then the Special:FilePath redirect, for each file.
+function sources(id, w){
+  const tw = THUMBS.find(s => s >= w) || 1280;
+  const out = [];
+  (FILES[id] || []).forEach(f => {
+    const n = encodeURIComponent(f.n);
+    out.push(`https://upload.wikimedia.org/wikipedia/commons/thumb/${f.p}/${n}/${tw}px-${n}`);
+    out.push(`https://commons.wikimedia.org/wiki/Special:FilePath/${n}?width=${tw}`);
+  });
+  return out;
+}
+const imgURL = (id, w) => sources(id, w)[0];
 const PERIODS = [
   { id:"all", label:"كل الأعمال" },
   { id:"nuenen", label:"نوينن 1885" },
@@ -1049,27 +1137,44 @@ const SOURCES = [
   "Gombrich, E. H. (1995). <i>The story of art</i> (16th ed.). Phaidon."
 ];
 
-/* ---------------- image fallback (if a remote image cannot load) ---------------- */
+/* ---------------- image loading: direct URL → alternates → designed fallback ---------------- */
 function placeholderSVG(title){
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><radialGradient id="g" cx="70%" cy="25%" r="80%"><stop offset="0" stop-color="#3f6fd0"/><stop offset=".6" stop-color="#14204d"/><stop offset="1" stop-color="#0a0f24"/></radialGradient></defs><rect width="400" height="300" fill="url(#g)"/><g fill="none" stroke="#9cc0ee" stroke-opacity=".5" stroke-width="3"><path d="M30 120c40-40 90 20 130-10s80-40 120 0 70 20 90-10"/><path d="M20 160c50-30 90 20 140-5s90-30 130 5 60 10 90-15" stroke="#f0be4a" stroke-opacity=".55"/></g><circle cx="320" cy="60" r="22" fill="#ffd84a"/><circle cx="90" cy="50" r="8" fill="#ffd84a" fill-opacity=".8"/><circle cx="200" cy="40" r="6" fill="#ffd84a" fill-opacity=".7"/><text x="200" y="250" text-anchor="middle" font-family="Amiri, serif" font-size="26" fill="#ece6d6">${title}</text></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><radialGradient id="g" cx="68%" cy="22%" r="85%"><stop offset="0" stop-color="#4a7ad8"/><stop offset=".55" stop-color="#16245a"/><stop offset="1" stop-color="#0a0f24"/></radialGradient><radialGradient id="m" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3b0"/><stop offset=".5" stop-color="#ffd84a"/><stop offset="1" stop-color="#ffd84a" stop-opacity="0"/></radialGradient></defs><rect width="400" height="300" fill="url(#g)"/><g fill="none" stroke-linecap="round" stroke-width="3"><path d="M20 120c40-40 90 20 130-10s80-40 120 0 70 20 110-10" stroke="#9cc0ee" stroke-opacity=".55"/><path d="M10 155c50-30 90 20 140-5s90-30 130 5 60 10 110-15" stroke="#f0be4a" stroke-opacity=".6"/><path d="M30 190c60-25 100 15 150-5s80-25 120 0 50 10 80-5" stroke="#6f9fe6" stroke-opacity=".45"/></g><circle cx="318" cy="62" r="34" fill="url(#m)"/><circle cx="90" cy="52" r="9" fill="url(#m)"/><circle cx="196" cy="38" r="7" fill="url(#m)"/><rect x="10" y="10" width="380" height="280" rx="6" fill="none" stroke="#f0be4a" stroke-opacity=".55" stroke-width="2"/><text x="200" y="250" text-anchor="middle" font-family="Amiri, serif" font-size="25" fill="#ece6d6">${title}</text><text x="200" y="276" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="12" fill="#9cc0ee">Vincent van Gogh</text></svg>`;
   return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
 }
 document.addEventListener("error", e => {
   const img = e.target;
-  if (!(img instanceof HTMLImageElement) || !img.dataset.art || img.dataset.fallback === "done") return;
-  const id = img.dataset.art;
-  if (!img.dataset.fallback) {               // retry once at original size
-    img.dataset.fallback = "retry";
-    img.src = "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(FILES[id]);
-    return;
-  }
-  img.dataset.fallback = "done";
+  if (!(img instanceof HTMLImageElement) || !img.dataset.art || img.dataset.state === "fallback") return;
+  const list = sources(img.dataset.art, +img.dataset.w || 960);
+  const next = (+img.dataset.try || 0) + 1;
+  if (next < list.length) { img.dataset.try = next; img.src = list[next]; return; }
+  img.dataset.state = "fallback";
   img.src = placeholderSVG(img.alt || "Van Gogh");
+  reportStatus();
 }, true);
+document.addEventListener("load", e => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement) || !img.dataset.art) return;
+  img.classList.add("ok");
+  if (img.dataset.state !== "fallback") img.dataset.state = "ok";
+  reportStatus();
+}, true);
+function reportStatus(){
+  const el = $("#imgStatus"); if (!el) return;
+  const imgs = $$(".site img[data-art]").filter(i => i.getAttribute("src"));
+  const ok = imgs.filter(i => i.dataset.state === "ok").length;
+  const fb = imgs.filter(i => i.dataset.state === "fallback").length;
+  const pending = imgs.length - ok - fb;
+  el.className = "img-status" + (pending ? "" : fb ? " warn" : " good");
+  $("span", el).textContent = pending
+    ? `جارٍ تحميل الصور من ويكيميديا كومنز… (${ok + fb} من ${imgs.length})`
+    : fb ? `فحص الصور: ${ok} من ${imgs.length} محمّلة من ويكيميديا كومنز، و${fb} بتصميم بديل`
+         : `فحص الصور: جميع الصور (${ok}) محمّلة مباشرة من ويكيميديا كومنز`;
+}
 
 function hydrateImages(root){
   $$("img[data-art]", root).forEach(img => {
-    if (!img.getAttribute("src")) img.src = imgURL(img.dataset.art, +img.dataset.w || 900);
+    if (!img.getAttribute("src")) img.src = imgURL(img.dataset.art, +img.dataset.w || 960);
   });
 }
 
@@ -1082,7 +1187,7 @@ const gallery = $("#gallery");
 gallery.innerHTML = WORKS.map((w, i) => `
   <button class="art reveal" type="button" data-i="${i}" data-p="${w.p}" aria-label="عرض تحليل لوحة ${w.t}">
     ${w.key ? '<span class="badge">عمل محوري</span>' : ""}
-    <span class="frame"><img data-art="${w.id}" data-w="800" alt="${w.t} — فان جوخ، ${w.y}" loading="lazy" width="800" height="600"></span>
+    <span class="frame"><img data-art="${w.id}" data-w="960" alt="${w.t} — فان جوخ، ${w.y}" decoding="async" width="800" height="600"></span>
     <span class="cap"><h3>${w.t}</h3><span class="latin">${w.en}</span><small>${w.y} · ${w.loc}</small></span>
   </button>`).join("");
 
@@ -1101,10 +1206,10 @@ function visibleIdx(){ return $$(".art", gallery).filter(a => !a.hidden).map(a =
 function openWork(i){
   cur = i; const w = WORKS[i];
   const img = $("#lbImg");
-  img.removeAttribute("data-fallback");
+  delete img.dataset.try; delete img.dataset.state; img.classList.remove("ok");
   img.dataset.art = w.id;
   img.alt = w.t;
-  img.src = imgURL(w.id, 1400);
+  img.src = imgURL(w.id, 1280);
   $("#lb-title").textContent = "«" + w.t + "»";
   $("#lbEn").textContent = w.en;
   $("#lbMeta").innerHTML = `<dt>التاريخ</dt><dd>${w.y}</dd><dt>الوسيط</dt><dd>${w.med}</dd><dt>الأبعاد</dt><dd>${w.size}</dd><dt>المكان</dt><dd>${w.loc}</dd>`;
@@ -1162,21 +1267,17 @@ autoQ();
 $("#srcList").innerHTML = SOURCES.map(s => `<li>${s}</li>`).join("");
 $("#srcPrint").innerHTML = SOURCES.map(s => `<li>${s}</li>`).join("");
 
-/* ---------------- student fields → report ---------------- */
+/* ---------------- submission date in the report ---------------- */
 const today = new Date().toLocaleDateString("ar", { year:"numeric", month:"long", day:"numeric" });
-function syncOut(){
-  const vals = { date: today };
-  $$("[data-bind]").forEach(inp => vals[inp.dataset.bind] = inp.value.trim());
-  $$("[data-out]").forEach(el => {
-    const k = el.dataset.out;
-    el.textContent = vals[k] || (k === "name" && el.closest(".site") ? "اسم الطالب" : "");
-  });
-}
-$$("[data-bind]").forEach(inp => {
-  const v = store.get(inp.dataset.bind); if (v) inp.value = v;
-  inp.addEventListener("input", () => { store.set(inp.dataset.bind, inp.value); syncOut(); });
-});
+function syncOut(){ $$('[data-out="date"]').forEach(el => el.textContent = today); }
 syncOut();
+
+/* ---------------- mobile menu ---------------- */
+const nav = $("#nav"), menuBtn = $("#menuBtn");
+function setMenu(open){ nav.classList.toggle("open", open); menuBtn.setAttribute("aria-expanded", open); }
+menuBtn.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
+nav.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
 
 /* ---------------- QR codes ---------------- */
 function siteURL(){ return /^https?:$/.test(location.protocol) ? location.href.split("#")[0] : SITE_URL; }
