@@ -125,13 +125,14 @@ button{font:inherit;color:inherit}
 .hero h1 .latin{display:block;text-align:right;font-size:.38em;margin-top:.25em;color:var(--sky);-webkit-text-fill-color:var(--sky);font-weight:500}
 .hero .lede{margin:0;font-size:var(--step-1);color:#d9dcef;max-width:60ch;font-weight:300}
 .hero .lede strong{color:var(--chrome);font-weight:500}
-.idcard{display:flex;flex-wrap:wrap;gap:0;margin:4px 0 0;border-radius:16px;overflow:hidden;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.idcard div{flex:1 1 auto;padding:10px 16px;border-inline-start:1px solid var(--line);min-width:0}
-.idcard div:first-child{border-inline-start:0}
+.idcard{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;margin:4px 0 0;border-radius:16px;overflow:hidden;background:var(--line);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.idcard div{grid-column:span 2;padding:10px 16px;min-width:0;background:rgba(17,26,63,.78)}
+.idcard .s3{grid-column:span 3}
+.idcard .s6{grid-column:span 6}
 .idcard dt{font-size:.74rem;color:var(--muted);letter-spacing:.03em}
 .idcard dd{margin:0;font-weight:500;font-size:.98rem;line-height:1.5;color:var(--ink)}
 .idcard dd.gold{color:var(--chrome)}
-@media (max-width:640px){.idcard div{flex:1 1 45%;border-inline-start:0;border-top:1px solid var(--line)}.idcard div:nth-child(-n+2){border-top:0}.idcard div:nth-child(even){border-inline-start:1px solid var(--line)}.idcard div.wide{flex-basis:100%;border-inline-start:0}}
+@media (max-width:640px){.idcard{grid-template-columns:repeat(2,minmax(0,1fr))}.idcard div,.idcard .s3{grid-column:span 1}.idcard .full{grid-column:span 2}}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px}
 .ghost{background:transparent;border-color:var(--line);color:var(--ink)}
 .portrait{margin:0;display:grid;justify-items:center;gap:16px;position:relative}
@@ -383,8 +384,15 @@ dialog.lb::backdrop{background:rgba(5,8,20,.86);backdrop-filter:blur(8px)}
 .src li{padding-left:6px}
 .src li::marker{color:var(--gold)}
 .src i{color:var(--sky)}
-footer{border-top:1px solid var(--line);padding-block:36px;color:var(--muted);font-size:var(--step--1)}
-footer .wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
+.site-foot{border-top:1px solid var(--line);color:var(--muted);font-size:var(--step--1);background:linear-gradient(180deg,rgba(17,26,63,.35),rgba(10,15,36,0))}
+.foot-top{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;padding-block:36px 28px}
+.foot-info{display:grid;gap:2px;min-width:0}
+.foot-info b{font-family:var(--f-display);font-size:1.35rem;color:var(--ink);font-weight:700}
+.foot-bottom{display:flex;justify-content:center;padding-block:18px 26px;border-top:1px solid var(--line)}
+.rj-badge{display:inline-flex;align-items:center;gap:10px;margin:0;padding:6px 16px 6px 8px;border-radius:999px;border:1px solid rgba(240,190,74,.35);background:linear-gradient(135deg,rgba(255,216,74,.08),rgba(63,111,208,.08));color:var(--muted);font-size:.84rem;transition:border-color .25s,box-shadow .25s}
+.rj-badge:hover{border-color:rgba(240,190,74,.7);box-shadow:0 0 28px -8px rgba(255,216,74,.5)}
+.rj-badge bdi{font-family:var(--f-latin);font-size:1.12rem;font-weight:600;color:var(--chrome);letter-spacing:.02em}
+.rj-logo{width:30px;height:30px;flex:none}
 
 /* floating QR */
 .qr-float{position:fixed;left:calc(18px + env(safe-area-inset-left,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;gap:10px;align-items:center;padding:10px;border-radius:16px;background:rgba(17,26,63,.82);border:1px solid rgba(240,190,74,.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 18px 40px -18px rgba(0,0,0,.8);transition:transform .3s}
@@ -459,7 +467,7 @@ body.is-preview .to-top{display:none!important}
   .qslide .en{font-size:1rem}
   .src{font-size:1rem}
   .ba-tag{font-size:.7rem}
-  footer .wrap{flex-direction:column;align-items:stretch;text-align:center}
+  .foot-top{flex-direction:column;align-items:stretch;text-align:center}
   .foot-actions{justify-content:center}
 }
 @media (max-width:360px){
@@ -530,7 +538,8 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
 .r-qr small{font-size:6.6pt;line-height:1.35;color:var(--p-soft)}
 .r-info{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.6pt;margin:0;background:var(--p-rule);border:.7pt solid var(--p-rule);border-top:2pt solid var(--p-navy);border-radius:1.6mm;overflow:hidden}
 .r-info div{grid-column:span 2;padding:2.2mm 3.4mm;background:var(--p-tint)}
-.r-info .span4{grid-column:span 4}
+.r-info .span1{grid-column:span 1}
+.r-info .span3{grid-column:span 3}
 .r-info dt{font-size:7.4pt;color:var(--p-soft);line-height:1.3}
 .r-info dd{margin:.6mm 0 0;font-size:10pt;font-weight:600;color:var(--p-navy);line-height:1.4}
 
@@ -589,6 +598,11 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
 .r-src i{color:var(--p-navy)}
 .r-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:6mm;border-top:.6pt solid var(--p-rule);padding-top:2.4mm;font-size:7.8pt;color:var(--p-soft)}
 .r-foot b{color:var(--p-navy)}
+.r-foot > span:first-child,.r-foot > span:last-child{flex:1 1 0}
+.r-foot > span:last-child{text-align:left}
+.r-rj{display:inline-flex;align-items:center;gap:1.4mm;font-size:7pt;letter-spacing:.02em;color:var(--p-soft);white-space:nowrap}
+.r-rj bdi{font-family:var(--f-latin);font-size:8.4pt;font-weight:600;color:var(--p-gold)}
+.rj-mini{width:4.2mm;height:4.2mm;flex:none}
 
 @page{size:210mm 297mm;margin:0}
 @media print{
@@ -652,8 +666,9 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
           <div><dt>اسم الطالب</dt><dd>رضا أحمد يوسف</dd></div>
           <div><dt>الصف / الشعبة</dt><dd><span class="latin" style="font-style:normal;font-family:var(--f-body)">MYP-A</span></dd></div>
           <div><dt>أستاذ المادة</dt><dd>أ. حسن فتيل</dd></div>
-          <div><dt>المادة</dt><dd>الفنون</dd></div>
-          <div class="wide"><dt>المهمة</dt><dd class="gold">المهمة الثانية (المعيار A: الاستقصاء)</dd></div>
+          <div class="s3 full"><dt>المدرسة</dt><dd>مدرسة الميثاق الإعدادية للبنين</dd></div>
+          <div class="s3"><dt>المادة</dt><dd>الفنون</dd></div>
+          <div class="s6 full"><dt>المهمة</dt><dd class="gold">المهمة الثانية (المعيار A: الاستقصاء)</dd></div>
         </dl>
         <div class="hero-cta">
           <a class="btn solid" href="#works">
@@ -913,9 +928,14 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <span>الفنون البصرية · المهمة 2 · المعيار A: الاستقصاء — رضا أحمد يوسف · MYP-A · أ. حسن فتيل</span>
+<footer class="site-foot">
+  <div class="wrap foot-top">
+    <div class="foot-info">
+      <b>استقصاء فان جوخ</b>
+      <span>الفنون · المهمة الثانية (المعيار A: الاستقصاء)</span>
+      <span>رضا أحمد يوسف · MYP-A · أ. حسن فتيل</span>
+      <span>مدرسة الميثاق الإعدادية للبنين</span>
+    </div>
     <div class="foot-actions">
       <button class="btn ghost" type="button" id="shareBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>
@@ -923,6 +943,9 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
       </button>
       <button class="btn" type="button" data-print-mode>طباعة التقرير / PDF</button>
     </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <p class="rj-badge"><svg class="rj-logo site" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="rjg-rj-logo site" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#c9952a"/></linearGradient></defs><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#0f1a42" stroke="url(#rjg-rj-logo site)" stroke-width="2"/><text x="19" y="26.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="17" fill="url(#rjg-rj-logo site)" letter-spacing="-.5">RJ</text><path d="M31 7.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#ffd84a"/></svg><span>جميع الحقوق محفوظة <bdi dir="ltr">© RJ Works</bdi></span></p>
   </div>
 </footer>
 </div>
@@ -988,8 +1011,9 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
       <div><dt>اسم الطالب</dt><dd>رضا أحمد يوسف</dd></div>
       <div><dt>الصف / الشعبة</dt><dd>MYP-A</dd></div>
       <div><dt>أستاذ المادة</dt><dd>أ. حسن فتيل</dd></div>
-      <div><dt>المادة</dt><dd>الفنون</dd></div>
-      <div class="span4"><dt>المهمة</dt><dd>المهمة الثانية (المعيار A: الاستقصاء)</dd></div>
+      <div><dt>المدرسة</dt><dd>مدرسة الميثاق الإعدادية للبنين</dd></div>
+      <div class="span1"><dt>المادة</dt><dd>الفنون</dd></div>
+      <div class="span3"><dt>المهمة</dt><dd>المهمة الثانية (المعيار A: الاستقصاء)</dd></div>
     </dl>
 
     <section class="r-sec">
@@ -1028,7 +1052,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
       </table>
     </section>
 
-    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b> · أ. حسن فتيل</span><span>صفحة <b>1</b> من 3</span></footer>
+    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b></span><span class="r-rj"><svg class="rj-mini r1" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="rjg-rj-mini r1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#c9952a"/></linearGradient></defs><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#0f1a42" stroke="url(#rjg-rj-mini r1)" stroke-width="2"/><text x="19" y="26.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="17" fill="url(#rjg-rj-mini r1)" letter-spacing="-.5">RJ</text><path d="M31 7.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#ffd84a"/></svg>جميع الحقوق محفوظة <bdi dir="ltr">© RJ Works</bdi></span><span>صفحة <b>1</b> من 3</span></footer>
   </article>
 
   <!-- SHEET 2 -->
@@ -1075,7 +1099,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
       </div>
     </section>
 
-    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b> · أ. حسن فتيل</span><span>صفحة <b>2</b> من 3</span></footer>
+    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b></span><span class="r-rj"><svg class="rj-mini r2" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="rjg-rj-mini r2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#c9952a"/></linearGradient></defs><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#0f1a42" stroke="url(#rjg-rj-mini r2)" stroke-width="2"/><text x="19" y="26.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="17" fill="url(#rjg-rj-mini r2)" letter-spacing="-.5">RJ</text><path d="M31 7.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#ffd84a"/></svg>جميع الحقوق محفوظة <bdi dir="ltr">© RJ Works</bdi></span><span>صفحة <b>2</b> من 3</span></footer>
   </article>
 
   <!-- SHEET 3 -->
@@ -1117,7 +1141,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
       <ol class="r-src" id="srcPrint"></ol>
     </section>
 
-    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b> · أ. حسن فتيل</span><span>صفحة <b>3</b> من 3</span></footer>
+    <footer class="r-foot"><span>رضا أحمد يوسف · <b>MYP-A</b></span><span class="r-rj"><svg class="rj-mini r3" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="rjg-rj-mini r3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#c9952a"/></linearGradient></defs><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#0f1a42" stroke="url(#rjg-rj-mini r3)" stroke-width="2"/><text x="19" y="26.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="17" fill="url(#rjg-rj-mini r3)" letter-spacing="-.5">RJ</text><path d="M31 7.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#ffd84a"/></svg>جميع الحقوق محفوظة <bdi dir="ltr">© RJ Works</bdi></span><span>صفحة <b>3</b> من 3</span></footer>
   </article>
 </div>
 
