@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>استقصاء فان جوخ</title>
+<meta name="description" content="الفنون البصرية — المهمة 2، المعيار A: الاستقصاء. دراسة تفاعلية لتحليل الحراك التعبيري في أعمال فينسنت فان جوخ مع تقرير A4 جاهز للطباعة.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&display=swap">
+<style>
+/* Layout: a dark "night gallery" — full-bleed bands, a 1180px content rail, glass panels lit by gold.
+   Print: a separate two-sheet A4 report (#report) in an ink-saving light palette. */
+:root{
+  --night:#0a0f24;        /* deep Starry-Night blue-black: page ground */
+  --night-2:#111a3f;      /* raised night: panels */
+  --prussian:#1d3a78;     /* Prussian blue */
+  --cobalt:#3f6fd0;       /* cobalt swirls */
+  --sky:#9cc0ee;          /* pale star halo */
+  --gold:#f0be4a;         /* glowing gold accent */
+  --chrome:#ffd84a;       /* chrome yellow highlight */
+  --ink:#ece6d6;          /* text on night */
+  --muted:#a5afcf;        /* secondary text, blue-biased */
+  --line:rgba(156,192,238,.16);
+  --glass:rgba(22,33,78,.48);
+  --glass-hi:rgba(40,60,130,.55);
+
+  --f-display:"Amiri","Noto Naskh Arabic","Traditional Arabic",serif;
+  --f-body:"IBM Plex Sans Arabic","Segoe UI","Tahoma",system-ui,sans-serif;
+  --f-latin:"Cormorant Garamond","Georgia","Times New Roman",serif;
+
+  --step--1:clamp(.82rem,.8rem + .1vw,.88rem);
+  --step-0:clamp(1rem,.96rem + .2vw,1.08rem);
+  --step-1:clamp(1.2rem,1.1rem + .45vw,1.45rem);
+  --step-2:clamp(1.6rem,1.35rem + 1vw,2.2rem);
+  --step-3:clamp(2.1rem,1.6rem + 2vw,3.4rem);
+  --step-4:clamp(2.8rem,1.9rem + 4.4vw,6rem);
+
+  --radius:18px;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--night);color:var(--ink);
+  font-family:var(--f-body);font-size:var(--step-0);line-height:1.85;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:var(--gold)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--chrome);outline-offset:3px;border-radius:6px}
+.latin{font-family:var(--f-latin);font-style:italic;letter-spacing:.01em;direction:ltr;unicode-bidi:isolate}
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* ---------- top bar ---------- */
+.progress{position:fixed;inset:0 0 auto 0;height:3px;z-index:60;background:linear-gradient(90deg,var(--chrome),var(--gold),var(--cobalt));transform-origin:right;transform:scaleX(0)}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(10,15,36,.72);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);
+  border-bottom:1px solid var(--line);
+}
+.topbar .wrap{display:flex;align-items:center;gap:20px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:var(--f-display);font-size:1.25rem;white-space:nowrap}
+.brand-mark{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 40% 40%,var(--chrome),var(--gold) 45%,rgba(240,190,74,0) 72%);box-shadow:0 0 18px rgba(255,216,74,.55)}
+.nav{display:flex;gap:4px;margin-inline-start:auto;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{color:var(--muted);text-decoration:none;font-size:var(--step--1);padding:6px 10px;border-radius:999px;white-space:nowrap;transition:color .2s,background .2s}
+.nav a:hover,.nav a.active{color:var(--ink);background:rgba(156,192,238,.1)}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(240,190,74,.55);
+  background:linear-gradient(135deg,rgba(255,216,74,.18),rgba(240,190,74,.06));
+  color:var(--chrome);padding:9px 16px;border-radius:999px;cursor:pointer;font-weight:500;font-size:var(--step--1);white-space:nowrap;
+  transition:transform .2s,box-shadow .2s,background .2s;
+}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 30px -8px rgba(255,216,74,.55);background:linear-gradient(135deg,rgba(255,216,74,.3),rgba(240,190,74,.12))}
+.btn svg{width:18px;height:18px;flex:none}
+.btn.solid{background:var(--gold);color:#1a1405;border-color:var(--gold)}
+.btn.solid:hover{background:var(--chrome)}
+@media (max-width:900px){.nav{display:none}.topbar .btn{margin-inline-start:auto}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:min(92vh,860px);display:grid;align-items:end;overflow:hidden;isolation:isolate;border-bottom:1px solid var(--line)}
+#sky{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(120% 70% at 70% 110%,rgba(10,15,36,.96) 20%,rgba(10,15,36,.15) 70%),
+  linear-gradient(0deg,var(--night) 0%,rgba(10,15,36,0) 35%)}
+.moon{position:absolute;top:12%;left:9%;width:clamp(70px,9vw,130px);aspect-ratio:1;border-radius:50%;z-index:-1;
+  background:radial-gradient(circle at 62% 40%,transparent 38%,var(--chrome) 39%,var(--gold) 52%,rgba(240,190,74,0) 70%);
+  filter:drop-shadow(0 0 40px rgba(255,216,74,.65));animation:breathe 6s ease-in-out infinite}
+.star{position:absolute;z-index:-1;width:var(--s,14px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff6c7 0,var(--chrome) 25%,rgba(255,216,74,0) 70%);animation:breathe var(--d,4s) ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.25);opacity:1}}
+.hero-inner{padding-block:120px 64px;display:grid;gap:22px;max-width:900px}
+.eyebrow{display:inline-flex;flex-wrap:wrap;gap:8px 14px;align-items:center;color:var(--gold);font-size:var(--step--1);letter-spacing:.04em}
+.eyebrow span+span::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--gold);margin-inline-end:14px;vertical-align:middle;opacity:.7}
+.hero h1{margin:0;font-family:var(--f-display);font-weight:700;font-size:var(--step-4);line-height:1.08;text-wrap:balance;
+  background:linear-gradient(180deg,#fff7d6 10%,var(--chrome) 55%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 60px rgba(255,216,74,.12)}
+.hero h1 .latin{display:block;text-align:right;font-size:.38em;margin-top:.25em;color:var(--sky);-webkit-text-fill-color:var(--sky);font-weight:500}
+.hero .lede{margin:0;font-size:var(--step-1);color:#d9dcef;max-width:62ch;font-weight:300}
+.hero .lede strong{color:var(--chrome);font-weight:500}
+.student{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.field{display:flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:6px 12px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.field label{font-size:var(--step--1);color:var(--muted);white-space:nowrap}
+.field input{background:transparent;border:0;color:var(--ink);font:inherit;font-size:var(--step--1);width:150px;min-width:0;padding:4px 0}
+.field input::placeholder{color:rgba(165,175,207,.6)}
+.field input:focus{outline:none}
+.field:focus-within{border-color:var(--gold)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.75rem;letter-spacing:.2em;display:flex;flex-direction:column;align-items:center;gap:6px}
+.scroll-hint::after{content:"";width:1px;height:34px;background:linear-gradient(var(--gold),transparent);animation:drip 2s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- sections ---------- */
+section.band{padding-block:clamp(64px,9vw,120px);position:relative}
+section.band.alt{background:linear-gradient(180deg,rgba(17,26,63,.55),rgba(10,15,36,0))}
+.sec-head{display:grid;gap:10px;margin-bottom:clamp(28px,4vw,48px);max-width:760px}
+.q-tag{display:inline-flex;align-items:center;gap:10px;color:var(--gold);font-size:var(--step--1);letter-spacing:.05em}
+.q-tag b{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1px solid rgba(240,190,74,.6);font-family:var(--f-display);font-size:1.1rem;color:var(--chrome)}
+.sec-head h2{margin:0;font-family:var(--f-display);font-size:var(--step-3);line-height:1.2;font-weight:700;text-wrap:balance}
+.sec-head h2 small{display:block;font-size:.45em;color:var(--muted);font-weight:400;margin-top:6px;font-family:var(--f-body)}
+.prose p{margin:0 0 1em;max-width:66ch}
+.prose p:last-child{margin-bottom:0}
+.prose strong{color:var(--chrome);font-weight:500}
+.dropcap::first-letter{font-family:var(--f-display);float:right;font-size:3.6em;line-height:.9;margin:6px 0 0 12px;color:var(--gold)}
+
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:var(--radius);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2)}
+
+/* reveal: elements are visible by default; JS adds .pre only to items below the fold */
+.reveal{transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.pre{opacity:0;transform:translateY(26px)}
+@media (prefers-reduced-motion:reduce){.reveal,.reveal.pre{opacity:1;transform:none;transition:none}}
+
+/* ---------- §1 who + dossier ---------- */
+.who-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
+@media (max-width:860px){.who-grid{grid-template-columns:1fr}}
+.dossier{padding:0;overflow:hidden;position:relative}
+.dossier-head{display:flex;gap:16px;align-items:center;padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,rgba(240,190,74,.14),rgba(63,111,208,.1))}
+.dossier-head img{width:72px;height:88px;object-fit:cover;border-radius:10px;border:1px solid rgba(240,190,74,.45)}
+.dossier-head h3{margin:0;font-family:var(--f-display);font-size:1.45rem;line-height:1.3}
+.dossier-head .latin{color:var(--sky);font-size:1rem;display:block}
+.stamp{position:absolute;top:14px;left:14px;font-size:.66rem;letter-spacing:.18em;color:var(--gold);border:1px solid rgba(240,190,74,.5);padding:2px 8px;border-radius:4px;transform:rotate(-6deg)}
+.facts{margin:0;padding:8px 20px 18px;display:grid}
+.facts div{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.facts div:last-child{border-bottom:0}
+.facts dt{color:var(--muted);font-size:var(--step--1)}
+.facts dd{margin:0;font-size:.97rem;line-height:1.6}
+.facts dd small{display:block;color:var(--muted);font-size:.8rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:.78rem;padding:2px 10px;border-radius:999px;background:rgba(240,190,74,.12);color:var(--chrome);border:1px solid rgba(240,190,74,.3)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+.stat{padding:16px;border-radius:14px;background:rgba(17,26,63,.6);border:1px solid var(--line)}
+.stat b{display:block;font-family:var(--f-display);font-size:var(--step-2);color:var(--chrome);line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{font-size:var(--step--1);color:var(--muted)}
+@media (max-width:520px){.stats{grid-template-columns:1fr}}
+
+/* ---------- §2 school comparison ---------- */
+.school-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:clamp(24px,4vw,56px);align-items:start}
+@media (max-width:900px){.school-grid{grid-template-columns:1fr}}
+.compare-wrap{overflow-x:auto;border-radius:var(--radius)}
+.compare{width:100%;min-width:560px;border-collapse:separate;border-spacing:0;font-size:.92rem}
+.compare th,.compare td{padding:14px 14px;text-align:right;vertical-align:top;border-bottom:1px solid var(--line);line-height:1.6}
+.compare thead th{font-family:var(--f-display);font-size:1.1rem;font-weight:700;color:var(--muted)}
+.compare thead th.me{color:var(--chrome)}
+.compare tbody th{color:var(--muted);font-weight:500;font-size:.85rem;white-space:nowrap}
+.compare td.me{background:rgba(240,190,74,.08);color:#fff3cf}
+.compare thead th.me{background:rgba(240,190,74,.12);border-radius:14px 14px 0 0}
+.compare tr:last-child td,.compare tr:last-child th{border-bottom:0}
+.arrow-line{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:var(--step--1);margin-top:14px;flex-wrap:wrap}
+.arrow-line i{flex:1 1 40px;height:1px;background:linear-gradient(270deg,var(--sky),var(--gold),#c8553d);min-width:30px}
+
+/* ---------- §3 style cards ---------- */
+.cards3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;perspective:1200px}
+@media (max-width:900px){.cards3{grid-template-columns:1fr}}
+.tilt{position:relative;padding:26px 24px 24px;transform-style:preserve-3d;transition:transform .25s ease,border-color .3s,background .3s;overflow:hidden}
+.tilt::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%),rgba(255,216,74,.16),transparent 45%);opacity:0;transition:opacity .3s;pointer-events:none}
+.tilt:hover{border-color:rgba(240,190,74,.45);background:var(--glass-hi)}
+.tilt:hover::before{opacity:1}
+.tilt .ico{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(255,216,74,.2),rgba(63,111,208,.25));border:1px solid rgba(240,190,74,.35);margin-bottom:16px;transform:translateZ(30px)}
+.tilt .ico svg{width:30px;height:30px}
+.tilt h3{margin:0 0 4px;font-family:var(--f-display);font-size:1.5rem;line-height:1.3;transform:translateZ(20px)}
+.tilt h3 .latin{display:block;font-size:.95rem;color:var(--sky)}
+.tilt p{margin:10px 0 0;color:#d4d8ea;font-size:.95rem;line-height:1.8}
+.tilt .eg{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:.82rem;color:var(--muted)}
+.tilt .eg b{color:var(--gold);font-weight:500}
+
+.palette{margin-top:44px;padding:22px}
+.palette h3{margin:0 0 4px;font-family:var(--f-display);font-size:1.35rem}
+.palette > p{margin:0 0 16px;color:var(--muted);font-size:var(--step--1)}
+.swatches{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.swatches{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:420px){.swatches{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sw{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:rgba(10,15,36,.5);transition:transform .25s}
+.sw:hover{transform:translateY(-4px)}
+.sw i{display:block;height:64px;background:var(--c)}
+.sw div{padding:8px 10px;font-size:.78rem;line-height:1.5}
+.sw div b{display:block;font-weight:500;font-size:.84rem}
+.sw div span{color:var(--muted)}
+
+/* ---------- §4 gallery ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.filter{border:1px solid var(--line);background:rgba(17,26,63,.5);color:var(--muted);padding:7px 14px;border-radius:999px;cursor:pointer;font-size:var(--step--1);transition:all .2s}
+.filter:hover{color:var(--ink);border-color:rgba(156,192,238,.4)}
+.filter[aria-pressed="true"]{background:var(--gold);color:#1a1405;border-color:var(--gold)}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:960px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.gallery{grid-template-columns:1fr}}
+.art{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;border-radius:var(--radius);overflow:hidden;background:var(--night-2);border:1px solid var(--line);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s;position:relative}
+.art:hover,.art:focus-visible{transform:translateY(-6px);border-color:rgba(240,190,74,.5);box-shadow:0 26px 60px -24px rgba(0,0,0,.8),0 0 0 1px rgba(240,190,74,.15)}
+.art:focus-visible{outline:2px solid var(--chrome);outline-offset:3px}
+.art .frame{aspect-ratio:4/3;overflow:hidden;background:#0d1430;position:relative}
+.art img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .5s;filter:saturate(1.05)}
+.art:hover img{transform:scale(1.07);filter:saturate(1.2)}
+.art .frame::after{content:"اضغط للتحليل";position:absolute;inset:auto 12px 12px auto;background:rgba(10,15,36,.75);color:var(--chrome);font-size:.75rem;padding:4px 10px;border-radius:999px;opacity:0;transform:translateY(6px);transition:all .3s;backdrop-filter:blur(6px)}
+.art:hover .frame::after,.art:focus-visible .frame::after{opacity:1;transform:none}
+.art .cap{padding:14px 16px 16px;display:grid;gap:2px}
+.art .cap h3{margin:0;font-family:var(--f-display);font-size:1.25rem;line-height:1.35}
+.art .cap .latin{color:var(--sky);font-size:.92rem}
+.art .cap small{color:var(--muted);font-size:.8rem}
+.badge{position:absolute;top:12px;right:12px;z-index:2;font-size:.72rem;padding:3px 10px;border-radius:999px;background:var(--gold);color:#1a1405;font-weight:600}
+.art[hidden]{display:none}
+
+/* lightbox */
+dialog.lb{border:0;padding:0;background:transparent;color:var(--ink);max-width:min(1180px,96vw);width:100%;max-height:94vh}
+dialog.lb::backdrop{background:rgba(5,8,20,.86);backdrop-filter:blur(8px)}
+.lb-card{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);background:var(--night-2);border:1px solid rgba(240,190,74,.3);border-radius:22px;overflow:hidden;max-height:94vh}
+@media (max-width:860px){.lb-card{grid-template-columns:1fr;overflow-y:auto}}
+.lb-media{background:#05081a;display:grid;place-items:center;min-height:260px;position:relative}
+.lb-media img{max-height:86vh;width:100%;object-fit:contain}
+.lb-info{padding:26px 26px 22px;overflow-y:auto;max-height:94vh;display:flex;flex-direction:column;gap:14px}
+@media (max-width:860px){.lb-info{max-height:none}}
+.lb-info h3{margin:0;font-family:var(--f-display);font-size:var(--step-2);line-height:1.2}
+.lb-info .latin{color:var(--sky);font-size:1.1rem}
+.lb-meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;font-size:.88rem;margin:0;padding:12px 14px;border-radius:12px;background:rgba(10,15,36,.6);border:1px solid var(--line)}
+.lb-meta dt{color:var(--muted)}
+.lb-meta dd{margin:0}
+.lb-ana{display:grid;gap:12px}
+.lb-ana div{border-right:2px solid var(--gold);padding-right:12px}
+.lb-ana b{display:block;color:var(--chrome);font-weight:500;font-size:.9rem}
+.lb-ana p{margin:2px 0 0;font-size:.93rem;line-height:1.8;color:#d9dcef}
+.lb-nav{display:flex;gap:8px;margin-top:auto;padding-top:8px}
+.lb-close{position:absolute;top:12px;left:12px;z-index:3;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(10,15,36,.8);cursor:pointer;font-size:1.3rem;line-height:1}
+.lb-close:hover{border-color:var(--gold);color:var(--chrome)}
+
+/* ---------- §5 context ---------- */
+.ctx-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:860px){.ctx-grid{grid-template-columns:1fr}}
+.ctx{padding:26px}
+.ctx h3{margin:0 0 6px;font-family:var(--f-display);font-size:1.5rem;display:flex;gap:10px;align-items:center}
+.ctx h3 svg{width:26px;height:26px;flex:none}
+.ctx p{margin:0 0 12px;color:#d6daec}
+.ctx ul{margin:0;padding:0 18px 0 0;display:grid;gap:6px;font-size:.93rem;color:#cfd4ea}
+.ctx li::marker{color:var(--gold)}
+.flow{margin-top:28px;padding:24px;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:18px;align-items:center}
+@media (max-width:860px){.flow{grid-template-columns:1fr}}
+.flow h4{margin:0 0 10px;font-size:var(--step--1);color:var(--muted);font-weight:500;letter-spacing:.04em}
+.flow ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.flow li{padding:8px 12px;border-radius:10px;background:rgba(10,15,36,.55);border:1px solid var(--line);font-size:.9rem;line-height:1.55}
+.flow li small{display:block;color:var(--muted);font-size:.78rem}
+.flow .core{display:grid;place-items:center;text-align:center;gap:6px;padding:18px}
+.flow .core b{width:110px;height:110px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-size:1.3rem;line-height:1.2;color:#1a1405;background:radial-gradient(circle at 40% 35%,#fff3b0,var(--chrome) 35%,var(--gold) 70%);box-shadow:0 0 50px rgba(255,216,74,.45)}
+.flow .core span{color:var(--muted);font-size:.8rem}
+.flow .core::before,.flow .core::after{content:"←";color:var(--gold);font-size:1.4rem;line-height:1}
+@media (max-width:860px){.flow .core::before,.flow .core::after{content:"↓"}}
+
+/* ---------- timeline ---------- */
+.tl{position:relative;display:grid;gap:18px;padding:8px 0}
+.tl::before{content:"";position:absolute;top:0;bottom:0;right:50%;width:2px;transform:translateX(50%);background:linear-gradient(var(--gold),var(--cobalt) 60%,rgba(63,111,208,.1))}
+.tl-item{position:relative;width:calc(50% - 34px)}
+.tl-item:nth-child(odd){margin-left:auto}
+.tl-item::before{content:"";position:absolute;top:22px;width:16px;height:16px;border-radius:50%;background:var(--night);border:3px solid var(--gold);box-shadow:0 0 18px rgba(255,216,74,.6)}
+.tl-item:nth-child(odd)::before{right:-42px}
+.tl-item:nth-child(even)::before{left:-42px}
+.tl-btn{all:unset;box-sizing:border-box;display:block;width:100%;cursor:pointer;padding:18px 20px;border-radius:16px;background:var(--glass);border:1px solid var(--line);transition:border-color .25s,background .25s}
+.tl-btn:hover,.tl-item.open .tl-btn{border-color:rgba(240,190,74,.5);background:var(--glass-hi)}
+.tl-btn:focus-visible{outline:2px solid var(--chrome);outline-offset:3px}
+.tl-year{font-family:var(--f-display);font-size:1.7rem;color:var(--chrome);line-height:1;font-variant-numeric:tabular-nums}
+.tl-place{font-size:.78rem;color:var(--muted);margin-inline-start:8px}
+.tl-btn h3{margin:6px 0 4px;font-size:1.08rem;font-weight:600}
+.tl-btn p{margin:0;font-size:.92rem;color:#d1d6ea;line-height:1.75}
+.tl-pal{display:flex;height:6px;border-radius:4px;overflow:hidden;margin-top:12px}
+.tl-pal i{flex:1}
+.tl-more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+.tl-more > div{overflow:hidden}
+.tl-item.open .tl-more{grid-template-rows:1fr}
+.tl-ctx{margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(10,15,36,.6);border-right:3px solid var(--cobalt);font-size:.88rem;line-height:1.75;color:#cfd6f0}
+.tl-ctx b{color:var(--sky);font-weight:500}
+.tl-toggle{display:inline-block;margin-top:10px;font-size:.78rem;color:var(--gold)}
+.tl-item.open .tl-toggle{display:none}
+@media (max-width:760px){
+  .tl::before{right:9px;transform:none}
+  .tl-item,.tl-item:nth-child(odd){width:auto;margin-left:0;margin-right:34px}
+  .tl-item:nth-child(odd)::before,.tl-item:nth-child(even)::before{right:-33px;left:auto}
+}
+
+/* ---------- quotes ---------- */
+.quotes{position:relative;overflow:hidden;padding-block:clamp(70px,10vw,130px);background:
+  radial-gradient(60% 80% at 80% 20%,rgba(63,111,208,.28),transparent 70%),
+  radial-gradient(40% 60% at 15% 80%,rgba(240,190,74,.16),transparent 70%),var(--night)}
+.qbox{max-width:900px;margin-inline:auto;text-align:center;display:grid;gap:22px;justify-items:center}
+.qmark{font-family:var(--f-display);font-size:6rem;line-height:.5;color:var(--gold);opacity:.7;height:40px}
+.qslides{display:grid;width:100%}
+.qslide{grid-area:1/1;opacity:0;transform:translateY(12px);transition:opacity .7s,transform .7s;pointer-events:none;display:grid;gap:14px}
+.qslide.on{opacity:1;transform:none;pointer-events:auto}
+.qslide blockquote{margin:0;font-family:var(--f-display);font-size:var(--step-2);line-height:1.6;text-wrap:balance}
+.qslide .en{font-family:var(--f-latin);font-style:italic;color:var(--sky);font-size:1.15rem;direction:ltr}
+.qslide cite{font-style:normal;color:var(--muted);font-size:var(--step--1)}
+.qctl{display:flex;gap:10px;align-items:center}
+.qdot{width:10px;height:10px;border-radius:50%;border:1px solid var(--gold);background:transparent;cursor:pointer;padding:0}
+.qdot[aria-current="true"]{background:var(--gold)}
+
+/* ---------- sources & footer ---------- */
+.src{display:grid;gap:10px;margin:0;padding:0 22px 0 0;max-width:900px;direction:ltr;text-align:left;padding:0 0 0 22px;font-family:var(--f-latin);font-size:1.08rem}
+.src li{padding-left:6px}
+.src li::marker{color:var(--gold)}
+.src i{color:var(--sky)}
+footer{border-top:1px solid var(--line);padding-block:36px;color:var(--muted);font-size:var(--step--1)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
+
+/* floating QR */
+.qr-float{position:fixed;left:calc(18px + env(safe-area-inset-left,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;gap:10px;align-items:center;padding:10px;border-radius:16px;background:rgba(17,26,63,.82);border:1px solid rgba(240,190,74,.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 18px 40px -18px rgba(0,0,0,.8);transition:transform .3s}
+.qr-float:hover{transform:translateY(-3px)}
+.qr-float .qr{width:74px;height:74px;background:#fff;border-radius:8px;padding:5px}
+.qr-float p{margin:0;font-size:.74rem;line-height:1.5;max-width:9.5em;color:var(--muted)}
+.qr-float p b{display:block;color:var(--chrome);font-weight:500;font-size:.8rem}
+.qr-float .x{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:var(--night);cursor:pointer;font-size:.8rem;line-height:1;padding:0}
+@media (max-width:640px){.qr-float p{display:none}.qr-float .qr{width:58px;height:58px}}
+.qr img,.qr canvas{width:100%!important;height:auto!important;display:block}
+
+/* ===================================================================
+   PRINT REPORT — two A4 sheets. Hidden on screen unless preview mode.
+   =================================================================== */
+#report{display:none}
+.preview-bar{display:none}
+body.is-preview .site,body.is-preview .qr-float,body.is-preview .progress{display:none!important}
+body.is-preview{background:#3a3f52}
+body.is-preview #report{display:flex;flex-direction:column;align-items:center;gap:28px;padding:84px 16px 48px}
+body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-index:70;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;padding:12px max(16px,env(safe-area-inset-left,0px));background:rgba(10,15,36,.92);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+.preview-bar span{color:var(--muted);font-size:.85rem}
+body.is-preview .sheet{box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+
+.sheet{
+  --p-ink:#141c38; --p-soft:#4b5577; --p-gold:#a8780f; --p-blue:#24467f; --p-rule:#d8dbe6; --p-tint:#f4f5fa; --p-warm:#fbf6e8;
+  width:210mm;height:297mm;padding:11mm 12.5mm 10mm;background:#fff;color:var(--p-ink);
+  font-family:var(--f-body);font-size:9.7pt;line-height:1.7;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:4.2mm;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+}
+.sheet h2,.sheet h3,.sheet h4{color:var(--p-ink)}
+.r-head{display:grid;grid-template-columns:minmax(0,1fr) 25mm;gap:5mm;align-items:stretch;border-bottom:1.6pt solid var(--p-ink);padding-bottom:3mm}
+.r-kicker{font-size:7.6pt;color:var(--p-gold);letter-spacing:.04em;font-weight:600}
+.r-title{margin:1mm 0 .5mm;font-family:var(--f-display);font-size:19pt;line-height:1.25;font-weight:700}
+.r-sub{font-size:9pt;color:var(--p-soft);margin:0}
+.r-meta{display:flex;flex-wrap:wrap;gap:2mm 6mm;margin-top:2mm;font-size:8pt}
+.r-meta span b{font-weight:600;color:var(--p-soft);margin-inline-end:1.5mm}
+.r-meta span em{font-style:normal;display:inline-block;min-width:30mm;border-bottom:.6pt dotted var(--p-soft);padding:0 1mm}
+.r-qr{display:grid;justify-items:center;align-content:center;gap:1mm;border:.6pt solid var(--p-rule);border-radius:2mm;padding:1.5mm;text-align:center}
+.r-qr .qr{width:19mm;height:19mm}
+.r-qr small{font-size:5.8pt;line-height:1.3;color:var(--p-soft)}
+.r-sec{display:grid;gap:1.2mm}
+.r-h{display:flex;align-items:baseline;gap:2mm;margin:0;font-family:var(--f-display);font-size:12.6pt;line-height:1.3;font-weight:700}
+.r-h i{font-style:normal;display:inline-grid;place-items:center;width:5.2mm;height:5.2mm;border-radius:50%;background:var(--p-ink);color:#fff;font-family:var(--f-body);font-size:7.4pt;font-weight:600;flex:none;transform:translateY(-.4mm)}
+.r-h small{font-family:var(--f-body);font-weight:400;font-size:7.6pt;color:var(--p-gold)}
+.sheet p{margin:0;text-align:justify}
+.sheet strong{font-weight:600;color:var(--p-blue)}
+.r-cols{display:grid;grid-template-columns:minmax(0,1fr) 58mm;gap:5mm}
+.r-side{display:grid;gap:2.6mm;align-content:start}
+.r-dossier{border:.7pt solid var(--p-ink);border-radius:1.6mm;overflow:hidden}
+.r-dossier h4{margin:0;padding:1.4mm 2.5mm;background:var(--p-ink);color:#fff;font-size:8pt;font-weight:600;display:flex;justify-content:space-between}
+.r-dossier h4 .latin{font-size:8.5pt;color:#f3d27a}
+.r-dossier dl{margin:0;padding:.6mm 2.5mm 1.2mm}
+.r-dossier dl div{display:grid;grid-template-columns:15mm minmax(0,1fr);gap:1.5mm;padding:1.1mm 0;border-bottom:.4pt dashed var(--p-rule);font-size:8.1pt;line-height:1.45}
+.r-dossier dl div:last-child{border-bottom:0}
+.r-dossier dt{color:var(--p-soft);font-weight:600}
+.r-dossier dd{margin:0}
+.r-fig{margin:0;display:grid;gap:1mm}
+.r-fig img{width:100%;height:var(--h,34mm);object-fit:cover;border-radius:1.2mm;border:.4pt solid var(--p-rule)}
+.r-fig figcaption{font-size:7.2pt;color:var(--p-soft);line-height:1.35}
+.r-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3mm}
+.r-box{border:.6pt solid var(--p-rule);border-top:2pt solid var(--p-gold);border-radius:1.2mm;padding:2mm 2.4mm;background:var(--p-tint)}
+.r-box h4{margin:0 0 .6mm;font-size:9.4pt;font-weight:600;line-height:1.35}
+.r-box h4 .latin{font-size:8.4pt;color:var(--p-blue);font-weight:500}
+.r-box p{font-size:8.8pt;line-height:1.65;text-align:right}
+.r-table{width:100%;border-collapse:collapse;font-size:8.2pt;line-height:1.45}
+.r-table th,.r-table td{border:.5pt solid var(--p-rule);padding:1mm 1.6mm;text-align:right;vertical-align:top}
+.r-table thead th{background:var(--p-tint);font-weight:600}
+.r-table .me{background:var(--p-warm);font-weight:500}
+.r-quote{margin:0;padding:3mm 4.5mm;border-right:2.4pt solid var(--p-gold);background:var(--p-warm);font-family:var(--f-display);font-size:12pt;line-height:1.5;border-radius:1mm}
+.r-quote cite{display:block;font-family:var(--f-body);font-style:normal;font-size:7.6pt;color:var(--p-soft);margin-top:.6mm}
+.r-works{display:grid;gap:2.4mm}
+.r-work{display:grid;grid-template-columns:42mm minmax(0,1fr);gap:3.5mm;align-items:start;padding-bottom:2.4mm;border-bottom:.4pt solid var(--p-rule)}
+.r-work:last-child{border-bottom:0;padding-bottom:0}
+.r-work img{width:42mm;height:31.5mm;object-fit:cover;border-radius:1.2mm;border:.4pt solid var(--p-rule)}
+.r-work h4{margin:0;font-family:var(--f-display);font-size:11.4pt;line-height:1.3}
+.r-work h4 .latin{font-size:9pt;color:var(--p-blue);font-weight:500}
+.r-work .m{font-size:7.5pt;color:var(--p-soft);margin:.2mm 0 .8mm}
+.r-work p{font-size:8.9pt;line-height:1.62}
+.r-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4mm}
+.r-two .r-box{border-top-color:var(--p-blue);background:#fff}
+.r-tl{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:0;position:relative;padding-top:2mm}
+.r-tl::before{content:"";position:absolute;top:3.4mm;right:2mm;left:2mm;height:.8pt;background:var(--p-ink)}
+.r-tl div{position:relative;padding:3.6mm .8mm 0;font-size:7.2pt;line-height:1.35;text-align:center}
+.r-tl div::before{content:"";position:absolute;top:.6mm;right:50%;transform:translateX(50%);width:2mm;height:2mm;border-radius:50%;background:#fff;border:.9pt solid var(--p-gold)}
+.r-tl b{display:block;font-size:9pt;color:var(--p-ink)}
+.r-src{margin:0;padding:0 0 0 4mm;direction:ltr;text-align:left;font-family:var(--f-latin);font-size:8.8pt;line-height:1.4;display:grid;gap:.4mm}
+.r-src i{color:var(--p-blue)}
+.r-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;border-top:.6pt solid var(--p-rule);padding-top:1.6mm;font-size:6.8pt;color:var(--p-soft)}
+.r-foot b{color:var(--p-ink)}
+.r-concl{padding:2.2mm 3mm;border:.6pt solid var(--p-ink);border-radius:1.4mm}
+.r-concl p{font-size:9pt}
+
+@page{size:A4 portrait;margin:0}
+@media print{
+  html,body{background:#fff!important;margin:0!important;padding:0!important}
+  body > *:not(#report){display:none!important}
+  #report{display:block!important;padding:0!important;zoom:1!important}
+  .sheet{box-shadow:none!important;break-after:page;page-break-after:always;margin:0}
+  .sheet:last-child{break-after:auto;page-break-after:auto}
+  .sheet *{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ============================== SCREEN SITE ============================== -->
+<div class="site">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>فان جوخ</a>
+    <nav class="nav" aria-label="أقسام البحث">
+      <a href="#who">الفنان</a>
+      <a href="#school">المدرسة</a>
+      <a href="#style">الأسلوب</a>
+      <a href="#works">المعرض</a>
+      <a href="#context">السياق</a>
+      <a href="#timeline">الخط الزمني</a>
+      <a href="#quotes">اقتباسات</a>
+      <a href="#sources">المصادر</a>
+    </nav>
+    <button class="btn" type="button" data-print-mode>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>
+      طباعة التقرير / PDF
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <canvas id="sky" aria-hidden="true"></canvas>
+    <div class="moon" aria-hidden="true"></div>
+    <span class="star" style="top:18%;left:32%;--s:22px;--d:5s" aria-hidden="true"></span>
+    <span class="star" style="top:10%;left:52%;--s:14px;--d:3.6s" aria-hidden="true"></span>
+    <span class="star" style="top:28%;left:20%;--s:12px;--d:4.4s" aria-hidden="true"></span>
+    <span class="star" style="top:8%;right:22%;--s:18px;--d:6s" aria-hidden="true"></span>
+    <span class="star" style="top:22%;right:8%;--s:26px;--d:5.4s" aria-hidden="true"></span>
+    <span class="star" style="top:36%;left:44%;--s:10px;--d:3s" aria-hidden="true"></span>
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="eyebrow"><span>الفنون البصرية</span><span>دراسة استقصائية لمدارس الفن</span><span>المهمة 2 · المعيار A: الاستقصاء</span></div>
+        <h1 id="hero-title">فينسنت فان جوخ<span class="latin">Vincent van Gogh · 1853–1890</span></h1>
+        <p class="lede">تحليل <strong>الحراك التعبيري</strong> في أعمال فنانٍ حوّل العزلة إلى ضوء، والانفعال إلى ضربات فرشاة تتحرك على القماش كالدوامات الكونية.</p>
+        <div class="student" role="group" aria-label="بيانات الطالب (تظهر في التقرير المطبوع)">
+          <div class="field"><label for="f-name">اسم الطالب</label><input id="f-name" data-bind="name" placeholder="اكتب اسمك هنا" autocomplete="name"></div>
+          <div class="field"><label for="f-class">الصف / الشعبة</label><input id="f-class" data-bind="klass" placeholder="مثال: العاشر - أ"></div>
+          <div class="field"><label for="f-teacher">الأستاذ/ة</label><input id="f-teacher" data-bind="teacher" placeholder="اسم المعلم"></div>
+        </div>
+        <div class="hero-cta">
+          <a class="btn solid" href="#works">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 17-5-5-9 8"/></svg>
+            ادخل المعرض
+          </a>
+          <button class="btn ghost" type="button" data-print-mode>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>
+            معاينة ورقة A4
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">مرّر</div>
+  </section>
+
+  <!-- §1 WHO -->
+  <section class="band" id="who" aria-labelledby="who-h">
+    <div class="wrap who-grid">
+      <div class="reveal">
+        <div class="sec-head">
+          <span class="q-tag"><b>١</b>السؤال الأول</span>
+          <h2 id="who-h">من هو الفنان؟<small>السيرة والعمق الفلسفي</small></h2>
+        </div>
+        <div class="prose">
+          <p class="dropcap">فينسنت فان جوخ <span class="latin">(Vincent van Gogh)</span>؛ عبقري هولندا الذي تحوّل من رجلٍ يصارع عزلة الروح إلى إحدى أعظم الأيقونات الخالدة في تاريخ الفن البشري. لم يكن مجرد رسامٍ يمسك بالفرشاة، بل كان فيلسوفاً يسكب لوعته وشغفه المحموم على قماش اللوحة، ليعيد تعريف الجمال من منظور <strong>الانفعال الإنساني الخالص</strong>.</p>
+          <p>بدأ حياته تاجراً للوحات في دار <span class="latin">Goupil &amp; Cie</span>، ثم واعظاً بين عمّال المناجم الفقراء في بلجيكا، قبل أن يقرر عام 1880 أن يصبح فناناً وهو في السابعة والعشرين. وفي عشر سنوات فقط أنتج ما يقارب <strong>2100 عمل فني</strong>، بدعمٍ مادي ومعنوي متواصل من أخيه <strong>ثيو</strong> الذي تبادل معه مئات الرسائل التي تُعدّ اليوم أهم وثيقة لفهم فكره الفني.</p>
+          <p>عاش فقيراً ومجهولاً تقريباً، وعانى نوبات نفسية حادة، لكنه رأى في الرسم خلاصاً ومعنى: الفن عنده ليس تزييناً للواقع بل شهادة على ما يشعر به الإنسان أمامه.</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><b data-count="860">860</b><span>لوحة زيتية تقريباً</span></div>
+          <div class="stat"><b data-count="1300">1300</b><span>رسم وعمل على الورق</span></div>
+          <div class="stat"><b data-count="10">10</b><span>سنوات فقط من الإنتاج</span></div>
+        </div>
+      </div>
+
+      <aside class="glass dossier reveal" aria-label="بطاقة الهوية البصرية للفنان">
+        <span class="stamp">DOSSIER</span>
+        <div class="dossier-head">
+          <img data-art="selfportrait" data-w="300" alt="بورتريه ذاتي لفان جوخ، 1887" width="72" height="88">
+          <div>
+            <h3>فينسنت ويليم فان جوخ</h3>
+            <span class="latin">Vincent Willem van Gogh</span>
+          </div>
+        </div>
+        <dl class="facts">
+          <div><dt>الميلاد</dt><dd>30 مارس 1853<small>غروت-زوندرت، هولندا</small></dd></div>
+          <div><dt>الوفاة</dt><dd>29 يوليو 1890 (37 عاماً)<small>أوفير-سور-واز، فرنسا</small></dd></div>
+          <div><dt>الجنسية</dt><dd>هولندي</dd></div>
+          <div><dt>الحركة الفنية</dt><dd>ما بعد الانطباعية<small>والممهّد الأبرز للتعبيرية</small></dd></div>
+          <div><dt>أشهر الأساليب</dt><dd><div class="chips"><span class="chip">الإمباستو</span><span class="chip">ضربات متجهة</span><span class="chip">ألوان متكاملة</span><span class="chip">الدوامات</span></div></dd></div>
+          <div><dt>الوسائط</dt><dd>زيت على قماش، رسم بالقصبة والحبر، ألوان مائية</dd></div>
+          <div><dt>مدن مفصلية</dt><dd>نوينن · باريس · آرل · سان-ريمي · أوفير</dd></div>
+          <div><dt>أهم الداعمين</dt><dd>أخوه ثيو فان جوخ، تاجر لوحات في باريس</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- §2 SCHOOL -->
+  <section class="band alt" id="school" aria-labelledby="school-h">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="q-tag"><b>٢</b>السؤال الثاني</span>
+        <h2 id="school-h">إلى أي مدرسة ينتمي؟<small>التمرد الفني</small></h2>
+      </div>
+      <div class="school-grid">
+        <div class="prose reveal">
+          <p>يُصنَّف فان جوخ ركناً أساسياً في حركة <strong>ما بعد الانطباعية</strong> <span class="latin">(Post-Impressionism)</span>، ويُعدّ في الوقت ذاته <strong>الأب الروحي للمدرسة التعبيرية</strong> <span class="latin">(Expressionism)</span> التي ستنفجر في أوروبا بعد وفاته بخمسة عشر عاماً.</p>
+          <p>لم يستكن للنقل الحرفي للواقع، ولم يكتفِ برصد الضوء العابر كما فعل الانطباعيون، بل شقّ طريقاً تمرّد فيه على المحاكاة الظاهرية، ليتخذ من اللوحة <strong>مرآةً تعكس أغوار النفس وشواهد الوجدان</strong>. اللون عنده لا يصف الشيء، بل يصف ما يشعر به الرسام تجاهه.</p>
+          <div class="arrow-line" aria-hidden="true"><span>الانطباعية</span><i></i><span>فان جوخ</span><i></i><span>التعبيرية</span></div>
+        </div>
+        <div class="compare-wrap glass reveal">
+          <table class="compare">
+            <caption class="latin" style="caption-side:bottom;padding:10px;color:var(--muted);font-size:.9rem">Impressionism → Van Gogh → Expressionism</caption>
+            <thead><tr><th scope="col"></th><th scope="col">الانطباعية</th><th scope="col" class="me">فان جوخ</th><th scope="col">التعبيرية</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">الهدف</th><td>التقاط لحظة الضوء العابرة كما تراها العين</td><td class="me">نقل الانفعال الداخلي عبر الطبيعة</td><td>تجسيد القلق النفسي مباشرة، ولو بتشويه الشكل</td></tr>
+              <tr><th scope="row">اللون</th><td>واقعي متغير بحسب الضوء</td><td class="me">رمزي مشبع؛ أصفر وأزرق متكاملان</td><td>اعتباطي صارخ ومتنافر</td></tr>
+              <tr><th scope="row">الفرشاة</th><td>لمسات خفيفة متقطعة</td><td class="me">كثيفة بارزة، متجهة ودوّامية</td><td>عنيفة، حادة، خشنة</td></tr>
+              <tr><th scope="row">الموضوع</th><td>الحياة الحديثة والمناظر الخارجية</td><td class="me">الفلاحون، الحقول، الليل، الذات</td><td>المدينة، الاغتراب، الخوف</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §3 STYLE -->
+  <section class="band" id="style" aria-labelledby="style-h">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="q-tag"><b>٣</b>السؤال الثالث</span>
+        <h2 id="style-h">ما أبرز خصائص أسلوبه الفني؟<small>البصمة البصرية</small></h2>
+      </div>
+      <div class="cards3">
+        <article class="glass tilt reveal">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="#ffd84a" stroke-width="1.8" stroke-linecap="round"><path d="M4 22c4-6 8 2 12-4s8 2 12-4"/><path d="M4 27c4-6 8 2 12-4s8 2 12-4" opacity=".6"/><path d="M4 17c4-6 8 2 12-4s8 2 12-4" opacity=".35"/></svg></div>
+          <h3>عنفوان ضربات الفرشاة<span class="latin">Impasto</span></h3>
+          <p>تقنية طبقات اللون الكثيفة والبروز الملمسي الذي يمنح اللوحة بُعداً حركياً ثائراً، وكأن الأشكال تتشكّل وتتحرك أمام عين الناظر. كان يضع اللون أحياناً مباشرة من الأنبوب أو بالسكين.</p>
+          <p class="eg"><b>مثال:</b> سماء «ليلة مرصعة بالنجوم» وبتلات «دوار الشمس».</p>
+        </article>
+        <article class="glass tilt reveal">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke-width="2"><circle cx="12" cy="16" r="8" stroke="#ffd84a" fill="rgba(255,216,74,.25)"/><circle cx="20" cy="16" r="8" stroke="#9cc0ee" fill="rgba(63,111,208,.3)"/></svg></div>
+          <h3>الرمزية اللونية والتباين الصارخ<span class="latin">Symbolic Colour</span></h3>
+          <p>ألوان مشبعة بالدلالات، كالصفرة المتوهجة والأزرق اللامتناهي، لا لنقل لون الطبيعة، بل لتجسيد حرارة العاطفة أو صفاء الذهن أو عمق الحزن. يجاور الألوان المتكاملة (أزرق/برتقالي، أصفر/بنفسجي) لتشتعل كلٌّ منها بالأخرى.</p>
+          <p class="eg"><b>مثال:</b> «تراس المقهى ليلاً»؛ ليلٌ بلا لون أسود.</p>
+        </article>
+        <article class="glass tilt reveal">
+          <div class="ico" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="#ffd84a" stroke-width="1.8" stroke-linecap="round"><path d="M16 16c0-2 2-3 3.5-2s1.5 4-1 5.5-6.5 0-7-4 3-8 7.5-8 9 4 8 9.5"/></svg></div>
+          <h3>الدوامات والخطوط التموجية<span class="latin">Swirling Rhythm</span></h3>
+          <p>إيقاعات خطية لولبية تحوّل المشاهد الثابتة إلى ساحة من الطاقة الكونية المتدفقة؛ السماء والأشجار والحقول تتنفس وتتحرك بالإيقاع نفسه، فتتوحّد الطبيعة مع نبض الفنان الداخلي.</p>
+          <p class="eg"><b>مثال:</b> أشجار السرو وحقول القمح في سان-ريمي.</p>
+        </article>
+      </div>
+
+      <div class="glass palette reveal">
+        <h3>لوح ألوان فان جوخ</h3>
+        <p>أصباغ حقيقية استخدمها بكثافة في آرل وسان-ريمي، وبعضها يبهت مع الزمن فغيّر ألوان لوحاته الأصلية.</p>
+        <div class="swatches" id="swatches"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §4 GALLERY -->
+  <section class="band alt" id="works" aria-labelledby="works-h">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="q-tag"><b>٤</b>السؤال الرابع</span>
+        <h2 id="works-h">ما أشهر أعماله الفنية؟<small>المعرض التفاعلي وتحليل الروائع — اضغط على أي لوحة لقراءة تحليلها</small></h2>
+      </div>
+      <div class="filters" role="group" aria-label="تصفية حسب المرحلة" id="filters"></div>
+      <div class="gallery" id="gallery"></div>
+    </div>
+  </section>
+
+  <!-- §5 CONTEXT -->
+  <section class="band" id="context" aria-labelledby="ctx-h">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="q-tag"><b>٥</b>السؤال الخامس</span>
+        <h2 id="ctx-h">كيف تأثر أسلوبه بالظروف التاريخية والاجتماعية والثقافية؟<small>التحليل البنيوي</small></h2>
+      </div>
+      <div class="ctx-grid">
+        <article class="glass ctx reveal">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="#ffd84a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V10l5 3V10l5 3V6l4 2v13"/></svg>السياق الاجتماعي والتاريخي</h3>
+          <p>عاش أواخر القرن التاسع عشر في ذروة <strong style="color:var(--chrome);font-weight:500">الثورة الصناعية والاغتراب الحديث</strong>؛ انعكست ظروفه القاسية من فقرٍ مدقع وعزلةٍ ذاتية على أسلوبه، فغدا الفن بالنسبة له ملاذاً تطهيرياً وليس مجرد رفاهية سطحية.</p>
+          <ul>
+            <li>عايش بؤس عمّال مناجم الفحم في البوريناج (1879)، فولد تعاطفه مع الكادحين في «آكلو البطاطا».</li>
+            <li>هرب من ضجيج المدن الصناعية إلى الريف والجنوب الفرنسي بحثاً عن نقاء الضوء والطبيعة.</li>
+            <li>الأمراض النفسية والإقامة في المصحة حوّلت اللوحة إلى مساحة علاج ومقاومة.</li>
+          </ul>
+        </article>
+        <article class="glass ctx reveal">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="#9cc0ee" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20c3-1 5-4 7-8 1.5 3 3 5 6 6 2-3 4-4 7-4"/><circle cx="17" cy="6" r="2.5"/></svg>السياق الثقافي</h3>
+          <p>تأثر بشدة بموجة الانبهار بالفن الياباني التقليدي <span class="latin">(Ukiyo-e)</span>، فاستلهم منه الجرأة في تقسيم المساحات، وبساطة الخطوط الخارجية، والمسطحات اللونية الصافية، ليمزج هذه الرؤية الشرقية بوعيه الأوروبي القلق، منتجاً أسلوباً ثورياً أثّر في الفن الحديث للأبد.</p>
+          <ul>
+            <li>بعد انفتاح اليابان على التجارة (1854) غمرت المطبوعات اليابانية أسواق باريس.</li>
+            <li>جمع مع ثيو مئات المطبوعات، ونسخ لوحات هيروشيغي بالزيت عام 1887.</li>
+            <li>في باريس تعرّف على الانطباعيين وتقنية التنقيط عند سورا، ففتّح ألوانه القاتمة.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="glass flow reveal" aria-label="شبكة التأثير والتأثر">
+        <div>
+          <h4>تأثّر بـ</h4>
+          <ul>
+            <li>جان فرانسوا ميليه<small>واقعية الفلاحين والعمل اليدوي</small></li>
+            <li>رامبرانت والمدرسة الهولندية<small>العمق الإنساني والضوء الدرامي</small></li>
+            <li>الانطباعية والتنقيطية<small>مونيه، بيسارو، سورا</small></li>
+            <li>الأوكييو-إي اليابانية<small>هيروشيغي، هوكوساي</small></li>
+          </ul>
+        </div>
+        <div class="core"><b>فان<br>جوخ</b><span>نقطة التحوّل</span></div>
+        <div>
+          <h4>وأثّر في</h4>
+          <ul>
+            <li>الوحوشية <span class="latin">Fauvism</span> (1905)<small>ماتيس، ديران، فلامنك</small></li>
+            <li>التعبيرية الألمانية (1905)<small>جماعة «الجسر»: كيرشنر، هيكل</small></li>
+            <li>إدفارد مونك والتعبير عن القلق<small>«الصرخة» 1893</small></li>
+            <li>التعبيرية التجريدية<small>دي كونينغ، بولوك (منتصف القرن العشرين)</small></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="band alt" id="timeline" aria-labelledby="tl-h">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="q-tag"><b>⟡</b>محطات</span>
+        <h2 id="tl-h">الخط الزمني التفاعلي<small>اضغط على أي محطة لعرض الحدث التاريخي المرتبط بها. الشريط الملوّن يُظهر تطور لوحة ألوانه.</small></h2>
+      </div>
+      <ol class="tl" id="tl" style="list-style:none;margin:0;padding:0"></ol>
+    </div>
+  </section>
+
+  <!-- QUOTES -->
+  <section class="quotes" id="quotes" aria-labelledby="q-h">
+    <div class="wrap">
+      <div class="qbox">
+        <h2 id="q-h" class="q-tag" style="margin:0"><b>“</b>اقتباسات مأثورة</h2>
+        <div class="qmark" aria-hidden="true">”</div>
+        <div class="qslides" id="qslides" aria-live="polite"></div>
+        <div class="qctl">
+          <button class="btn ghost" type="button" id="qprev" aria-label="الاقتباس السابق">→</button>
+          <div id="qdots" style="display:flex;gap:8px"></div>
+          <button class="btn ghost" type="button" id="qnext" aria-label="الاقتباس التالي">←</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOURCES -->
+  <section class="band" id="sources" aria-labelledby="src-h">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="q-tag"><b>§</b>توثيق</span>
+        <h2 id="src-h">المصادر والمراجع<small>توثيق بأسلوب APA</small></h2>
+      </div>
+      <ol class="src reveal" id="srcList"></ol>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>الفنون البصرية · المهمة 2 · المعيار A: الاستقصاء — <span data-out="name">اسم الطالب</span></span>
+    <button class="btn" type="button" data-print-mode>طباعة التقرير / PDF</button>
+  </div>
+</footer>
+</div>
+
+<!-- floating QR (screen) -->
+<aside class="qr-float" id="qrFloat" aria-label="رمز QR للنسخة الرقمية">
+  <div class="qr" id="qrScreen"></div>
+  <p><b>النسخة الرقمية</b>امسح الرمز لفتح الموقع التفاعلي</p>
+  <button class="x" type="button" aria-label="إخفاء رمز QR" id="qrHide">×</button>
+</aside>
+
+<!-- lightbox -->
+<dialog class="lb" id="lb" aria-labelledby="lb-title">
+  <div class="lb-card" style="position:relative">
+    <button class="lb-close" type="button" id="lbClose" aria-label="إغلاق">×</button>
+    <div class="lb-media"><img id="lbImg" alt=""></div>
+    <div class="lb-info">
+      <div>
+        <h3 id="lb-title"></h3>
+        <div class="latin" id="lbEn"></div>
+      </div>
+      <dl class="lb-meta" id="lbMeta"></dl>
+      <div class="lb-ana" id="lbAna"></div>
+      <div class="lb-nav">
+        <button class="btn ghost" type="button" id="lbPrev">→ السابقة</button>
+        <button class="btn ghost" type="button" id="lbNext">التالية ←</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- preview toolbar -->
+<div class="preview-bar" role="toolbar" aria-label="أدوات الطباعة">
+  <span>معاينة التقرير — ورقتان بمقاس A4</span>
+  <button class="btn solid" type="button" id="doPrint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>
+    طباعة / حفظ PDF
+  </button>
+  <button class="btn ghost" type="button" id="exitPreview">العودة إلى الموقع</button>
+</div>
+
+<!-- ============================== PRINT REPORT (A4 × 2) ============================== -->
+<div id="report" aria-label="التقرير المطبوع">
+  <!-- SHEET 1 -->
+  <article class="sheet">
+    <header class="r-head">
+      <div>
+        <div class="r-kicker">الفنون البصرية — دراسة استقصائية لمدارس الفن · المهمة 2: المعيار A (الاستقصاء)</div>
+        <h1 class="r-title">تحليل الحراك التعبيري في أعمال فينسنت فان جوخ</h1>
+        <p class="r-sub"><span class="latin">Vincent van Gogh (1853–1890)</span> · ما بعد الانطباعية والتمهيد للتعبيرية</p>
+        <div class="r-meta">
+          <span><b>الطالب:</b><em data-out="name"></em></span>
+          <span><b>الصف:</b><em data-out="klass"></em></span>
+          <span><b>الأستاذ/ة:</b><em data-out="teacher"></em></span>
+          <span><b>التاريخ:</b><em data-out="date"></em></span>
+        </div>
+      </div>
+      <div class="r-qr"><div class="qr" id="qrPrint"></div><small>امسح لزيارة<br>النسخة التفاعلية</small></div>
+    </header>
+
+    <div class="r-cols">
+      <div style="display:grid;gap:3mm;align-content:start">
+        <section class="r-sec">
+          <h2 class="r-h"><i>1</i>من هو الفنان؟ <small>السيرة والعمق الفلسفي</small></h2>
+          <p>فينسنت فان جوخ <span class="latin">(Vincent van Gogh)</span>؛ عبقري هولندا الذي تحوّل من رجلٍ يصارع عزلة الروح إلى إحدى أعظم الأيقونات الخالدة في تاريخ الفن البشري. لم يكن مجرد رسامٍ يمسك بالفرشاة، بل كان فيلسوفاً يسكب لوعته وشغفه المحموم على قماش اللوحة، ليعيد تعريف الجمال من منظور <strong>الانفعال الإنساني الخالص</strong>.</p>
+          <p>عمل تاجراً للوحات ثم واعظاً بين عمّال المناجم، ولم يقرر احتراف الرسم إلا في السابعة والعشرين (1880). وخلال عشر سنوات فقط أنتج نحو <strong>2100 عمل</strong> منها قرابة 860 لوحة زيتية، بدعمٍ متواصل من أخيه <strong>ثيو</strong>؛ وتُعدّ رسائله إليه أهم وثيقة لفهم فكره الفني. عاش فقيراً مجهولاً، ورأى في الرسم خلاصاً ومعنى لا تزييناً للواقع.</p>
+        </section>
+        <section class="r-sec">
+          <h2 class="r-h"><i>2</i>إلى أي مدرسة ينتمي؟ <small>التمرد الفني</small></h2>
+          <p>يُعدّ فان جوخ ركناً أساسياً في حركة <strong>ما بعد الانطباعية</strong> <span class="latin">(Post-Impressionism)</span>، والأبَ الروحي <strong>للمدرسة التعبيرية</strong> <span class="latin">(Expressionism)</span>. لم يستكن للنقل الحرفي للواقع أو الاكتفاء برصد الضوء كما فعل الانطباعيون، بل شقّ طريقاً تمرّد فيه على المحاكاة الظاهرية، ليتخذ من اللوحة مرآةً تعكس أغوار النفس وشواهد الوجدان.</p>
+          <table class="r-table">
+            <thead><tr><th></th><th>الانطباعية</th><th class="me">فان جوخ</th><th>التعبيرية</th></tr></thead>
+            <tbody>
+              <tr><th>الهدف</th><td>لحظة الضوء العابرة</td><td class="me">الانفعال الداخلي عبر الطبيعة</td><td>القلق النفسي ولو بتشويه الشكل</td></tr>
+              <tr><th>اللون</th><td>واقعي متغير</td><td class="me">رمزي مشبع ومتكامل</td><td>اعتباطي صارخ</td></tr>
+              <tr><th>الفرشاة</th><td>لمسات خفيفة</td><td class="me">كثيفة، متجهة، دوّامية</td><td>عنيفة حادة</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+
+      <aside class="r-side">
+        <div class="r-dossier">
+          <h4><span>بطاقة الفنان</span><span class="latin">Dossier</span></h4>
+          <dl>
+            <div><dt>الاسم</dt><dd>فينسنت ويليم فان جوخ</dd></div>
+            <div><dt>الميلاد</dt><dd>30 مارس 1853، زوندرت، هولندا</dd></div>
+            <div><dt>الوفاة</dt><dd>29 يوليو 1890، أوفير-سور-واز، فرنسا</dd></div>
+            <div><dt>الجنسية</dt><dd>هولندي</dd></div>
+            <div><dt>الحركة</dt><dd>ما بعد الانطباعية / ممهّد للتعبيرية</dd></div>
+            <div><dt>الأساليب</dt><dd>الإمباستو، الضربات المتجهة، الألوان المتكاملة، الدوامات</dd></div>
+            <div><dt>الإنتاج</dt><dd>≈ 860 لوحة زيتية و1300 عمل على الورق</dd></div>
+          </dl>
+        </div>
+        <figure class="r-fig" style="--h:50mm">
+          <img data-art="starry" data-w="700" alt="ليلة مرصعة بالنجوم">
+          <figcaption><b>ليلة مرصعة بالنجوم</b>، 1889، زيت على قماش، 73.7 × 92.1 سم. متحف الفن الحديث (MoMA)، نيويورك.</figcaption>
+        </figure>
+      </aside>
+    </div>
+
+    <section class="r-sec">
+      <h2 class="r-h"><i>3</i>ما أبرز خصائص أسلوبه الفني؟ <small>البصمة البصرية</small></h2>
+      <div class="r-three">
+        <div class="r-box"><h4>عنفوان ضربات الفرشاة <span class="latin">Impasto</span></h4><p>طبقات لونٍ كثيفة وبروز ملمسي يمنح اللوحة بُعداً حركياً ثائراً، وكأن الأشكال تتشكّل وتتحرك أمام عين الناظر.</p></div>
+        <div class="r-box"><h4>الرمزية اللونية والتباين <span class="latin">Colour</span></h4><p>ألوان مشبعة بالدلالات كالصفرة المتوهجة والأزرق اللامتناهي، لا لنقل لون الطبيعة بل لتجسيد حرارة العاطفة أو صفاء الذهن أو عمق الحزن.</p></div>
+        <div class="r-box"><h4>الدوامات والخطوط التموجية <span class="latin">Rhythm</span></h4><p>إيقاعات خطية لولبية تحوّل المشاهد الثابتة إلى ساحة من الطاقة الكونية المتدفقة، فتتوحّد الطبيعة مع نبض الفنان.</p></div>
+      </div>
+    </section>
+
+    <blockquote class="r-quote">«بدلاً من محاولة نقل ما أراه أمامي بدقة، أستخدم اللون بحرية أكبر لأعبّر عن نفسي بقوة.»<cite>فان جوخ، رسالة إلى أخيه ثيو، آرل، أغسطس 1888 — الدليل المباشر على نزعته التعبيرية.</cite></blockquote>
+
+    <footer class="r-foot"><span>الفنون البصرية · المعيار A: الاستقصاء · <b data-out="name"></b></span><span>صفحة <b>1</b> من 2</span></footer>
+  </article>
+
+  <!-- SHEET 2 -->
+  <article class="sheet">
+    <section class="r-sec">
+      <h2 class="r-h"><i>4</i>ما أشهر أعماله الفنية؟ <small>تحليل الروائع</small></h2>
+      <div class="r-works">
+        <div class="r-work">
+          <img data-art="starry" data-w="400" alt="ليلة مرصعة بالنجوم">
+          <div>
+            <h4>«ليلة مرصعة بالنجوم» <span class="latin">The Starry Night</span></h4>
+            <div class="m">يونيو 1889 · زيت على قماش · 73.7 × 92.1 سم · متحف الفن الحديث، نيويورك</div>
+            <p>ملحمة بصرية تختزل التوق إلى السماء والهروب من ضيق المصحة النفسية عبر دوامات ضوئية ساحرة. شجرة السرو الداكنة تشقّ الإطار كاللهب وتصل الأرض بالسماء، والقرية الهادئة متخيَّلة جزئياً؛ والتباين بين الأزرق البروسي والأصفر الكرومي يجعل الليل أكثر حياةً من النهار.</p>
+          </div>
+        </div>
+        <div class="r-work">
+          <img data-art="sunflowers" data-w="400" alt="دوار الشمس">
+          <div>
+            <h4>«دوار الشمس» <span class="latin">Sunflowers</span></h4>
+            <div class="m">أغسطس 1888 · زيت على قماش · 92.1 × 73 سم · المعرض الوطني، لندن</div>
+            <p>قصيدة لونية في حب الضوء والحياة، تسبر أغوار التحول بين التفتح والذبول. رسمها لتزيين غرفة صديقه غوغان في «البيت الأصفر»، مستعرضاً تنويعات «أصفر على أصفر» بأصباغ الكروم الحديثة آنذاك، وتظهر الزهور في كل مراحل عمرها كاستعارة لدورة الحياة.</p>
+          </div>
+        </div>
+        <div class="r-work">
+          <img data-art="bedroom" data-w="400" alt="غرفة النوم في آرل">
+          <div>
+            <h4>«غرفة النوم في آرل» <span class="latin">Bedroom in Arles</span></h4>
+            <div class="m">أكتوبر 1888 · زيت على قماش · 72.4 × 91.3 سم · متحف فان جوخ، أمستردام</div>
+            <p>تجسيد بارع لمفهوم السكينة المفقودة والبحث عن الأمان من خلال زوايا وألوان متداخلة. أراد أن يوحي اللون «بالراحة والنوم»، فاستخدم مساحات مسطحة بلا ظلال على طريقة المطبوعات اليابانية، ومنظوراً مائلاً يكشف قلق الساكن رغم هدوء المكان.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="r-sec">
+      <h2 class="r-h"><i>5</i>كيف تأثر أسلوبه بالظروف التاريخية والاجتماعية والثقافية؟ <small>التحليل البنيوي</small></h2>
+      <div class="r-two">
+        <div class="r-box"><h4>السياق الاجتماعي والتاريخي</h4><p>عاش أواخر القرن التاسع عشر في ذروة <strong>الثورة الصناعية والاغتراب الحديث</strong>؛ انعكست ظروفه القاسية من فقرٍ مدقع وعزلةٍ ذاتية على أسلوبه، فغدا الفن ملاذاً تطهيرياً لا رفاهية سطحية. عايش بؤس عمّال المناجم فرسم الكادحين في «آكلو البطاطا» (1885)، ثم هرب من المدن الصناعية إلى نور الجنوب الفرنسي.</p></div>
+        <div class="r-box"><h4>السياق الثقافي</h4><p>تأثر بشدة بموجة الانبهار بالفن الياباني <span class="latin">(Ukiyo-e)</span>، فاستلهم الجرأة في تقسيم المساحات وبساطة الخطوط والمسطحات اللونية الصافية، ونسخ لوحات هيروشيغي عام 1887؛ ثم مزج هذه الرؤية الشرقية بوعيه الأوروبي القلق، منتجاً أسلوباً ثورياً أثّر في الوحوشية والتعبيرية الألمانية.</p></div>
+      </div>
+    </section>
+
+    <section class="r-sec">
+      <h2 class="r-h"><i>⟡</i>محطات حياته وتطور أسلوبه</h2>
+      <div class="r-tl">
+        <div><b>1853</b>الميلاد في زوندرت</div>
+        <div><b>1880</b>قرار احتراف الرسم</div>
+        <div><b>1885</b>«آكلو البطاطا»: ألوان قاتمة</div>
+        <div><b>1886</b>باريس: الانطباعية واليابان</div>
+        <div><b>1888</b>آرل: الأصفر و«دوار الشمس»</div>
+        <div><b>1889</b>سان-ريمي: «ليلة النجوم»</div>
+        <div><b>1890</b>أوفير: الوفاة في 29 يوليو</div>
+        <div><b>1905</b>ولادة الوحوشية والتعبيرية</div>
+      </div>
+    </section>
+
+    <div class="r-concl">
+      <h2 class="r-h" style="font-size:10.4pt;margin-bottom:.6mm">خلاصة الاستقصاء</h2>
+      <p>يكشف تتبّع أعمال فان جوخ من عتمة نوينن إلى توهّج آرل وسان-ريمي أن أسلوبه لم يكن نتاج موهبة معزولة، بل حصيلة تفاعل بين معاناته الشخصية وسياق صناعي قاسٍ وانفتاح ثقافي على الشرق. لقد نقل الرسم من سؤال «كيف يبدو العالم؟» إلى سؤال «كيف أشعر تجاه العالم؟»، وهو السؤال الذي قامت عليه التعبيرية والفن الحديث من بعده.</p>
+    </div>
+
+    <section class="r-sec">
+      <h2 class="r-h" style="font-size:10pt">المصادر <small>APA</small></h2>
+      <ol class="r-src" id="srcPrint"></ol>
+    </section>
+
+    <footer class="r-foot"><span>الفنون البصرية · المعيار A: الاستقصاء · <b data-out="name"></b></span><span>صفحة <b>2</b> من 2</span></footer>
+  </article>
+</div>
+
+<!-- QRCode.js (c) 2012 davidshimjs, MIT License — inlined so the QR works offline and in print -->
+<script>var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this.parsedData=[];for(var b=[],d=0,e=this.data.length;e>d;d++){var f=this.data.charCodeAt(d);f>65536?(b[0]=240|(1835008&f)>>>18,b[1]=128|(258048&f)>>>12,b[2]=128|(4032&f)>>>6,b[3]=128|63&f):f>2048?(b[0]=224|(61440&f)>>>12,b[1]=128|(4032&f)>>>6,b[2]=128|63&f):f>128?(b[0]=192|(1984&f)>>>6,b[1]=128|63&f):b[0]=f,this.parsedData=this.parsedData.concat(b)}this.parsedData.length!=this.data.length&&(this.parsedData.unshift(191),this.parsedData.unshift(187),this.parsedData.unshift(239))}function b(a,b){this.typeNumber=a,this.errorCorrectLevel=b,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}function i(a,b){if(void 0==a.length)throw new Error(a.length+"/"+b);for(var c=0;c<a.length&&0==a[c];)c++;this.num=new Array(a.length-c+b);for(var d=0;d<a.length-c;d++)this.num[d]=a[d+c]}function j(a,b){this.totalCount=a,this.dataCount=b}function k(){this.buffer=[],this.length=0}function m(){return"undefined"!=typeof CanvasRenderingContext2D}function n(){var a=!1,b=navigator.userAgent;return/android/i.test(b)&&(a=!0,aMat=b.toString().match(/android ([0-9]\.[0-9])/i),aMat&&aMat[1]&&(a=parseFloat(aMat[1]))),a}function r(a,b){for(var c=1,e=s(a),f=0,g=l.length;g>=f;f++){var h=0;switch(b){case d.L:h=l[f][0];break;case d.M:h=l[f][1];break;case d.Q:h=l[f][2];break;case d.H:h=l[f][3]}if(h>=e)break;c++}if(c>l.length)throw new Error("Too long data");return c}function s(a){var b=encodeURI(a).toString().replace(/\%[0-9a-fA-F]{2}/g,"a");return b.length+(b.length!=a?3:0)}a.prototype={getLength:function(){return this.parsedData.length},write:function(a){for(var b=0,c=this.parsedData.length;c>b;b++)a.put(this.parsedData[b],8)}},b.prototype={addData:function(b){var c=new a(b);this.dataList.push(c),this.dataCache=null},isDark:function(a,b){if(0>a||this.moduleCount<=a||0>b||this.moduleCount<=b)throw new Error(a+","+b);return this.modules[a][b]},getModuleCount:function(){return this.moduleCount},make:function(){this.makeImpl(!1,this.getBestMaskPattern())},makeImpl:function(a,c){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var d=0;d<this.moduleCount;d++){this.modules[d]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[d][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupPositionAdjustPattern(),this.setupTimingPattern(),this.setupTypeInfo(a,c),this.typeNumber>=7&&this.setupTypeNumber(a),null==this.dataCache&&(this.dataCache=b.createData(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache,c)},setupPositionProbePattern:function(a,b){for(var c=-1;7>=c;c++)if(!(-1>=a+c||this.moduleCount<=a+c))for(var d=-1;7>=d;d++)-1>=b+d||this.moduleCount<=b+d||(this.modules[a+c][b+d]=c>=0&&6>=c&&(0==d||6==d)||d>=0&&6>=d&&(0==c||6==c)||c>=2&&4>=c&&d>=2&&4>=d?!0:!1)},getBestMaskPattern:function(){for(var a=0,b=0,c=0;8>c;c++){this.makeImpl(!0,c);var d=f.getLostPoint(this);(0==c||a>d)&&(a=d,b=c)}return b},createMovieClip:function(a,b,c){var d=a.createEmptyMovieClip(b,c),e=1;this.make();for(var f=0;f<this.modules.length;f++)for(var g=f*e,h=0;h<this.modules[f].length;h++){var i=h*e,j=this.modules[f][h];j&&(d.beginFill(0,100),d.moveTo(i,g),d.lineTo(i+e,g),d.lineTo(i+e,g+e),d.lineTo(i,g+e),d.endFill())}return d},setupTimingPattern:function(){for(var a=8;a<this.moduleCount-8;a++)null==this.modules[a][6]&&(this.modules[a][6]=0==a%2);for(var b=8;b<this.moduleCount-8;b++)null==this.modules[6][b]&&(this.modules[6][b]=0==b%2)},setupPositionAdjustPattern:function(){for(var a=f.getPatternPosition(this.typeNumber),b=0;b<a.length;b++)for(var c=0;c<a.length;c++){var d=a[b],e=a[c];if(null==this.modules[d][e])for(var g=-2;2>=g;g++)for(var h=-2;2>=h;h++)this.modules[d+g][e+h]=-2==g||2==g||-2==h||2==h||0==g&&0==h?!0:!1}},setupTypeNumber:function(a){for(var b=f.getBCHTypeNumber(this.typeNumber),c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3]=d}for(var c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[c%3+this.moduleCount-8-3][Math.floor(c/3)]=d}},setupTypeInfo:function(a,b){for(var c=this.errorCorrectLevel<<3|b,d=f.getBCHTypeInfo(c),e=0;15>e;e++){var g=!a&&1==(1&d>>e);6>e?this.modules[e][8]=g:8>e?this.modules[e+1][8]=g:this.modules[this.moduleCount-15+e][8]=g}for(var e=0;15>e;e++){var g=!a&&1==(1&d>>e);8>e?this.modules[8][this.moduleCount-e-1]=g:9>e?this.modules[8][15-e-1+1]=g:this.modules[8][15-e-1]=g}this.modules[this.moduleCount-8][8]=!a},mapData:function(a,b){for(var c=-1,d=this.moduleCount-1,e=7,g=0,h=this.moduleCount-1;h>0;h-=2)for(6==h&&h--;;){for(var i=0;2>i;i++)if(null==this.modules[d][h-i]){var j=!1;g<a.length&&(j=1==(1&a[g]>>>e));var k=f.getMask(b,d,h-i);k&&(j=!j),this.modules[d][h-i]=j,e--,-1==e&&(g++,e=7)}if(d+=c,0>d||this.moduleCount<=d){d-=c,c=-c;break}}}},b.PAD0=236,b.PAD1=17,b.createData=function(a,c,d){for(var e=j.getRSBlocks(a,c),g=new k,h=0;h<d.length;h++){var i=d[h];g.put(i.mode,4),g.put(i.getLength(),f.getLengthInBits(i.mode,a)),i.write(g)}for(var l=0,h=0;h<e.length;h++)l+=e[h].dataCount;if(g.getLengthInBits()>8*l)throw new Error("code length overflow. ("+g.getLengthInBits()+">"+8*l+")");for(g.getLengthInBits()+4<=8*l&&g.put(0,4);0!=g.getLengthInBits()%8;)g.putBit(!1);for(;;){if(g.getLengthInBits()>=8*l)break;if(g.put(b.PAD0,8),g.getLengthInBits()>=8*l)break;g.put(b.PAD1,8)}return b.createBytes(g,e)},b.createBytes=function(a,b){for(var c=0,d=0,e=0,g=new Array(b.length),h=new Array(b.length),j=0;j<b.length;j++){var k=b[j].dataCount,l=b[j].totalCount-k;d=Math.max(d,k),e=Math.max(e,l),g[j]=new Array(k);for(var m=0;m<g[j].length;m++)g[j][m]=255&a.buffer[m+c];c+=k;var n=f.getErrorCorrectPolynomial(l),o=new i(g[j],n.getLength()-1),p=o.mod(n);h[j]=new Array(n.getLength()-1);for(var m=0;m<h[j].length;m++){var q=m+p.getLength()-h[j].length;h[j][m]=q>=0?p.get(q):0}}for(var r=0,m=0;m<b.length;m++)r+=b[m].totalCount;for(var s=new Array(r),t=0,m=0;d>m;m++)for(var j=0;j<b.length;j++)m<g[j].length&&(s[t++]=g[j][m]);for(var m=0;e>m;m++)for(var j=0;j<b.length;j++)m<h[j].length&&(s[t++]=h[j][m]);return s};for(var c={MODE_NUMBER:1,MODE_ALPHA_NUM:2,MODE_8BIT_BYTE:4,MODE_KANJI:8},d={L:1,M:0,Q:3,H:2},e={PATTERN000:0,PATTERN001:1,PATTERN010:2,PATTERN011:3,PATTERN100:4,PATTERN101:5,PATTERN110:6,PATTERN111:7},f={PATTERN_POSITION_TABLE:[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],G15:1335,G18:7973,G15_MASK:21522,getBCHTypeInfo:function(a){for(var b=a<<10;f.getBCHDigit(b)-f.getBCHDigit(f.G15)>=0;)b^=f.G15<<f.getBCHDigit(b)-f.getBCHDigit(f.G15);return(a<<10|b)^f.G15_MASK},getBCHTypeNumber:function(a){for(var b=a<<12;f.getBCHDigit(b)-f.getBCHDigit(f.G18)>=0;)b^=f.G18<<f.getBCHDigit(b)-f.getBCHDigit(f.G18);return a<<12|b},getBCHDigit:function(a){for(var b=0;0!=a;)b++,a>>>=1;return b},getPatternPosition:function(a){return f.PATTERN_POSITION_TABLE[a-1]},getMask:function(a,b,c){switch(a){case e.PATTERN000:return 0==(b+c)%2;case e.PATTERN001:return 0==b%2;case e.PATTERN010:return 0==c%3;case e.PATTERN011:return 0==(b+c)%3;case e.PATTERN100:return 0==(Math.floor(b/2)+Math.floor(c/3))%2;case e.PATTERN101:return 0==b*c%2+b*c%3;case e.PATTERN110:return 0==(b*c%2+b*c%3)%2;case e.PATTERN111:return 0==(b*c%3+(b+c)%2)%2;default:throw new Error("bad maskPattern:"+a)}},getErrorCorrectPolynomial:function(a){for(var b=new i([1],0),c=0;a>c;c++)b=b.multiply(new i([1,g.gexp(c)],0));return b},getLengthInBits:function(a,b){if(b>=1&&10>b)switch(a){case c.MODE_NUMBER:return 10;case c.MODE_ALPHA_NUM:return 9;case c.MODE_8BIT_BYTE:return 8;case c.MODE_KANJI:return 8;default:throw new Error("mode:"+a)}else if(27>b)switch(a){case c.MODE_NUMBER:return 12;case c.MODE_ALPHA_NUM:return 11;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 10;default:throw new Error("mode:"+a)}else{if(!(41>b))throw new Error("type:"+b);switch(a){case c.MODE_NUMBER:return 14;case c.MODE_ALPHA_NUM:return 13;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 12;default:throw new Error("mode:"+a)}}},getLostPoint:function(a){for(var b=a.getModuleCount(),c=0,d=0;b>d;d++)for(var e=0;b>e;e++){for(var f=0,g=a.isDark(d,e),h=-1;1>=h;h++)if(!(0>d+h||d+h>=b))for(var i=-1;1>=i;i++)0>e+i||e+i>=b||(0!=h||0!=i)&&g==a.isDark(d+h,e+i)&&f++;f>5&&(c+=3+f-5)}for(var d=0;b-1>d;d++)for(var e=0;b-1>e;e++){var j=0;a.isDark(d,e)&&j++,a.isDark(d+1,e)&&j++,a.isDark(d,e+1)&&j++,a.isDark(d+1,e+1)&&j++,(0==j||4==j)&&(c+=3)}for(var d=0;b>d;d++)for(var e=0;b-6>e;e++)a.isDark(d,e)&&!a.isDark(d,e+1)&&a.isDark(d,e+2)&&a.isDark(d,e+3)&&a.isDark(d,e+4)&&!a.isDark(d,e+5)&&a.isDark(d,e+6)&&(c+=40);for(var e=0;b>e;e++)for(var d=0;b-6>d;d++)a.isDark(d,e)&&!a.isDark(d+1,e)&&a.isDark(d+2,e)&&a.isDark(d+3,e)&&a.isDark(d+4,e)&&!a.isDark(d+5,e)&&a.isDark(d+6,e)&&(c+=40);for(var k=0,e=0;b>e;e++)for(var d=0;b>d;d++)a.isDark(d,e)&&k++;var l=Math.abs(100*k/b/b-50)/5;return c+=10*l}},g={glog:function(a){if(1>a)throw new Error("glog("+a+")");return g.LOG_TABLE[a]},gexp:function(a){for(;0>a;)a+=255;for(;a>=256;)a-=255;return g.EXP_TABLE[a]},EXP_TABLE:new Array(256),LOG_TABLE:new Array(256)},h=0;8>h;h++)g.EXP_TABLE[h]=1<<h;for(var h=8;256>h;h++)g.EXP_TABLE[h]=g.EXP_TABLE[h-4]^g.EXP_TABLE[h-5]^g.EXP_TABLE[h-6]^g.EXP_TABLE[h-8];for(var h=0;255>h;h++)g.LOG_TABLE[g.EXP_TABLE[h]]=h;i.prototype={get:function(a){return this.num[a]},getLength:function(){return this.num.length},multiply:function(a){for(var b=new Array(this.getLength()+a.getLength()-1),c=0;c<this.getLength();c++)for(var d=0;d<a.getLength();d++)b[c+d]^=g.gexp(g.glog(this.get(c))+g.glog(a.get(d)));return new i(b,0)},mod:function(a){if(this.getLength()-a.getLength()<0)return this;for(var b=g.glog(this.get(0))-g.glog(a.get(0)),c=new Array(this.getLength()),d=0;d<this.getLength();d++)c[d]=this.get(d);for(var d=0;d<a.getLength();d++)c[d]^=g.gexp(g.glog(a.get(d))+b);return new i(c,0).mod(a)}},j.RS_BLOCK_TABLE=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],j.getRSBlocks=function(a,b){var c=j.getRsBlockTable(a,b);if(void 0==c)throw new Error("bad rs block @ typeNumber:"+a+"/errorCorrectLevel:"+b);for(var d=c.length/3,e=[],f=0;d>f;f++)for(var g=c[3*f+0],h=c[3*f+1],i=c[3*f+2],k=0;g>k;k++)e.push(new j(h,i));return e},j.getRsBlockTable=function(a,b){switch(b){case d.L:return j.RS_BLOCK_TABLE[4*(a-1)+0];case d.M:return j.RS_BLOCK_TABLE[4*(a-1)+1];case d.Q:return j.RS_BLOCK_TABLE[4*(a-1)+2];case d.H:return j.RS_BLOCK_TABLE[4*(a-1)+3];default:return void 0}},k.prototype={get:function(a){var b=Math.floor(a/8);return 1==(1&this.buffer[b]>>>7-a%8)},put:function(a,b){for(var c=0;b>c;c++)this.putBit(1==(1&a>>>b-c-1))},getLengthInBits:function(){return this.length},putBit:function(a){var b=Math.floor(this.length/8);this.buffer.length<=b&&this.buffer.push(0),a&&(this.buffer[b]|=128>>>this.length%8),this.length++}};var l=[[17,14,11,7],[32,26,20,14],[53,42,32,24],[78,62,46,34],[106,84,60,44],[134,106,74,58],[154,122,86,64],[192,152,108,84],[230,180,130,98],[271,213,151,119],[321,251,177,137],[367,287,203,155],[425,331,241,177],[458,362,258,194],[520,412,292,220],[586,450,322,250],[644,504,364,280],[718,560,394,310],[792,624,442,338],[858,666,482,382],[929,711,509,403],[1003,779,565,439],[1091,857,611,461],[1171,911,661,511],[1273,997,715,535],[1367,1059,751,593],[1465,1125,805,625],[1528,1190,868,658],[1628,1264,908,698],[1732,1370,982,742],[1840,1452,1030,790],[1952,1538,1112,842],[2068,1628,1168,898],[2188,1722,1228,958],[2303,1809,1283,983],[2431,1911,1351,1051],[2563,1989,1423,1093],[2699,2099,1499,1139],[2809,2213,1579,1219],[2953,2331,1663,1273]],o=function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){function g(a,b){var c=document.createElementNS("http://www.w3.org/2000/svg",a);for(var d in b)b.hasOwnProperty(d)&&c.setAttribute(d,b[d]);return c}var b=this._htOption,c=this._el,d=a.getModuleCount();Math.floor(b.width/d),Math.floor(b.height/d),this.clear();var h=g("svg",{viewBox:"0 0 "+String(d)+" "+String(d),width:"100%",height:"100%",fill:b.colorLight});h.setAttributeNS("http://www.w3.org/2000/xmlns/","xmlns:xlink","http://www.w3.org/1999/xlink"),c.appendChild(h),h.appendChild(g("rect",{fill:b.colorDark,width:"1",height:"1",id:"template"}));for(var i=0;d>i;i++)for(var j=0;d>j;j++)if(a.isDark(i,j)){var k=g("use",{x:String(i),y:String(j)});k.setAttributeNS("http://www.w3.org/1999/xlink","href","#template"),h.appendChild(k)}},a.prototype.clear=function(){for(;this._el.hasChildNodes();)this._el.removeChild(this._el.lastChild)},a}(),p="svg"===document.documentElement.tagName.toLowerCase(),q=p?o:m()?function(){function a(){this._elImage.src=this._elCanvas.toDataURL("image/png"),this._elImage.style.display="block",this._elCanvas.style.display="none"}function d(a,b){var c=this;if(c._fFail=b,c._fSuccess=a,null===c._bSupportDataURI){var d=document.createElement("img"),e=function(){c._bSupportDataURI=!1,c._fFail&&_fFail.call(c)},f=function(){c._bSupportDataURI=!0,c._fSuccess&&c._fSuccess.call(c)};return d.onabort=e,d.onerror=e,d.onload=f,d.src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",void 0}c._bSupportDataURI===!0&&c._fSuccess?c._fSuccess.call(c):c._bSupportDataURI===!1&&c._fFail&&c._fFail.call(c)}if(this._android&&this._android<=2.1){var b=1/window.devicePixelRatio,c=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(a,d,e,f,g,h,i,j){if("nodeName"in a&&/img/i.test(a.nodeName))for(var l=arguments.length-1;l>=1;l--)arguments[l]=arguments[l]*b;else"undefined"==typeof j&&(arguments[1]*=b,arguments[2]*=b,arguments[3]*=b,arguments[4]*=b);c.apply(this,arguments)}}var e=function(a,b){this._bIsPainted=!1,this._android=n(),this._htOption=b,this._elCanvas=document.createElement("canvas"),this._elCanvas.width=b.width,this._elCanvas.height=b.height,a.appendChild(this._elCanvas),this._el=a,this._oContext=this._elCanvas.getContext("2d"),this._bIsPainted=!1,this._elImage=document.createElement("img"),this._elImage.style.display="none",this._el.appendChild(this._elImage),this._bSupportDataURI=null};return e.prototype.draw=function(a){var b=this._elImage,c=this._oContext,d=this._htOption,e=a.getModuleCount(),f=d.width/e,g=d.height/e,h=Math.round(f),i=Math.round(g);b.style.display="none",this.clear();for(var j=0;e>j;j++)for(var k=0;e>k;k++){var l=a.isDark(j,k),m=k*f,n=j*g;c.strokeStyle=l?d.colorDark:d.colorLight,c.lineWidth=1,c.fillStyle=l?d.colorDark:d.colorLight,c.fillRect(m,n,f,g),c.strokeRect(Math.floor(m)+.5,Math.floor(n)+.5,h,i),c.strokeRect(Math.ceil(m)-.5,Math.ceil(n)-.5,h,i)}this._bIsPainted=!0},e.prototype.makeImage=function(){this._bIsPainted&&d.call(this,a)},e.prototype.isPainted=function(){return this._bIsPainted},e.prototype.clear=function(){this._oContext.clearRect(0,0,this._elCanvas.width,this._elCanvas.height),this._bIsPainted=!1},e.prototype.round=function(a){return a?Math.floor(1e3*a)/1e3:a},e}():function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){for(var b=this._htOption,c=this._el,d=a.getModuleCount(),e=Math.floor(b.width/d),f=Math.floor(b.height/d),g=['<table style="border:0;border-collapse:collapse;">'],h=0;d>h;h++){g.push("<tr>");for(var i=0;d>i;i++)g.push('<td style="border:0;border-collapse:collapse;padding:0;margin:0;width:'+e+"px;height:"+f+"px;background-color:"+(a.isDark(h,i)?b.colorDark:b.colorLight)+';"></td>');g.push("</tr>")}g.push("</table>"),c.innerHTML=g.join("");var j=c.childNodes[0],k=(b.width-j.offsetWidth)/2,l=(b.height-j.offsetHeight)/2;k>0&&l>0&&(j.style.margin=l+"px "+k+"px")},a.prototype.clear=function(){this._el.innerHTML=""},a}();QRCode=function(a,b){if(this._htOption={width:256,height:256,typeNumber:4,colorDark:"#000000",colorLight:"#ffffff",correctLevel:d.H},"string"==typeof b&&(b={text:b}),b)for(var c in b)this._htOption[c]=b[c];"string"==typeof a&&(a=document.getElementById(a)),this._android=n(),this._el=a,this._oQRCode=null,this._oDrawing=new q(this._el,this._htOption),this._htOption.text&&this.makeCode(this._htOption.text)},QRCode.prototype.makeCode=function(a){this._oQRCode=new b(r(a,this._htOption.correctLevel),this._htOption.correctLevel),this._oQRCode.addData(a),this._oQRCode.make(),this._el.title=a,this._oDrawing.draw(this._oQRCode),this.makeImage()},QRCode.prototype.makeImage=function(){"function"==typeof this._oDrawing.makeImage&&(!this._android||this._android>=3)&&this._oDrawing.makeImage()},QRCode.prototype.clear=function(){this._oDrawing.clear()},QRCode.CorrectLevel=d}();</script>
+<script>
+(function(){
+"use strict";
+
+/* ---------------- configuration ---------------- */
+// Used for the QR code when the page is opened as a local file (file://).
+// Put your published address here (e.g. GitHub Pages) so the printed QR leads to the live site.
+const SITE_URL = "https://redhaahmedyousif-lab.github.io/arts-criterion-a/";
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const store = {
+  get(k){ try { return localStorage.getItem("vg-" + k); } catch(e){ return null; } },
+  set(k, v){ try { localStorage.setItem("vg-" + k, v); } catch(e){} }
+};
+
+/* ---------------- artwork data ---------------- */
+const FILES = {
+  starry:      "Van Gogh - Starry Night - Google Art Project.jpg",
+  sunflowers:  "Vincent Willem van Gogh 127.jpg",
+  bedroom:     "Vincent van Gogh - De slaapkamer - Google Art Project.jpg",
+  potato:      "Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg",
+  plum:        "Van Gogh - Blühender Pflaumenbaum.jpeg",
+  selfportrait:"Vincent van Gogh - Self-Portrait - Google Art Project (454045).jpg",
+  cafe:        "Van Gogh - Terrasse des Cafés an der Place du Forum in Arles am Abend1.jpeg",
+  almond:      "Vincent van Gogh - Almond blossom - Google Art Project.jpg",
+  crows:       "Vincent Van Gogh - Wheatfield with Crows.jpg"
+};
+const imgURL = (id, w) => "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(FILES[id]) + "?width=" + (w || 900);
+
+const PERIODS = [
+  { id:"all", label:"كل الأعمال" },
+  { id:"nuenen", label:"نوينن 1885" },
+  { id:"paris", label:"باريس 1886–87" },
+  { id:"arles", label:"آرل 1888" },
+  { id:"saint-remy", label:"سان-ريمي 1889–90" },
+  { id:"auvers", label:"أوفير 1890" }
+];
+
+const WORKS = [
+  { id:"starry", t:"ليلة مرصعة بالنجوم", en:"The Starry Night", y:"يونيو 1889", p:"saint-remy", key:true,
+    med:"زيت على قماش", size:"73.7 × 92.1 سم", loc:"متحف الفن الحديث (MoMA)، نيويورك",
+    a:[
+      ["الفكرة", "ملحمة بصرية تختزل التوق إلى السماء والهروب من ضيق المصحة النفسية عبر دوامات ضوئية ساحرة. رسمها في مصحة سان-بول-دو-موزول مستنداً إلى المنظر من نافذته، وأكملها من الذاكرة والخيال."],
+      ["التكوين", "شجرة السرو الداكنة تشقّ الإطار عمودياً كاللهب وتصل الأرض بالسماء، بينما تنكمش القرية الهادئة في الثلث السفلي؛ وبرج الكنيسة المدبب يستدعي كنائس موطنه هولندا."],
+      ["اللون والتقنية", "تباين متكامل بين الأزرق البروسي والألترامارين من جهة، والأصفر الكرومي للنجوم والقمر من جهة أخرى. ضربات قصيرة كثيفة متجهة (إمباستو) تبني الدوامات كحقول طاقة."],
+      ["الدلالة التعبيرية", "السماء ليست وصفاً فلكياً بل حالة نفسية: قلق متدفق وأمل متوهج في آن. لهذا تُعدّ اللوحة جسراً مباشراً نحو التعبيرية."]
+    ]},
+  { id:"sunflowers", t:"دوار الشمس", en:"Sunflowers", y:"أغسطس 1888", p:"arles", key:true,
+    med:"زيت على قماش", size:"92.1 × 73 سم", loc:"المعرض الوطني، لندن",
+    a:[
+      ["الفكرة", "قصيدة لونية في حب الضوء والحياة، تسبر أغوار التحول بين التفتح والذبول؛ فالزهور تظهر في جميع مراحل عمرها من البرعم إلى الذبول."],
+      ["السياق", "رسمها في آرل لتزيين غرفة صديقه بول غوغان في «البيت الأصفر» تمهيداً لحلمه بتأسيس «ورشة الجنوب» للفنانين."],
+      ["اللون والتقنية", "تجربة جريئة «أصفر على أصفر» بفضل أصباغ الأصفر الكرومي الحديثة آنذاك، مع إمباستو كثيف يجعل البتلات والبذور بارزة ملموسة."],
+      ["الدلالة التعبيرية", "الأصفر عنده لون الامتنان والصداقة وشمس الجنوب؛ اللوحة صورة ذاتية رمزية لفنان يبحث عن الدفء والانتماء."]
+    ]},
+  { id:"bedroom", t:"غرفة النوم في آرل", en:"Bedroom in Arles", y:"أكتوبر 1888", p:"arles", key:true,
+    med:"زيت على قماش", size:"72.4 × 91.3 سم", loc:"متحف فان جوخ، أمستردام",
+    a:[
+      ["الفكرة", "تجسيد بارع لمفهوم السكينة المفقودة والبحث عن الأمان من خلال زوايا وألوان متداخلة. كتب لثيو أنه أراد للّون أن يوحي «بالراحة أو النوم عموماً»."],
+      ["التكوين", "منظور مائل وجدار خلفي منحرف (كانت الغرفة فعلاً غير منتظمة)، وأثاث مرسوم بخطوط خارجية واضحة؛ كل شيء في زوجين: كرسيان، وسادتان، لوحتان."],
+      ["اللون والتقنية", "مسطحات لونية صافية بلا ظلال على طريقة المطبوعات اليابانية: أصفر الخشب، أحمر الغطاء، أخضر النافذة. الجدران تبدو اليوم زرقاء لأن الصبغ الأحمر في البنفسجي بهت مع الزمن."],
+      ["الدلالة التعبيرية", "الغرفة مرآة لنفس تبحث عن الاستقرار؛ هدوء الألوان يتصارع مع قلق المنظور. رسم منها ثلاث نسخ مما يدل على أهميتها له."]
+    ]},
+  { id:"potato", t:"آكلو البطاطا", en:"The Potato Eaters", y:"أبريل 1885", p:"nuenen",
+    med:"زيت على قماش", size:"82 × 114 سم", loc:"متحف فان جوخ، أمستردام",
+    a:[
+      ["الفكرة", "أول عمل كبير طموح له: عائلة فلاحين تتناول عشاءها تحت ضوء مصباح واحد. أراد أن يُظهر أنهم «حرثوا الأرض بالأيدي نفسها التي يمدّونها إلى الطبق»."],
+      ["اللون والتقنية", "ألوان ترابية قاتمة (بني، أخضر زيتوني، رمادي) متأثرة بميليه ومدرسة لاهاي الهولندية، ووجوه خشنة متعمدة."],
+      ["قيمة استقصائية", "مقارنتها بلوحات آرل بعد ثلاث سنوات فقط تكشف حجم التحول الذي أحدثته باريس والفن الياباني في لوحة ألوانه."]
+    ]},
+  { id:"plum", t:"بستان البرقوق المزهر (عن هيروشيغي)", en:"Flowering Plum Orchard, after Hiroshige", y:"1887", p:"paris",
+    med:"زيت على قماش", size:"55 × 46 سم", loc:"متحف فان جوخ، أمستردام",
+    a:[
+      ["الفكرة", "نسخة زيتية من مطبوعة خشبية للفنان الياباني أوتاغاوا هيروشيغي ضمن سلسلة «مئة منظر مشهور لإيدو»."],
+      ["اللون والتقنية", "خطوط خارجية جريئة، مساحات لونية مسطحة، وإطار أحمر أضاف عليه حروفاً يابانية نسخها لقيمتها الزخرفية."],
+      ["قيمة استقصائية", "دليل بصري مباشر على السياق الثقافي (الجابونيزم): هنا تعلّم فان جوخ تبسيط الشكل وتحرير اللون."]
+    ]},
+  { id:"selfportrait", t:"بورتريه ذاتي", en:"Self-Portrait", y:"1887", p:"paris",
+    med:"زيت على لوح كرتوني", size:"41 × 32.5 سم", loc:"معهد شيكاغو للفنون",
+    a:[
+      ["الفكرة", "رسم أكثر من 35 بورتريه ذاتياً، معظمها في باريس، لأنه لم يكن يملك ثمن أجور العارضين."],
+      ["اللون والتقنية", "لمسات متقطعة مستوحاة من تنقيطية سورا لكنها أطول ومتجهة حول الوجه كالهالة، مع تباين البرتقالي والأزرق المتكاملين."],
+      ["الدلالة التعبيرية", "النظرة الحادة والخلفية النابضة تحوّلان البورتريه من وصف للملامح إلى تحليل للذات."]
+    ]},
+  { id:"cafe", t:"تراس المقهى ليلاً", en:"Café Terrace at Night", y:"سبتمبر 1888", p:"arles",
+    med:"زيت على قماش", size:"80.7 × 65.3 سم", loc:"متحف كرولر-مولر، أوتيرلو",
+    a:[
+      ["الفكرة", "أول لوحة يرسم فيها سماءً مرصعة بالنجوم، رسمها في الموقع ليلاً في ساحة الفوروم بآرل."],
+      ["اللون والتقنية", "«لوحة ليلية بلا أسود»: أزرق وبنفسجي وأخضر للسماء، يقابلها أصفر ضوء الغاز الدافئ على المظلة والأرصفة."],
+      ["الدلالة التعبيرية", "يتحول المقهى إلى واحة دفء إنساني وسط الليل، وتعلن النجوم المزهرة ولادة أشهر ثيماته."]
+    ]},
+  { id:"almond", t:"أغصان اللوز المزهرة", en:"Almond Blossom", y:"فبراير 1890", p:"saint-remy",
+    med:"زيت على قماش", size:"73.3 × 92.4 سم", loc:"متحف فان جوخ، أمستردام",
+    a:[
+      ["الفكرة", "هدية احتفالاً بولادة ابن أخيه ثيو الذي سُمّي «فينسنت ويليم» على اسمه. زهر اللوز من أوائل ما يتفتح في الربيع، رمزاً للحياة الجديدة."],
+      ["اللون والتقنية", "أغصان على سماء فيروزية صافية، بخطوط خارجية واضحة وتكوين مقرّب مستوحى مباشرة من المطبوعات اليابانية."],
+      ["الدلالة التعبيرية", "لحظة صفاء نادرة وسط أشهر المصحة؛ الضربات هنا أهدأ والإيقاع أرق، مما يثبت أن الأسلوب كان يتغير مع الحالة النفسية."]
+    ]},
+  { id:"crows", t:"حقل قمح مع غربان", en:"Wheatfield with Crows", y:"يوليو 1890", p:"auvers",
+    med:"زيت على قماش", size:"50.5 × 103 سم", loc:"متحف فان جوخ، أمستردام",
+    a:[
+      ["الفكرة", "حقل قمح تحت سماء عاصفة وغربان سوداء، ومسارات ثلاثة لا تقود إلى مكان. وصف في رسائله هذه الحقول بأنها تعبّر عن «الحزن والوحدة الشديدة» وأيضاً عن «ما هو صحي ومقوٍّ في الريف»."],
+      ["اللون والتقنية", "صيغة عريضة (مربعان متجاوران)، وضربات عنيفة سريعة، وتصادم الأزرق الداكن مع الأصفر الذهبي."],
+      ["تفكير نقدي", "تشيع أسطورة أنها لوحته الأخيرة، لكن الباحثين يرجّحون أن «جذور الأشجار» هي آخر أعماله؛ وهذا تذكير بضرورة التحقق من المصادر في أي استقصاء."]
+    ]}
+];
+
+const PIGMENTS = [
+  { n:"الأصفر الكرومي", en:"Chrome yellow", c:"#f5c518", u:"دوار الشمس، النجوم" },
+  { n:"الأزرق البروسي", en:"Prussian blue", c:"#1c3a6e", u:"سماء الليل" },
+  { n:"الألترامارين", en:"Ultramarine", c:"#3346a8", u:"الدوامات" },
+  { n:"الأزرق الكوبالتي", en:"Cobalt blue", c:"#2a64b8", u:"الأفق والجبال" },
+  { n:"الأخضر الزمردي", en:"Emerald green", c:"#2f9a6a", u:"السرو والحقول" },
+  { n:"الزنجفر", en:"Vermilion", c:"#d8402a", u:"الوجوه والأسقف" },
+  { n:"لك الجيرانيوم", en:"Geranium lake", c:"#d23a6a", u:"يبهت مع الزمن" }
+];
+
+const TIMELINE = [
+  { y:"1853", place:"زوندرت، هولندا", t:"الميلاد", d:"وُلد في 30 مارس لأب قسّ بروتستانتي، في بيئة ريفية متدينة صارمة.",
+    ctx:"<b>العالم:</b> أوروبا في قلب الثورة الصناعية. وفي 1854 تُجبر اليابان على فتح موانئها للتجارة الغربية، فيبدأ تدفق فنونها إلى أوروبا.",
+    pal:["#3b3324","#5a4a30","#6b6a4a","#2e3a2a"] },
+  { y:"1869", place:"لاهاي · لندن · باريس", t:"تاجر لوحات في Goupil & Cie", d:"عمل في دار بيع الأعمال الفنية، فتعرّف إلى الفن الأوروبي ونسخه المطبوعة.",
+    ctx:"<b>العالم:</b> سوق الفن يتحول إلى تجارة حديثة، والطباعة الحجرية تنشر نسخ اللوحات بين الطبقة الوسطى.",
+    pal:["#3b3324","#4a4030","#5e5a48","#2e3a2a"] },
+  { y:"1879", place:"البوريناج، بلجيكا", t:"واعظ بين عمّال المناجم", d:"عاش في فقر مع عمّال الفحم، ثم قرر عام 1880 أن يصبح فناناً ليخدم الناس بالرسم.",
+    ctx:"<b>العالم:</b> الوجه القاسي للتصنيع: ساعات عمل طويلة، فقر، وحوادث مناجم. هنا تولد نزعته الاجتماعية وتعاطفه مع الكادحين.",
+    pal:["#1f1c17","#3a3326","#4a4436","#2b2b2b"] },
+  { y:"1885", place:"نوينن، هولندا", t:"«آكلو البطاطا»", d:"أول تحفة طموحة؛ لوحة ألوان قاتمة ترابية متأثرة بميليه ومدرسة لاهاي.",
+    ctx:"<b>الفن:</b> الواقعية الاجتماعية تمجّد الفلاح والعمل اليدوي في مواجهة المدينة الصناعية.",
+    pal:["#2a2418","#4b3f28","#6a5a36","#3d4a2c"] },
+  { y:"1886", place:"باريس، فرنسا", t:"الانتقال إلى باريس", d:"أقام مع أخيه ثيو، والتقى بيسارو وسورا وتولوز-لوتريك وغوغان؛ فانفجرت ألوانه وتفتحت.",
+    ctx:"<b>الفن:</b> المعرض الانطباعي الثامن والأخير (1886) وظهور التنقيطية. وفي المتاجر موجة «الجابونيزم»: جمع مع ثيو مئات المطبوعات اليابانية ونسخ هيروشيغي (1887).",
+    pal:["#c84b3c","#e4a83a","#4a7cc4","#5aa36b"] },
+  { y:"1888", place:"آرل، جنوب فرنسا", t:"البيت الأصفر وغوغان", d:"ذروة إبداعه: «دوار الشمس»، «غرفة النوم»، «تراس المقهى». في ديسمبر ينهار بعد خلاف مع غوغان ويجرح أذنه.",
+    ctx:"<b>الحلم:</b> كان يرى في جنوب فرنسا «يابانَه» الخاصة، وأراد تأسيس ورشة جماعية للفنانين المستقلين.",
+    pal:["#f5c518","#e8892b","#2a64b8","#2f9a6a"] },
+  { y:"1889", place:"سان-ريمي-دو-بروفانس", t:"المصحة و«ليلة مرصعة بالنجوم»", d:"دخل مصحة سان-بول طوعاً، ورسم فيها نحو 150 لوحة، منها أشجار السرو وحقول القمح وليلة النجوم.",
+    ctx:"<b>العالم:</b> معرض باريس العالمي وبرج إيفل (1889) ذروة الحداثة الصناعية. وفي يناير 1890 يكتب الناقد ألبير أورييه أول مقال يحتفي بفنه.",
+    pal:["#1c3a6e","#3346a8","#f5c518","#1f4a3a"] },
+  { y:"1890", place:"أوفير-سور-واز", t:"السبعون يوماً الأخيرة", d:"تحت رعاية الطبيب غاشيه رسم نحو 70 لوحة في 70 يوماً. أُصيب بطلق ناري في 27 يوليو وتوفي في 29 يوليو.",
+    ctx:"<b>المفارقة:</b> باع خلال حياته عدداً ضئيلاً جداً من أعماله، أشهرها «الكرمة الحمراء» (1890)، ولم يعرف قط حجم الأثر الذي سيتركه.",
+    pal:["#1c2f6e","#d9b13a","#2f7a4a","#1a1a2a"] },
+  { y:"1905", place:"باريس · دريسدن", t:"الإرث: ولادة التعبيرية", d:"معرض استعادي كبير في أمستردام، وفي العام نفسه تولد «الوحوشية» في باريس وجماعة «الجسر» التعبيرية في ألمانيا.",
+    ctx:"<b>الأثر:</b> ماتيس وكيرشنر وغيرهما استلهموا حرية لونه وانفعال خطه؛ لقد أصبح فان جوخ «جد» الفن الحديث.",
+    pal:["#e8392b","#2a64b8","#f5c518","#2f9a6a"] }
+];
+
+const QUOTES = [
+  { ar:"إنني أضع قلبي وروحي في عملي، وقد فقدت عقلي في هذه العملية.", en:"I put my heart and soul into my work, and have lost my mind in the process.", src:"قول يُنسب إلى فان جوخ" },
+  { ar:"بدلاً من محاولة نقل ما أراه أمامي بدقة، أستخدم اللون بحرية أكبر لأعبّر عن نفسي بقوة.", en:"Instead of trying to reproduce exactly what I have before my eyes, I use colour more arbitrarily, in order to express myself forcefully.", src:"رسالة إلى ثيو، آرل، أغسطس 1888" },
+  { ar:"كثيراً ما أفكر أن الليل أكثر حياةً وأغنى ألواناً من النهار.", en:"I often think that the night is more alive and more richly coloured than the day.", src:"رسالة إلى ثيو، آرل، سبتمبر 1888" },
+  { ar:"لا أعرف شيئاً على وجه اليقين، لكن مرأى النجوم يجعلني أحلم.", en:"I know nothing with any certainty, but the sight of the stars makes me dream.", src:"رسالة إلى ثيو، آرل، يوليو 1888" },
+  { ar:"ماذا ستكون الحياة لو لم تكن لدينا الشجاعة لمحاولة أي شيء؟", en:"What would life be if we had no courage to attempt anything?", src:"رسالة إلى ثيو، ديسمبر 1881" }
+];
+
+const SOURCES = [
+  "Jansen, L., Luijten, H., &amp; Bakker, N. (Eds.). (2009). <i>Vincent van Gogh – The letters</i>. Van Gogh Museum &amp; Huygens ING. vangoghletters.org",
+  "Van Gogh Museum. (n.d.). <i>The bedroom; Almond blossom; The potato eaters</i>. vangoghmuseum.nl",
+  "The Museum of Modern Art. (n.d.). <i>Vincent van Gogh: The Starry Night, 1889</i>. moma.org",
+  "The National Gallery. (n.d.). <i>Vincent van Gogh: Sunflowers, 1888</i>. nationalgallery.org.uk",
+  "Naifeh, S., &amp; Smith, G. W. (2011). <i>Van Gogh: The life</i>. Random House.",
+  "Gombrich, E. H. (1995). <i>The story of art</i> (16th ed.). Phaidon."
+];
+
+/* ---------------- image fallback (if a remote image cannot load) ---------------- */
+function placeholderSVG(title){
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><radialGradient id="g" cx="70%" cy="25%" r="80%"><stop offset="0" stop-color="#3f6fd0"/><stop offset=".6" stop-color="#14204d"/><stop offset="1" stop-color="#0a0f24"/></radialGradient></defs><rect width="400" height="300" fill="url(#g)"/><g fill="none" stroke="#9cc0ee" stroke-opacity=".5" stroke-width="3"><path d="M30 120c40-40 90 20 130-10s80-40 120 0 70 20 90-10"/><path d="M20 160c50-30 90 20 140-5s90-30 130 5 60 10 90-15" stroke="#f0be4a" stroke-opacity=".55"/></g><circle cx="320" cy="60" r="22" fill="#ffd84a"/><circle cx="90" cy="50" r="8" fill="#ffd84a" fill-opacity=".8"/><circle cx="200" cy="40" r="6" fill="#ffd84a" fill-opacity=".7"/><text x="200" y="250" text-anchor="middle" font-family="Amiri, serif" font-size="26" fill="#ece6d6">${title}</text></svg>`;
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+document.addEventListener("error", e => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement) || !img.dataset.art || img.dataset.fallback === "done") return;
+  const id = img.dataset.art;
+  if (!img.dataset.fallback) {               // retry once at original size
+    img.dataset.fallback = "retry";
+    img.src = "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(FILES[id]);
+    return;
+  }
+  img.dataset.fallback = "done";
+  img.src = placeholderSVG(img.alt || "Van Gogh");
+}, true);
+
+function hydrateImages(root){
+  $$("img[data-art]", root).forEach(img => {
+    if (!img.getAttribute("src")) img.src = imgURL(img.dataset.art, +img.dataset.w || 900);
+  });
+}
+
+/* ---------------- swatches ---------------- */
+$("#swatches").innerHTML = PIGMENTS.map(p =>
+  `<div class="sw" style="--c:${p.c}"><i></i><div><b>${p.n}</b><span class="latin">${p.en}</span><br><span>${p.u}</span></div></div>`).join("");
+
+/* ---------------- gallery ---------------- */
+const gallery = $("#gallery");
+gallery.innerHTML = WORKS.map((w, i) => `
+  <button class="art reveal" type="button" data-i="${i}" data-p="${w.p}" aria-label="عرض تحليل لوحة ${w.t}">
+    ${w.key ? '<span class="badge">عمل محوري</span>' : ""}
+    <span class="frame"><img data-art="${w.id}" data-w="800" alt="${w.t} — فان جوخ، ${w.y}" loading="lazy" width="800" height="600"></span>
+    <span class="cap"><h3>${w.t}</h3><span class="latin">${w.en}</span><small>${w.y} · ${w.loc}</small></span>
+  </button>`).join("");
+
+const filters = $("#filters");
+filters.innerHTML = PERIODS.map(p => `<button class="filter" type="button" data-f="${p.id}" aria-pressed="${p.id === "all"}">${p.label}</button>`).join("");
+filters.addEventListener("click", e => {
+  const b = e.target.closest(".filter"); if (!b) return;
+  $$(".filter", filters).forEach(x => x.setAttribute("aria-pressed", x === b));
+  $$(".art", gallery).forEach(a => { a.hidden = !(b.dataset.f === "all" || a.dataset.p === b.dataset.f); a.classList.remove("pre"); });
+});
+
+/* ---------------- lightbox ---------------- */
+const lb = $("#lb");
+let cur = 0;
+function visibleIdx(){ return $$(".art", gallery).filter(a => !a.hidden).map(a => +a.dataset.i); }
+function openWork(i){
+  cur = i; const w = WORKS[i];
+  const img = $("#lbImg");
+  img.removeAttribute("data-fallback");
+  img.dataset.art = w.id;
+  img.alt = w.t;
+  img.src = imgURL(w.id, 1400);
+  $("#lb-title").textContent = "«" + w.t + "»";
+  $("#lbEn").textContent = w.en;
+  $("#lbMeta").innerHTML = `<dt>التاريخ</dt><dd>${w.y}</dd><dt>الوسيط</dt><dd>${w.med}</dd><dt>الأبعاد</dt><dd>${w.size}</dd><dt>المكان</dt><dd>${w.loc}</dd>`;
+  $("#lbAna").innerHTML = w.a.map(([k, v]) => `<div><b>${k}</b><p>${v}</p></div>`).join("");
+  if (!lb.open) { if (lb.showModal) lb.showModal(); else lb.setAttribute("open", ""); }
+}
+function step(d){ const v = visibleIdx(); const k = v.indexOf(cur); openWork(v[(k + d + v.length) % v.length]); }
+gallery.addEventListener("click", e => { const a = e.target.closest(".art"); if (a) openWork(+a.dataset.i); });
+$("#lbClose").addEventListener("click", () => lb.close());
+$("#lbPrev").addEventListener("click", () => step(-1));
+$("#lbNext").addEventListener("click", () => step(1));
+lb.addEventListener("click", e => { if (e.target === lb) lb.close(); });
+lb.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") step(1);       // RTL: left = next
+  if (e.key === "ArrowRight") step(-1);
+});
+
+/* ---------------- timeline ---------------- */
+$("#tl").innerHTML = TIMELINE.map((t, i) => `
+  <li class="tl-item reveal">
+    <button class="tl-btn" type="button" aria-expanded="false" aria-controls="tlc-${i}">
+      <span class="tl-year">${t.y}</span><span class="tl-place">${t.place}</span>
+      <h3>${t.t}</h3>
+      <p>${t.d}</p>
+      <div class="tl-more" id="tlc-${i}"><div><div class="tl-ctx">${t.ctx}</div></div></div>
+      <span class="tl-toggle">+ السياق التاريخي</span>
+      <div class="tl-pal" aria-hidden="true">${t.pal.map(c => `<i style="background:${c}"></i>`).join("")}</div>
+    </button>
+  </li>`).join("");
+$("#tl").addEventListener("click", e => {
+  const b = e.target.closest(".tl-btn"); if (!b) return;
+  const li = b.parentElement; const open = !li.classList.contains("open");
+  li.classList.toggle("open", open); b.setAttribute("aria-expanded", open);
+});
+
+/* ---------------- quotes ---------------- */
+const qs = $("#qslides"), qd = $("#qdots");
+qs.innerHTML = QUOTES.map((q, i) => `<figure class="qslide${i ? "" : " on"}" style="margin:0"><blockquote>«${q.ar}»</blockquote><div class="en">“${q.en}”</div><cite>— ${q.src}</cite></figure>`).join("");
+qd.innerHTML = QUOTES.map((_, i) => `<button class="qdot" type="button" aria-label="اقتباس ${i + 1}" ${i ? "" : 'aria-current="true"'}></button>`).join("");
+let qi = 0, qtimer = null;
+function showQ(i){
+  qi = (i + QUOTES.length) % QUOTES.length;
+  $$(".qslide", qs).forEach((s, k) => s.classList.toggle("on", k === qi));
+  $$(".qdot", qd).forEach((d, k) => d.setAttribute("aria-current", k === qi));
+}
+function autoQ(){ if (reduceMotion) return; clearInterval(qtimer); qtimer = setInterval(() => showQ(qi + 1), 8000); }
+$("#qnext").addEventListener("click", () => { showQ(qi + 1); autoQ(); });
+$("#qprev").addEventListener("click", () => { showQ(qi - 1); autoQ(); });
+qd.addEventListener("click", e => { const d = e.target.closest(".qdot"); if (d) { showQ($$(".qdot", qd).indexOf(d)); autoQ(); } });
+$("#quotes").addEventListener("mouseenter", () => clearInterval(qtimer));
+$("#quotes").addEventListener("mouseleave", autoQ);
+autoQ();
+
+/* ---------------- sources ---------------- */
+$("#srcList").innerHTML = SOURCES.map(s => `<li>${s}</li>`).join("");
+$("#srcPrint").innerHTML = SOURCES.map(s => `<li>${s}</li>`).join("");
+
+/* ---------------- student fields → report ---------------- */
+const today = new Date().toLocaleDateString("ar", { year:"numeric", month:"long", day:"numeric" });
+function syncOut(){
+  const vals = { date: today };
+  $$("[data-bind]").forEach(inp => vals[inp.dataset.bind] = inp.value.trim());
+  $$("[data-out]").forEach(el => {
+    const k = el.dataset.out;
+    el.textContent = vals[k] || (k === "name" && el.closest(".site") ? "اسم الطالب" : "");
+  });
+}
+$$("[data-bind]").forEach(inp => {
+  const v = store.get(inp.dataset.bind); if (v) inp.value = v;
+  inp.addEventListener("input", () => { store.set(inp.dataset.bind, inp.value); syncOut(); });
+});
+syncOut();
+
+/* ---------------- QR codes ---------------- */
+function siteURL(){ return /^https?:$/.test(location.protocol) ? location.href.split("#")[0] : SITE_URL; }
+function makeQR(el, px){
+  el.innerHTML = "";
+  const text = siteURL();
+  if (window.QRCode) {
+    new QRCode(el, { text, width:px, height:px, colorDark:"#0a0f24", colorLight:"#ffffff", correctLevel:QRCode.CorrectLevel.M });
+  } else {
+    const img = new Image();
+    img.alt = "QR";
+    img.src = "https://api.qrserver.com/v1/create-qr-code/?margin=0&size=" + px + "x" + px + "&data=" + encodeURIComponent(text);
+    el.appendChild(img);
+  }
+}
+makeQR($("#qrScreen"), 256);
+makeQR($("#qrPrint"), 300);
+$("#qrHide").addEventListener("click", () => { $("#qrFloat").hidden = true; });
+
+/* ---------------- print mode ---------------- */
+const report = $("#report");
+let reportReady = false;
+function prepReport(){
+  if (reportReady) return;
+  reportReady = true;
+  $$("img[data-art]", report).forEach(img => img.loading = "eager");
+  hydrateImages(report);
+}
+function fitPreview(){
+  const z = Math.min(1, (window.innerWidth - 32) / 794);
+  report.style.zoom = z < 1 ? z : "";
+}
+function enterPreview(){
+  prepReport(); syncOut();
+  document.body.classList.add("is-preview");
+  fitPreview(); window.scrollTo(0, 0);
+  $("#doPrint").focus();
+}
+function exitPreview(){
+  document.body.classList.remove("is-preview");
+  report.style.zoom = "";
+  location.hash = "";
+}
+function whenImagesReady(cb){
+  const pending = $$("img", report).filter(i => !i.complete);
+  if (!pending.length) return cb();
+  let left = pending.length, done = false;
+  const fin = () => { if (!done) { done = true; cb(); } };
+  pending.forEach(i => { const f = () => { if (--left <= 0) fin(); }; i.addEventListener("load", f, { once:true }); i.addEventListener("error", f, { once:true }); });
+  setTimeout(fin, 3500);
+}
+$$("[data-print-mode]").forEach(b => b.addEventListener("click", enterPreview));
+$("#exitPreview").addEventListener("click", exitPreview);
+$("#doPrint").addEventListener("click", () => { prepReport(); whenImagesReady(() => window.print()); });
+window.addEventListener("beforeprint", () => { prepReport(); syncOut(); report.style.zoom = ""; });
+window.addEventListener("afterprint", () => { if (document.body.classList.contains("is-preview")) fitPreview(); });
+window.addEventListener("resize", () => { if (document.body.classList.contains("is-preview")) fitPreview(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && document.body.classList.contains("is-preview")) exitPreview(); });
+// Load the report images quietly after the page settles, so Ctrl+P also prints them.
+window.addEventListener("load", () => setTimeout(prepReport, 2500));
+
+/* ---------------- site images ---------------- */
+hydrateImages($(".site"));
+
+/* ---------------- scroll progress + active nav ---------------- */
+const prog = $("#progress");
+const navLinks = $$(".nav a");
+function onScroll(){
+  const h = document.documentElement;
+  const p = h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight);
+  prog.style.transform = `scaleX(${p})`;
+}
+document.addEventListener("scroll", onScroll, { passive:true }); onScroll();
+if ("IntersectionObserver" in window) {
+  const secIO = new IntersectionObserver(es => es.forEach(en => {
+    if (en.isIntersecting) navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
+  }), { rootMargin:"-45% 0px -50% 0px" });
+  $$("main section[id]").forEach(s => secIO.observe(s));
+
+  /* reveal: only items currently below the fold get the hidden pre-state */
+  if (!reduceMotion) {
+    const rIO = new IntersectionObserver(es => es.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.remove("pre"); rIO.unobserve(en.target); }
+    }), { rootMargin:"0px 0px -8% 0px" });
+    $$(".reveal").forEach(el => {
+      if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add("pre"); rIO.observe(el); }
+    });
+  }
+}
+
+/* ---------------- counters ---------------- */
+if (!reduceMotion && "IntersectionObserver" in window) {
+  const cIO = new IntersectionObserver(es => es.forEach(en => {
+    if (!en.isIntersecting) return;
+    const el = en.target, end = +el.dataset.count, t0 = performance.now();
+    const tick = now => { const k = Math.min(1, (now - t0) / 1400); el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick); cIO.unobserve(el);
+  }), { threshold:.6 });
+  $$("[data-count]").forEach(el => cIO.observe(el));
+}
+
+/* ---------------- tilt cards ---------------- */
+if (!reduceMotion && matchMedia("(hover:hover)").matches) {
+  $$(".tilt").forEach(card => {
+    card.addEventListener("mousemove", e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      card.style.transform = `rotateY(${(x - .5) * 10}deg) rotateX(${(.5 - y) * 8}deg) translateY(-4px)`;
+      card.style.setProperty("--mx", x * 100 + "%"); card.style.setProperty("--my", y * 100 + "%");
+    });
+    card.addEventListener("mouseleave", () => { card.style.transform = ""; });
+  });
+}
+
+/* ---------------- Starry-Night flow field (hero canvas) ---------------- */
+const cv = $("#sky"), ctx = cv.getContext("2d");
+let W = 0, H = 0, parts = [], running = true, t = 0, raf = 0;
+const COLORS = ["#2f5fb3","#3f6fd0","#6f9fe6","#9cc0ee","#1d3a78","#c9dcf5","#f0be4a","#ffd84a"];
+let vortices = [];
+function resize(){
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  W = cv.clientWidth; H = cv.clientHeight;
+  cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.fillStyle = "#0a0f24"; ctx.fillRect(0, 0, W, H);
+  vortices = [
+    { x:W * .38, y:H * .32, r:Math.max(W, H) * .22, s:1 },
+    { x:W * .66, y:H * .22, r:Math.max(W, H) * .14, s:-1 },
+    { x:W * .16, y:H * .55, r:Math.max(W, H) * .16, s:1 }
+  ];
+  const n = Math.round(Math.min(1400, (W * H) / 900));
+  parts = Array.from({ length:n }, spawn);
+}
+function spawn(){
+  return { x:Math.random() * W, y:Math.random() * H, life:60 + Math.random() * 160,
+           c:COLORS[Math.random() < .14 ? 6 + (Math.random() < .5 ? 1 : 0) : Math.floor(Math.random() * 6)],
+           w:.6 + Math.random() * 1.8 };
+}
+function angleAt(x, y){
+  let a = Math.sin(x * .0042 + t * .25) * 1.3 + Math.cos(y * .006 - t * .18) * 1.1;
+  for (const v of vortices) {
+    const dx = x - v.x, dy = y - v.y, d = Math.hypot(dx, dy);
+    if (d < v.r) {
+      const k = 1 - d / v.r;
+      const sw = Math.atan2(dy, dx) + v.s * (Math.PI / 2 + .25);
+      a = a * (1 - k) + sw * k;
+    }
+  }
+  return a;
+}
+function frame(){
+  ctx.fillStyle = "rgba(10,15,36,0.045)"; ctx.fillRect(0, 0, W, H);
+  ctx.globalAlpha = .55; ctx.lineCap = "round";
+  for (const p of parts) {
+    const a = angleAt(p.x, p.y);
+    const nx = p.x + Math.cos(a) * 1.6, ny = p.y + Math.sin(a) * 1.6;
+    ctx.strokeStyle = p.c; ctx.lineWidth = p.w;
+    ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(nx, ny); ctx.stroke();
+    p.x = nx; p.y = ny; p.life--;
+    if (p.life < 0 || p.x < -5 || p.x > W + 5 || p.y < -5 || p.y > H + 5) Object.assign(p, spawn());
+  }
+  ctx.globalAlpha = 1; t += .004;
+}
+function loop(){ if (!running) return; frame(); raf = requestAnimationFrame(loop); }
+resize();
+if (reduceMotion) { for (let i = 0; i < 160; i++) frame(); }
+else {
+  loop();
+  new IntersectionObserver(es => { running = es[0].isIntersecting && !document.body.classList.contains("is-preview"); cancelAnimationFrame(raf); if (running) loop(); }).observe(cv);
+}
+let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { resize(); if (reduceMotion) for (let i = 0; i < 160; i++) frame(); }, 200); });
+
+/* deep link to the print preview: index.html#print */
+if (location.hash === "#print") enterPreview();
+})();
+</script>
+</body>
+</html>
