@@ -368,6 +368,16 @@ dialog.lb::backdrop{background:rgba(5,8,20,.86);backdrop-filter:blur(8px)}
 .qdot{width:10px;height:10px;border-radius:50%;border:1px solid var(--gold);background:transparent;cursor:pointer;padding:0}
 .qdot[aria-current="true"]{background:var(--gold)}
 
+/* ---------- glossary ---------- */
+.gloss{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0}
+@media (max-width:1000px){.gloss{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.gloss{grid-template-columns:1fr}}
+.gloss div{padding:16px 18px;border-radius:14px;background:rgba(17,26,63,.55);border:1px solid var(--line);transition:border-color .25s,transform .25s}
+.gloss div:hover{border-color:rgba(240,190,74,.45);transform:translateY(-3px)}
+.gloss dt{font-family:var(--f-display);font-size:1.25rem;font-weight:700;color:var(--chrome);line-height:1.3}
+.gloss dt .latin{display:block;font-size:.95rem;color:var(--sky);font-weight:500}
+.gloss dd{margin:8px 0 0;font-size:.9rem;line-height:1.75;color:#d4d8ea}
+
 /* ---------- sources & footer ---------- */
 .src{display:grid;gap:10px;margin:0;padding:0 22px 0 0;max-width:900px;direction:ltr;text-align:left;padding:0 0 0 22px;font-family:var(--f-latin);font-size:1.08rem}
 .src li{padding-left:6px}
@@ -464,6 +474,7 @@ body.is-preview .to-top{display:none!important}
   body.is-preview .preview-bar{gap:8px;padding-block:10px}
   .preview-bar span{display:none}
   .preview-bar .btn{height:38px;padding:0 12px;font-size:.82rem}
+  .seg button{height:32px;padding:0 11px;font-size:.78rem}
 }
 
 /* ===================================================================
@@ -478,16 +489,31 @@ body.is-preview .sheet-wrap{position:relative;flex:none;width:calc(210mm * var(-
 body.is-preview .sheet{position:absolute;top:0;right:0;transform:scale(var(--z));transform-origin:top right}
 body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-index:70;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;padding:12px max(16px,env(safe-area-inset-left,0px));background:rgba(10,15,36,.92);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
 .preview-bar span{color:var(--muted);font-size:.85rem}
+.seg{display:inline-flex;padding:3px;border-radius:999px;border:1px solid var(--line);background:rgba(17,26,63,.75)}
+.seg button{border:0;background:transparent;color:var(--muted);height:34px;padding:0 14px;border-radius:999px;cursor:pointer;font-size:.82rem;white-space:nowrap;transition:background .2s,color .2s}
+.seg button[aria-checked="true"]{background:var(--gold);color:#1a1405;font-weight:500}
+/* Eco print: no tinted fills, black text, thin gold rules */
+#report.eco .sheet{--p-ink:#151515;--p-navy:#151515;--p-soft:#4a4a4a;--p-tint:#fff;--p-warm:#fff;--p-rule:#d6d6d6;--p-gold:#94701a;--p-gold-2:#c9a24a}
+#report.eco .r-badge{background:#fff;color:#151515;border:.8pt solid var(--p-gold-2);border-top:0}
+#report.eco .r-badge span{color:var(--p-gold)}
+#report.eco .r-h i{background:#fff;color:#151515}
+#report.eco .r-info{border-top:1pt solid var(--p-gold-2)}
+#report.eco .r-box{border-top-width:1pt}
+#report.eco .r-quote{border-right-width:1.2pt}
+#report.eco .r-concl{border-right:1.2pt solid var(--p-gold-2)}
+#report.eco .r-table .me{font-weight:600}
+
 
 .sheet{
   --p-ink:#1b2440; --p-navy:#14285a; --p-soft:#5a6380; --p-gold:#a97a12; --p-gold-2:#d9a93a;
   --p-rule:#e2e4ec; --p-tint:#f7f8fb; --p-warm:#fcf8ee;
   width:210mm;height:297mm;padding:21mm 19mm 14mm;background:#fff;color:var(--p-ink);
   font-family:var(--f-body);font-size:10.2pt;line-height:1.8;position:relative;overflow:hidden;
-  display:flex;flex-direction:column;gap:6.5mm;
+  display:flex;flex-direction:column;gap:5.6mm;
   -webkit-print-color-adjust:exact;print-color-adjust:exact;
 }
 .sheet img{opacity:1!important}
+.sheet > *{flex-shrink:0}
 /* corner badge: hangs from the top edge on every sheet */
 .r-badge{position:absolute;top:0;left:19mm;display:grid;justify-items:center;gap:.4mm;padding:3.2mm 4.2mm 2.6mm;background:var(--p-navy);color:#fff;border-radius:0 0 2.2mm 2.2mm;border-bottom:1.6pt solid var(--p-gold-2);text-align:center;line-height:1.25}
 .r-badge b{font-size:8.6pt;font-weight:600}
@@ -497,14 +523,14 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
 
 .r-head{display:grid;grid-template-columns:minmax(0,1fr) 27mm;gap:7mm;align-items:end;padding-left:0}
 .r-kicker{font-size:8.4pt;color:var(--p-gold);letter-spacing:.04em;font-weight:600}
-.r-title{margin:1.5mm 0 1mm;font-family:var(--f-display);font-size:21pt;line-height:1.3;font-weight:700;color:var(--p-navy);text-wrap:balance}
+.r-title{margin:1.5mm 0 1mm;font-family:var(--f-display);font-size:19.5pt;line-height:1.3;font-weight:700;color:var(--p-navy);text-wrap:balance}
 .r-sub{font-size:9.6pt;color:var(--p-soft);margin:0;line-height:1.5}
 .r-qr{display:grid;justify-items:center;gap:1.2mm;text-align:center}
 .r-qr .qr{width:24mm;height:24mm;padding:1.2mm;border:.6pt solid var(--p-rule);border-radius:1.6mm;background:#fff}
 .r-qr small{font-size:6.6pt;line-height:1.35;color:var(--p-soft)}
-.r-info{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6pt;margin:0;background:var(--p-rule);border:.7pt solid var(--p-rule);border-top:2pt solid var(--p-navy);border-radius:1.6mm;overflow:hidden}
-.r-info div{padding:2.2mm 3.4mm;background:var(--p-tint)}
-.r-info .span3{grid-column:span 3}
+.r-info{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.6pt;margin:0;background:var(--p-rule);border:.7pt solid var(--p-rule);border-top:2pt solid var(--p-navy);border-radius:1.6mm;overflow:hidden}
+.r-info div{grid-column:span 2;padding:2.2mm 3.4mm;background:var(--p-tint)}
+.r-info .span4{grid-column:span 4}
 .r-info dt{font-size:7.4pt;color:var(--p-soft);line-height:1.3}
 .r-info dd{margin:.6mm 0 0;font-size:10pt;font-weight:600;color:var(--p-navy);line-height:1.4}
 
@@ -522,7 +548,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
 .r-dossier .top b{display:block;font-family:var(--f-display);font-size:10.5pt;line-height:1.3}
 .r-dossier .top .latin{font-size:8.4pt;color:var(--p-gold)}
 .r-dossier dl{margin:0;padding:1mm 3mm 1.6mm}
-.r-dossier dl div{display:grid;grid-template-columns:15mm minmax(0,1fr);gap:2mm;padding:1.4mm 0;border-bottom:.4pt dashed var(--p-rule);font-size:8.4pt;line-height:1.5}
+.r-dossier dl div{display:grid;grid-template-columns:15mm minmax(0,1fr);gap:2mm;padding:1.1mm 0;border-bottom:.4pt dashed var(--p-rule);font-size:8.4pt;line-height:1.5}
 .r-dossier dl div:last-child{border-bottom:0}
 .r-dossier dt{color:var(--p-gold);font-weight:600}
 .r-dossier dd{margin:0}
@@ -530,7 +556,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
 .r-fig img{width:100%;height:var(--h,40mm);object-fit:cover;border-radius:1.6mm;border:.5pt solid var(--p-rule)}
 .r-fig figcaption{font-size:7.6pt;color:var(--p-soft);line-height:1.45}
 .r-table{width:100%;border-collapse:collapse;font-size:8.8pt;line-height:1.6}
-.r-table th,.r-table td{border:.5pt solid var(--p-rule);padding:1.8mm 2.6mm;text-align:right;vertical-align:top}
+.r-table th,.r-table td{border:.5pt solid var(--p-rule);padding:1.4mm 2.6mm;text-align:right;vertical-align:top}
 .r-table thead th{background:var(--p-tint);font-weight:600;color:var(--p-navy)}
 .r-table tbody th{color:var(--p-soft);font-weight:600;white-space:nowrap}
 .r-table .me{background:var(--p-warm);font-weight:500;color:var(--p-ink)}
@@ -593,6 +619,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
       <a href="#context">السياق</a>
       <a href="#timeline">الخط الزمني</a>
       <a href="#quotes">اقتباسات</a>
+      <a href="#glossary">المصطلحات</a>
       <a href="#sources">المصادر</a>
     </nav>
     <div class="bar-actions">
@@ -625,7 +652,8 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
           <div><dt>اسم الطالب</dt><dd>رضا أحمد يوسف</dd></div>
           <div><dt>الصف / الشعبة</dt><dd><span class="latin" style="font-style:normal;font-family:var(--f-body)">MYP-A</span></dd></div>
           <div><dt>أستاذ المادة</dt><dd>أ. حسن فتيل</dd></div>
-          <div class="wide"><dt>المادة</dt><dd class="gold">الفنون البصرية (المعيار A: الاستقصاء)</dd></div>
+          <div><dt>المادة</dt><dd>الفنون</dd></div>
+          <div class="wide"><dt>المهمة</dt><dd class="gold">المهمة الثانية (المعيار A: الاستقصاء)</dd></div>
         </dl>
         <div class="hero-cta">
           <a class="btn solid" href="#works">
@@ -861,6 +889,17 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
     </div>
   </section>
 
+  <!-- GLOSSARY -->
+  <section class="band alt" id="glossary" aria-labelledby="gl-h">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="q-tag"><b>أ</b>مفاتيح البحث</span>
+        <h2 id="gl-h">مسرد المصطلحات الفنية<small>المفردات الأساسية التي يعتمد عليها هذا الاستقصاء</small></h2>
+      </div>
+      <dl class="gloss" id="gloss"></dl>
+    </div>
+  </section>
+
   <!-- SOURCES -->
   <section class="band" id="sources" aria-labelledby="src-h">
     <div class="wrap">
@@ -921,6 +960,10 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
 <!-- preview toolbar -->
 <div class="preview-bar" role="toolbar" aria-label="أدوات الطباعة">
   <span>معاينة التقرير — 3 صفحات بمقاس A4</span>
+  <div class="seg" role="radiogroup" aria-label="ألوان الطباعة">
+    <button type="button" role="radio" aria-checked="true" data-ink="color">ملوّن</button>
+    <button type="button" role="radio" aria-checked="false" data-ink="eco">اقتصادي · حبر أقل</button>
+  </div>
   <button class="btn solid" type="button" id="doPrint">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>
     طباعة / حفظ PDF
@@ -932,7 +975,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
 <div id="report" aria-label="التقرير المطبوع">
   <!-- SHEET 1 -->
   <article class="sheet">
-    <div class="r-badge"><b>المعيار A: الاستقصاء — المهمة 2</b><span>الفنون البصرية · MYP</span></div>
+    <div class="r-badge"><b>المعيار A: الاستقصاء — المهمة 2</b><span>الفنون · MYP</span></div>
     <header class="r-head">
       <div>
         <div class="r-kicker">الفنون البصرية · دراسة استقصائية لمدارس الفن</div>
@@ -945,9 +988,8 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
       <div><dt>اسم الطالب</dt><dd>رضا أحمد يوسف</dd></div>
       <div><dt>الصف / الشعبة</dt><dd>MYP-A</dd></div>
       <div><dt>أستاذ المادة</dt><dd>أ. حسن فتيل</dd></div>
-      <div><dt>تاريخ التسليم</dt><dd data-out="date"></dd></div>
-      <div class="span3"><dt>المادة</dt><dd>الفنون البصرية (المعيار A: الاستقصاء)</dd></div>
-      <div><dt>المهمة</dt><dd>المهمة الثانية</dd></div>
+      <div><dt>المادة</dt><dd>الفنون</dd></div>
+      <div class="span4"><dt>المهمة</dt><dd>المهمة الثانية (المعيار A: الاستقصاء)</dd></div>
     </dl>
 
     <section class="r-sec">
@@ -991,7 +1033,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
 
   <!-- SHEET 2 -->
   <article class="sheet">
-    <div class="r-badge"><b>المعيار A: الاستقصاء — المهمة 2</b><span>الفنون البصرية · MYP</span></div>
+    <div class="r-badge"><b>المعيار A: الاستقصاء — المهمة 2</b><span>الفنون · MYP</span></div>
     <div class="r-run"><b>فينسنت فان جوخ</b><span>تحليل الحراك التعبيري</span></div>
 
     <section class="r-sec">
@@ -1038,7 +1080,7 @@ body.is-preview .preview-bar{display:flex;position:fixed;inset:0 0 auto 0;z-inde
 
   <!-- SHEET 3 -->
   <article class="sheet">
-    <div class="r-badge"><b>المعيار A: الاستقصاء — المهمة 2</b><span>الفنون البصرية · MYP</span></div>
+    <div class="r-badge"><b>المعيار A: الاستقصاء — المهمة 2</b><span>الفنون · MYP</span></div>
     <div class="r-run"><b>فينسنت فان جوخ</b><span>تحليل الحراك التعبيري</span></div>
 
     <section class="r-sec">
@@ -1261,23 +1303,40 @@ function placeholderSVG(title){
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><radialGradient id="g" cx="68%" cy="22%" r="85%"><stop offset="0" stop-color="#4a7ad8"/><stop offset=".55" stop-color="#16245a"/><stop offset="1" stop-color="#0a0f24"/></radialGradient><radialGradient id="m" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3b0"/><stop offset=".5" stop-color="#ffd84a"/><stop offset="1" stop-color="#ffd84a" stop-opacity="0"/></radialGradient></defs><rect width="400" height="300" fill="url(#g)"/><g fill="none" stroke-linecap="round" stroke-width="3"><path d="M20 120c40-40 90 20 130-10s80-40 120 0 70 20 110-10" stroke="#9cc0ee" stroke-opacity=".55"/><path d="M10 155c50-30 90 20 140-5s90-30 130 5 60 10 110-15" stroke="#f0be4a" stroke-opacity=".6"/><path d="M30 190c60-25 100 15 150-5s80-25 120 0 50 10 80-5" stroke="#6f9fe6" stroke-opacity=".45"/></g><circle cx="318" cy="62" r="34" fill="url(#m)"/><circle cx="90" cy="52" r="9" fill="url(#m)"/><circle cx="196" cy="38" r="7" fill="url(#m)"/><rect x="10" y="10" width="380" height="280" rx="6" fill="none" stroke="#f0be4a" stroke-opacity=".55" stroke-width="2"/><text x="200" y="250" text-anchor="middle" font-family="Amiri, serif" font-size="${Math.max(14, Math.min(26, Math.floor(620 / Math.max(1, title.length))))}" fill="#ece6d6">${title}</text><text x="200" y="276" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="12" fill="#9cc0ee">Vincent van Gogh</text></svg>`;
   return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
 }
-document.addEventListener("error", e => {
-  const img = e.target;
-  if (!(img instanceof HTMLImageElement) || !img.dataset.art || img.dataset.state === "fallback") return;
+// Try each candidate URL in turn; give up on a slow one after 12 s; offline → designed fallback at once.
+function tryLoad(img, i){
   const list = sources(img.dataset.art, +img.dataset.w || 960);
-  const next = (+img.dataset.try || 0) + 1;
-  if (next < list.length) { img.dataset.try = next; img.src = list[next]; return; }
+  clearTimeout(img._timer);
+  if (navigator.onLine === false || i >= list.length) return useFallback(img);
+  img.dataset.try = i;
+  img.src = list[i];
+  img._timer = setTimeout(() => { if (img.dataset.state !== "ok" && +img.dataset.try === i) tryLoad(img, i + 1); }, 12000);
+}
+function useFallback(img){
+  clearTimeout(img._timer);
   img.dataset.state = "fallback";
   img.src = placeholderSVG(img.dataset.title || img.alt || "Van Gogh");
   reportStatus();
+}
+document.addEventListener("error", e => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement) || !img.dataset.art || img.dataset.state === "fallback") return;
+  tryLoad(img, (+img.dataset.try || 0) + 1);
 }, true);
 document.addEventListener("load", e => {
   const img = e.target;
   if (!(img instanceof HTMLImageElement) || !img.dataset.art) return;
+  clearTimeout(img._timer);
   img.classList.add("ok");
   if (img.dataset.state !== "fallback") img.dataset.state = "ok";
   reportStatus();
 }, true);
+// When the connection comes back, swap the fallbacks for the real paintings.
+window.addEventListener("online", () => {
+  $$("img[data-art]").filter(i => i.dataset.state === "fallback").forEach(i => {
+    delete i.dataset.state; i.classList.remove("ok"); tryLoad(i, 0);
+  });
+});
 function reportStatus(){
   const el = $("#imgStatus"); if (!el) return;
   const imgs = $$(".site img[data-art]").filter(i => i.getAttribute("src"));
@@ -1293,7 +1352,7 @@ function reportStatus(){
 
 function hydrateImages(root){
   $$("img[data-art]", root).forEach(img => {
-    if (!img.getAttribute("src")) img.src = imgURL(img.dataset.art, +img.dataset.w || 960);
+    if (!img.getAttribute("src")) tryLoad(img, 0);
   });
 }
 
@@ -1329,7 +1388,7 @@ function openWork(i){
   img.dataset.art = w.id;
   img.dataset.title = w.t;
   img.alt = w.t;
-  img.src = imgURL(w.id, 1280);
+  tryLoad(img, 0);
   $("#lb-title").textContent = "«" + w.t + "»";
   $("#lbEn").textContent = w.en;
   $("#lbMeta").innerHTML = `<dt>التاريخ</dt><dd>${w.y}</dd><dt>الوسيط</dt><dd>${w.med}</dd><dt>الأبعاد</dt><dd>${w.size}</dd><dt>المكان</dt><dd>${w.loc}</dd>`;
@@ -1390,14 +1449,22 @@ $("#quotes").addEventListener("mouseenter", () => clearInterval(qtimer));
 $("#quotes").addEventListener("mouseleave", autoQ);
 autoQ();
 
+const GLOSSARY = [
+  ["الإمباستو", "Impasto", "وضع طبقات سميكة من الطلاء تبرز عن سطح اللوحة ويظهر فيها أثر الفرشاة أو السكين."],
+  ["ما بعد الانطباعية", "Post-Impressionism", "تيار ظهر في ثمانينيات القرن التاسع عشر تجاوز تسجيل الضوء إلى البنية والعاطفة والرمز: سيزان، غوغان، سورا، فان جوخ."],
+  ["التعبيرية", "Expressionism", "حركة بدأت نحو 1905 تقدّم الانفعال الداخلي على المظهر الواقعي، ولو بتشويه الشكل واللون."],
+  ["الأوكييو-إي", "Ukiyo-e", "«صور العالم العائم»: مطبوعات خشبية يابانية بخطوط واضحة ومساحات لونية مسطحة، من أعلامها هيروشيغي وهوكوساي."],
+  ["الجابونيزم", "Japonisme", "ولع الفنانين الأوروبيين بالفن الياباني بعد انفتاح اليابان على التجارة، وقد ظهر بقوة في باريس منذ ستينيات القرن التاسع عشر."],
+  ["الألوان المتكاملة", "Complementary colours", "ألوان متقابلة في دائرة الألوان، مثل الأزرق والبرتقالي أو الأصفر والبنفسجي، يزيد تجاورها من توهج كل منها."],
+  ["التنقيطية", "Pointillism", "تقنية سورا وسينياك: بناء الصورة من نقاط لونية صغيرة تمتزج في عين المشاهد لا على لوح الألوان."],
+  ["الضربات المتجهة", "Directional brushwork", "لمسات فرشاة تتبع اتجاه الشكل وحركته، فتمنح السماء والحقول والأشجار إيقاعاً متدفقاً."]
+];
+$("#gloss").innerHTML = GLOSSARY.map(([ar, en, d]) => `<div class="reveal"><dt>${ar}<span class="latin">${en}</span></dt><dd>${d}</dd></div>`).join("");
+
 /* ---------------- sources ---------------- */
 $("#srcList").innerHTML = SOURCES.map(s => `<li>${s}</li>`).join("");
 $("#srcPrint").innerHTML = SOURCES.map(s => `<li>${s}</li>`).join("");
 
-/* ---------------- submission date in the report ---------------- */
-const today = new Date().toLocaleDateString("ar", { year:"numeric", month:"long", day:"numeric" });
-function syncOut(){ $$('[data-out="date"]').forEach(el => el.textContent = today); }
-syncOut();
 
 /* ---------------- mobile menu ---------------- */
 const nav = $("#nav"), menuBtn = $("#menuBtn");
@@ -1440,9 +1507,17 @@ const SHEET_PX = 210 * 96 / 25.4;           // 210 mm in CSS pixels
 function fitPreview(){
   const z = Math.min(1, (document.documentElement.clientWidth - 24) / SHEET_PX);
   report.style.setProperty("--z", z.toFixed(4));
+  report.style.paddingTop = ($(".preview-bar").offsetHeight + 16) + "px";   // toolbar may wrap on phones
 }
+function setInk(mode){
+  report.classList.toggle("eco", mode === "eco");
+  $$(".seg [data-ink]").forEach(b => b.setAttribute("aria-checked", b.dataset.ink === mode));
+  try { localStorage.setItem("vg-ink", mode); } catch (e) {}
+}
+$$(".seg [data-ink]").forEach(b => b.addEventListener("click", () => setInk(b.dataset.ink)));
+try { if (localStorage.getItem("vg-ink") === "eco") setInk("eco"); } catch (e) {}
 function enterPreview(){
-  prepReport(); syncOut();
+  prepReport();
   document.body.classList.add("is-preview");
   fitPreview(); window.scrollTo(0, 0);
   $("#doPrint").focus();
@@ -1450,6 +1525,7 @@ function enterPreview(){
 function exitPreview(){
   document.body.classList.remove("is-preview");
   report.style.removeProperty("--z");
+  report.style.paddingTop = "";
   location.hash = "";
 }
 function whenImagesReady(cb){
@@ -1463,7 +1539,7 @@ function whenImagesReady(cb){
 $$("[data-print-mode]").forEach(b => b.addEventListener("click", enterPreview));
 $("#exitPreview").addEventListener("click", exitPreview);
 $("#doPrint").addEventListener("click", () => { prepReport(); whenImagesReady(() => window.print()); });
-window.addEventListener("beforeprint", () => { prepReport(); syncOut(); });
+window.addEventListener("beforeprint", prepReport);
 window.addEventListener("afterprint", () => { if (document.body.classList.contains("is-preview")) fitPreview(); });
 window.addEventListener("resize", () => { if (document.body.classList.contains("is-preview")) fitPreview(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && document.body.classList.contains("is-preview")) exitPreview(); });
